@@ -1,9 +1,9 @@
-import { portfolioData } from '../data/portfolioData.js';
+import { getLang, getPortfolioData, onLangChange, t } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
 /**
  * Interactive 2011 - 2026 Career, Education, Certification & Award Scrubber.
- * Combines a segmented category filter and a year range slider to inspect milestones.
+ * Updates dynamically whenever the active language switches between ID and EN.
  */
 export function initTimelineScrubber() {
   const filterWrap = document.getElementById('timelineFilterTabs');
@@ -15,66 +15,80 @@ export function initTimelineScrubber() {
 
   if (!filterWrap || !rangeInput || !streamEl) return null;
 
-  if (summaryEl) {
-    summaryEl.textContent = portfolioData.summary;
-  }
-
-  // Merge all chronological milestones
-  const milestones = [
-    ...portfolioData.experience.map((exp) => ({
-      id: exp.id,
-      kind: 'karir',
-      kindLabel: 'Karir',
-      title: `${exp.role} - ${exp.company}`,
-      subtitle: `${exp.period} · ${exp.location}`,
-      startYear: exp.startYear,
-      endYear: exp.endYear,
-      details: exp.details,
-    })),
-    ...portfolioData.certifications.map((cert) => ({
-      id: cert.id,
-      kind: 'pendidikan',
-      kindLabel: 'Sertifikasi',
-      title: cert.title,
-      subtitle: cert.date,
-      startYear: cert.year,
-      endYear: cert.year,
-      details: [cert.desc],
-    })),
-    ...portfolioData.awards.map((aw) => ({
-      id: aw.id,
-      kind: 'prestasi',
-      kindLabel: 'Prestasi',
-      title: aw.title,
-      subtitle: aw.detail,
-      startYear: aw.year,
-      endYear: aw.year,
-      details: [],
-    })),
-    ...portfolioData.education.map((edu) => ({
-      id: edu.id,
-      kind: 'pendidikan',
-      kindLabel: 'Pendidikan',
-      title: `${edu.degree} - ${edu.institution}`,
-      subtitle: `${edu.period} · ${edu.location} · IPK ${edu.gpa}`,
-      startYear: edu.startYear,
-      endYear: edu.endYear,
-      details: [],
-    })),
-  ].sort((a, b) => b.endYear - a.endYear || b.startYear - a.startYear);
-
   let activeFilter = 'all';
   let yearFilterEnabled = false;
   let selectedYear = 2025;
 
+  function buildMilestones(lang) {
+    const data = getPortfolioData(lang);
+    const kindLabels =
+      lang === 'en'
+        ? { karir: 'Career', sertifikasi: 'Certification', prestasi: 'Award', pendidikan: 'Education' }
+        : { karir: 'Karir', sertifikasi: 'Sertifikasi', prestasi: 'Prestasi', pendidikan: 'Pendidikan' };
+    const gpaLabel = lang === 'en' ? 'GPA' : 'IPK';
+
+    return [
+      ...data.experience.map((exp) => ({
+        id: exp.id,
+        kind: 'karir',
+        kindLabel: kindLabels.karir,
+        title: `${exp.role} - ${exp.company}`,
+        subtitle: `${exp.period} · ${exp.location}`,
+        startYear: exp.startYear,
+        endYear: exp.endYear,
+        details: exp.details,
+      })),
+      ...data.certifications.map((cert) => ({
+        id: cert.id,
+        kind: 'pendidikan',
+        kindLabel: kindLabels.sertifikasi,
+        title: cert.title,
+        subtitle: cert.date,
+        startYear: cert.year,
+        endYear: cert.year,
+        details: [cert.desc],
+      })),
+      ...data.awards.map((aw) => ({
+        id: aw.id,
+        kind: 'prestasi',
+        kindLabel: kindLabels.prestasi,
+        title: aw.title,
+        subtitle: aw.detail,
+        startYear: aw.year,
+        endYear: aw.year,
+        details: [],
+      })),
+      ...data.education.map((edu) => ({
+        id: edu.id,
+        kind: 'pendidikan',
+        kindLabel: kindLabels.pendidikan,
+        title: `${edu.degree} - ${edu.institution}`,
+        subtitle: `${edu.period} · ${edu.location} · ${gpaLabel} ${edu.gpa}`,
+        startYear: edu.startYear,
+        endYear: edu.endYear,
+        details: [],
+      })),
+    ].sort((a, b) => b.endYear - a.endYear || b.startYear - a.startYear);
+  }
+
   function render() {
+    const lang = getLang();
+    const data = getPortfolioData(lang);
+
+    if (summaryEl) {
+      summaryEl.textContent = data.summary;
+    }
+
     if (yearLabel) {
-      yearLabel.textContent = yearFilterEnabled ? `Tahun fokus: ${selectedYear}` : 'Semua tahun (2011 - 2026)';
+      yearLabel.textContent = yearFilterEnabled
+        ? `${t('timelineFocusYear')}: ${selectedYear}`
+        : t('timelineAllYears');
     }
     if (resetBtn) {
       resetBtn.classList.toggle('is-active', !yearFilterEnabled);
     }
 
+    const milestones = buildMilestones(lang);
     const filtered = milestones.filter((item) => {
       if (activeFilter !== 'all' && item.kind !== activeFilter) return false;
       if (yearFilterEnabled) {
@@ -86,7 +100,7 @@ export function initTimelineScrubber() {
     if (!filtered.length) {
       streamEl.innerHTML = `
         <div class="timeline-empty">
-          <p>Tidak ada catatan kategori ini tepat pada tahun ${selectedYear}. Geser tahun lain atau pilih tampilkan semua tahun.</p>
+          <p>${t('timelineEmpty')}</p>
         </div>
       `;
       return;
@@ -142,6 +156,7 @@ export function initTimelineScrubber() {
     });
   }
 
+  onLangChange(render);
   render();
 
   return {

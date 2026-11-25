@@ -1,27 +1,61 @@
-import { portfolioData } from '../data/portfolioData.js';
+import { getLang, getPortfolioData, onLangChange } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
-const QUIZ_QUESTIONS = [
-  {
-    q: 'Lapisan mana yang tepat untuk menghitung logika ujian daring di LP3I College?',
-    options: ['PHP & MySQL Server', 'Hanya CSS Inline', 'Printer LPT1'],
-    correct: 0,
-  },
-  {
-    q: 'Komponen inti untuk memicu aksi eksternal pada arsitektur Agen AI modern?',
-    options: ['Tool Calling & API Integration', 'Static HTML Table', 'Manual Fax'],
-    correct: 0,
-  },
-  {
-    q: 'Metode penyimpanan terstruktur untuk data presensi dan antrean medis?',
-    options: ['Database Relasional MySQL', 'Plain Notepad File', 'Cookie Browser'],
-    correct: 0,
-  },
-];
+const QUIZ_QUESTIONS = {
+  id: [
+    {
+      q: 'Lapisan mana yang tepat untuk menghitung logika ujian daring di LP3I College?',
+      options: ['PHP & MySQL Server', 'Hanya CSS Inline', 'Printer LPT1'],
+      correct: 0,
+    },
+    {
+      q: 'Komponen inti untuk memicu aksi eksternal pada arsitektur Agen AI modern?',
+      options: ['Tool Calling & API Integration', 'Static HTML Table', 'Manual Fax'],
+      correct: 0,
+    },
+    {
+      q: 'Metode penyimpanan terstruktur untuk data presensi dan antrean medis?',
+      options: ['Database Relasional MySQL', 'Plain Notepad File', 'Cookie Browser'],
+      correct: 0,
+    },
+  ],
+  en: [
+    {
+      q: 'Which layer best handles online examination logic at LP3I College?',
+      options: ['PHP & MySQL Server', 'Inline CSS Only', 'LPT1 Printer'],
+      correct: 0,
+    },
+    {
+      q: 'What core mechanism triggers external actions in modern AI Agent workflows?',
+      options: ['Tool Calling & API Integration', 'Static HTML Table', 'Manual Fax'],
+      correct: 0,
+    },
+    {
+      q: 'Which structured storage stores attendance and medical clinic queues?',
+      options: ['Relational MySQL Database', 'Plain Notepad File', 'Browser Cookie'],
+      correct: 0,
+    },
+  ],
+};
+
+const SHIFT_LABELS = {
+  id: ['Shift Pagi (08:00 WIB)', 'Shift Siang (14:00 WIB)', 'Shift Operasional Lapangan'],
+  en: ['Morning Shift (08:00 WIB)', 'Afternoon Shift (14:00 WIB)', 'Field Operations Shift'],
+};
+
+const DOKLINC_POLIES = {
+  id: ['Konsultasi Umum', 'Cek Kesehatan Rutin', 'Layanan Ibu & Anak'],
+  en: ['General Consultation', 'Routine Checkup', 'Maternal & Child Care'],
+};
+
+const LETTER_STEPS = {
+  id: ['Draft Surat', 'Verifikasi Kabag', 'Disposisi Pimpinan', 'Nomor Resmi Terbit'],
+  en: ['Letter Draft', 'Dept Review', 'Executive Sign-off', 'Official Ref Issued'],
+};
 
 /**
- * Interactive 5-Project Workbench combining live runnable mini-prototypes
- * with an inspectable 3-layer system architecture view.
+ * Interactive 5-Project Workbench combining live prototypes, UI mockups,
+ * impact metrics, and 3-layer architecture diagrams with full ID/EN support.
  */
 export function initProjectShowcase() {
   const listWrap = document.getElementById('projectSelectorList');
@@ -35,30 +69,30 @@ export function initProjectShowcase() {
 
   if (!listWrap || !stageBody || !modeWrap) return null;
 
-  let activeProjectId = portfolioData.projects[0].id;
+  let activeProjectId = getPortfolioData().projects[0].id;
   let activeMode = 'simulasi';
   let activeArchIndex = 0;
   let activeMockScreen = 'utama';
 
-  // Per-project interactive simulation states
   const simState = {
-    presensiShift: 'Shift Pagi (08:00 WIB)',
-    presensiLogs: [
-      '07:56 WIB - Kantor Pusat PT. BCS Logistics, Cilegon (Terverifikasi)',
-    ],
-    doklincPoly: 'Konsultasi Umum',
-    doklincTickets: ['A-014 · Konsultasi Umum · Estimasi 10 menit'],
+    presensiShiftIdx: 0,
+    presensiCustomLogs: [],
+    doklincPolyIdx: 0,
+    doklincCustomTickets: [],
     quizIndex: 0,
     quizScore: 0,
     quizFinished: false,
     quizFeedback: '',
     testScores: { logika: 82, komputer: 88, inggris: 78 },
     letterStage: 1,
-    letterTitle: 'Surat Tugas Uji Kompetensi Mahasiswa',
+    letterTitleId: 'Surat Tugas Uji Kompetensi Mahasiswa',
+    letterTitleEn: 'Student Competency Assessment Assignment',
+    letterCustomTitle: '',
   };
 
   function renderProjectList() {
-    listWrap.innerHTML = portfolioData.projects
+    const projects = getPortfolioData().projects;
+    listWrap.innerHTML = projects
       .map(
         (proj) => `
       <button
@@ -103,163 +137,28 @@ export function initProjectShowcase() {
     `;
   }
 
-  function renderSimulation(project) {
-    if (project.id === 'presensi-online') {
-      stageBody.innerHTML = `
-        <div class="sim-panel">
-          <div class="sim-controls-row">
-            <label for="simShiftSelect" class="sim-label">Jadwal shift aktif</label>
-            <select id="simShiftSelect" class="sim-input">
-              <option${simState.presensiShift === 'Shift Pagi (08:00 WIB)' ? ' selected' : ''}>Shift Pagi (08:00 WIB)</option>
-              <option${simState.presensiShift === 'Shift Siang (14:00 WIB)' ? ' selected' : ''}>Shift Siang (14:00 WIB)</option>
-              <option${simState.presensiShift === 'Shift Operasional Lapangan' ? ' selected' : ''}>Shift Operasional Lapangan</option>
-            </select>
-            <button type="button" class="btn-primary sim-btn" id="simCheckinBtn">Catat presensi sekarang</button>
-          </div>
-          <p class="sim-caption">Simulasi verifikasi radius lokasi kerja Cilegon (Android & iOS).</p>
-          <ul class="sim-log-list">
-            ${simState.presensiLogs.map((item) => `<li class="tabular-nums">${item}</li>`).join('')}
-          </ul>
-        </div>
-      `;
-      return;
-    }
-
-    if (project.id === 'doklinc') {
-      const polies = ['Konsultasi Umum', 'Cek Kesehatan Rutin', 'Layanan Ibu & Anak'];
-      stageBody.innerHTML = `
-        <div class="sim-panel">
-          <div class="sim-segmented" role="group" aria-label="Pilih layanan doklinc">
-            ${polies
-              .map(
-                (p) => `
-              <button type="button" class="seg-btn${simState.doklincPoly === p ? ' is-active' : ''}" data-doklinc-poly="${p}">
-                ${p}
-              </button>
-            `
-              )
-              .join('')}
-          </div>
-          <div class="sim-controls-row">
-            <button type="button" class="btn-primary sim-btn" id="simDoklincTicketBtn">Ambil nomor antrean pasien</button>
-          </div>
-          <ul class="sim-log-list">
-            ${simState.doklincTickets.map((t) => `<li class="tabular-nums">${t}</li>`).join('')}
-          </ul>
-        </div>
-      `;
-      return;
-    }
-
-    if (project.id === 'ujian-online') {
-      if (simState.quizFinished) {
-        stageBody.innerHTML = `
-          <div class="sim-panel">
-            <p class="sim-result-score tabular-nums">Skor Simulasi Ujian: ${simState.quizScore} dari ${QUIZ_QUESTIONS.length}</p>
-            <p class="sim-caption">Hasil langsung direkap ke panel dosen dan basis data MySQL.</p>
-            <button type="button" class="btn-primary sim-btn" id="simQuizResetBtn">Ulangi simulasi ujian</button>
-          </div>
-        `;
-        return;
-      }
-
-      const item = QUIZ_QUESTIONS[simState.quizIndex];
-      stageBody.innerHTML = `
-        <div class="sim-panel">
-          <p class="sim-caption tabular-nums">Pertanyaan ${simState.quizIndex + 1} dari ${QUIZ_QUESTIONS.length}</p>
-          <p class="sim-question">${item.q}</p>
-          <div class="sim-quiz-options">
-            ${item.options
-              .map(
-                (opt, idx) => `
-              <button type="button" class="sim-option-btn" data-quiz-opt="${idx}">${opt}</button>
-            `
-              )
-              .join('')}
-          </div>
-          ${simState.quizFeedback ? `<p class="sim-caption">${simState.quizFeedback}</p>` : ''}
-        </div>
-      `;
-      return;
-    }
-
-    if (project.id === 'test-masuk') {
-      const avg = Math.round(
-        (simState.testScores.logika + simState.testScores.komputer + simState.testScores.inggris) / 3
-      );
-      const status = avg >= 75 ? 'Lulus Seleksi Utama' : avg >= 60 ? 'Lulus Jalur Matrikulasi' : 'Perlu Ujian Ulang';
-      const prodi =
-        simState.testScores.komputer >= simState.testScores.logika
-          ? 'D3 Manajemen Informatika'
-          : 'S1 Sistem Informasi';
-
-      stageBody.innerHTML = `
-        <div class="sim-panel">
-          <div class="sim-sliders">
-            <label class="sim-slider-row">
-              <span>Potensi Logika (<strong class="tabular-nums">${simState.testScores.logika}</strong>)</span>
-              <input type="range" min="40" max="100" value="${simState.testScores.logika}" data-test-field="logika" />
-            </label>
-            <label class="sim-slider-row">
-              <span>Komputer Dasar (<strong class="tabular-nums">${simState.testScores.komputer}</strong>)</span>
-              <input type="range" min="40" max="100" value="${simState.testScores.komputer}" data-test-field="komputer" />
-            </label>
-            <label class="sim-slider-row">
-              <span>Bahasa Inggris (<strong class="tabular-nums">${simState.testScores.inggris}</strong>)</span>
-              <input type="range" min="40" max="100" value="${simState.testScores.inggris}" data-test-field="inggris" />
-            </label>
-          </div>
-          <div class="sim-score-box">
-            <p class="tabular-nums">Rata-rata: ${avg} · Status: ${status}</p>
-            <p class="sim-caption">Rekomendasi program studi: ${prodi}</p>
-          </div>
-        </div>
-      `;
-      return;
-    }
-
-    // aplikasi-surat
-    const steps = ['Draft Surat', 'Verifikasi Kabag', 'Disposisi Pimpinan', 'Nomor Resmi Terbit'];
-    const refNumber = `042/LP3I-CLG/XI/2026`;
-    stageBody.innerHTML = `
-      <div class="sim-panel">
-        <label class="sim-label" for="simLetterInput">Perihal dokumen institusi</label>
-        <input id="simLetterInput" class="sim-input" type="text" value="${simState.letterTitle}" />
-        <div class="sim-stepper" role="list">
-          ${steps
-            .map(
-              (label, idx) => `
-            <button type="button" class="step-chip${idx <= simState.letterStage ? ' is-done' : ''}" data-letter-step="${idx}">
-              ${label}
-            </button>
-          `
-            )
-            .join('')}
-        </div>
-        <p class="sim-caption tabular-nums">
-          ${
-            simState.letterStage === 3
-              ? `Nomor surat diterbitkan: ${refNumber} (${simState.letterTitle})`
-              : `Tahap aktif: ${steps[simState.letterStage]} - klik tahap berikutnya untuk simulasi disposisi.`
-          }
-        </p>
-      </div>
-    `;
-  }
-
   function renderUiMockup(project) {
     const mockup = project.uiMockup;
     if (!mockup) return;
-
+    const isEn = getLang() === 'en';
     const isSecondary = activeMockScreen === 'data';
+    const deviceLabel =
+      mockup.device === 'mobile'
+        ? isEn
+          ? 'Mobile application concept'
+          : 'Tampilan konsep aplikasi seluler'
+        : isEn
+          ? 'Web portal concept'
+          : 'Tampilan konsep portal web';
+
     stageBody.innerHTML = `
       <div class="mockup-stage">
         <div class="mockup-toolbar">
-          <div class="segmented-control" role="tablist" aria-label="Pilih layar pratinjau antarmuka">
-            <button type="button" class="seg-btn${!isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${!isSecondary}" data-mock-screen="utama">Layar Utama</button>
-            <button type="button" class="seg-btn${isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${isSecondary}" data-mock-screen="data">Panel Data</button>
+          <div class="segmented-control" role="tablist" aria-label="${isEn ? 'Select UI mockup screen' : 'Pilih layar pratinjau antarmuka'}">
+            <button type="button" class="seg-btn${!isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${!isSecondary}" data-mock-screen="utama">${isEn ? 'Main Screen' : 'Layar Utama'}</button>
+            <button type="button" class="seg-btn${isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${isSecondary}" data-mock-screen="data">${isEn ? 'Data Panel' : 'Panel Data'}</button>
           </div>
-          <span class="sim-caption">Tampilan konsep ${mockup.device === 'mobile' ? 'aplikasi seluler' : 'portal web'}</span>
+          <span class="sim-caption">${deviceLabel}</span>
         </div>
 
         <div class="ui-mockup-frame ui-mockup-${mockup.device}">
@@ -298,9 +197,192 @@ export function initProjectShowcase() {
     `;
   }
 
+  function renderSimulation(project) {
+    const lang = getLang();
+    const isEn = lang === 'en';
+
+    if (project.id === 'presensi-online') {
+      const shifts = SHIFT_LABELS[lang];
+      const defaultLog = isEn
+        ? '07:56 WIB - PT. BCS Logistics HQ, Cilegon (Verified)'
+        : '07:56 WIB - Kantor Pusat PT. BCS Logistics, Cilegon (Terverifikasi)';
+      const logs = [...simState.presensiCustomLogs, defaultLog].slice(0, 4);
+
+      stageBody.innerHTML = `
+        <div class="sim-panel">
+          <div class="sim-controls-row">
+            <label for="simShiftSelect" class="sim-label">${isEn ? 'Active shift schedule' : 'Jadwal shift aktif'}</label>
+            <select id="simShiftSelect" class="sim-input">
+              ${shifts
+                .map(
+                  (label, idx) =>
+                    `<option value="${idx}"${simState.presensiShiftIdx === idx ? ' selected' : ''}>${label}</option>`
+                )
+                .join('')}
+            </select>
+            <button type="button" class="btn-primary sim-btn" id="simCheckinBtn">${isEn ? 'Record check-in now' : 'Catat presensi sekarang'}</button>
+          </div>
+          <p class="sim-caption">${isEn ? 'Simulated Cilegon HQ geofence verification (Android & iOS).' : 'Simulasi verifikasi radius lokasi kerja Cilegon (Android & iOS).'}</p>
+          <ul class="sim-log-list">
+            ${logs.map((item) => `<li class="tabular-nums">${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      return;
+    }
+
+    if (project.id === 'doklinc') {
+      const polies = DOKLINC_POLIES[lang];
+      const defaultTicket = isEn
+        ? `A-014 · ${polies[0]} · Est. 10 minutes`
+        : `A-014 · ${polies[0]} · Estimasi 10 menit`;
+      const tickets = [...simState.doklincCustomTickets, defaultTicket].slice(0, 4);
+
+      stageBody.innerHTML = `
+        <div class="sim-panel">
+          <div class="sim-segmented" role="group" aria-label="${isEn ? 'Select doklinc clinic service' : 'Pilih layanan doklinc'}">
+            ${polies
+              .map(
+                (p, idx) => `
+              <button type="button" class="seg-btn${simState.doklincPolyIdx === idx ? ' is-active' : ''}" data-doklinc-idx="${idx}">
+                ${p}
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+          <div class="sim-controls-row">
+            <button type="button" class="btn-primary sim-btn" id="simDoklincTicketBtn">${isEn ? 'Issue patient queue ticket' : 'Ambil nomor antrean pasien'}</button>
+          </div>
+          <ul class="sim-log-list">
+            ${tickets.map((tItem) => `<li class="tabular-nums">${tItem}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      return;
+    }
+
+    if (project.id === 'ujian-online') {
+      const questions = QUIZ_QUESTIONS[lang];
+      if (simState.quizFinished) {
+        stageBody.innerHTML = `
+          <div class="sim-panel">
+            <p class="sim-result-score tabular-nums">${isEn ? 'Exam Simulation Score' : 'Skor Simulasi Ujian'}: ${simState.quizScore} / ${questions.length}</p>
+            <p class="sim-caption">${isEn ? 'Results sync directly to lecturer dashboard and MySQL database.' : 'Hasil langsung direkap ke panel dosen dan basis data MySQL.'}</p>
+            <button type="button" class="btn-primary sim-btn" id="simQuizResetBtn">${isEn ? 'Restart exam simulation' : 'Ulangi simulasi ujian'}</button>
+          </div>
+        `;
+        return;
+      }
+
+      const item = questions[simState.quizIndex];
+      stageBody.innerHTML = `
+        <div class="sim-panel">
+          <p class="sim-caption tabular-nums">${isEn ? 'Question' : 'Pertanyaan'} ${simState.quizIndex + 1} / ${questions.length}</p>
+          <p class="sim-question">${item.q}</p>
+          <div class="sim-quiz-options">
+            ${item.options
+              .map(
+                (opt, idx) => `
+              <button type="button" class="sim-option-btn" data-quiz-opt="${idx}">${opt}</button>
+            `
+              )
+              .join('')}
+          </div>
+          ${simState.quizFeedback ? `<p class="sim-caption">${simState.quizFeedback}</p>` : ''}
+        </div>
+      `;
+      return;
+    }
+
+    if (project.id === 'test-masuk') {
+      const avg = Math.round(
+        (simState.testScores.logika + simState.testScores.komputer + simState.testScores.inggris) / 3
+      );
+      const status = isEn
+        ? avg >= 75
+          ? 'Passed Main Track'
+          : avg >= 60
+            ? 'Passed Matriculation Track'
+            : 'Retake Required'
+        : avg >= 75
+          ? 'Lulus Seleksi Utama'
+          : avg >= 60
+            ? 'Lulus Jalur Matrikulasi'
+            : 'Perlu Ujian Ulang';
+
+      const prodi =
+        simState.testScores.komputer >= simState.testScores.logika
+          ? isEn
+            ? 'D3 Informatics Management'
+            : 'D3 Manajemen Informatika'
+          : isEn
+            ? 'B.S. Information Systems'
+            : 'S1 Sistem Informasi';
+
+      stageBody.innerHTML = `
+        <div class="sim-panel">
+          <div class="sim-sliders">
+            <label class="sim-slider-row">
+              <span>${isEn ? 'Logic Aptitude' : 'Potensi Logika'} (<strong class="tabular-nums">${simState.testScores.logika}</strong>)</span>
+              <input type="range" min="40" max="100" value="${simState.testScores.logika}" data-test-field="logika" />
+            </label>
+            <label class="sim-slider-row">
+              <span>${isEn ? 'Computer Basics' : 'Komputer Dasar'} (<strong class="tabular-nums">${simState.testScores.komputer}</strong>)</span>
+              <input type="range" min="40" max="100" value="${simState.testScores.komputer}" data-test-field="komputer" />
+            </label>
+            <label class="sim-slider-row">
+              <span>${isEn ? 'English Proficiency' : 'Bahasa Inggris'} (<strong class="tabular-nums">${simState.testScores.inggris}</strong>)</span>
+              <input type="range" min="40" max="100" value="${simState.testScores.inggris}" data-test-field="inggris" />
+            </label>
+          </div>
+          <div class="sim-score-box">
+            <p class="tabular-nums">${isEn ? 'Average' : 'Rata-rata'}: ${avg} · Status: ${status}</p>
+            <p class="sim-caption">${isEn ? 'Recommended study program' : 'Rekomendasi program studi'}: ${prodi}</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const steps = LETTER_STEPS[lang];
+    const refNumber = '042/LP3I-CLG/XI/2026';
+    const currentSubject =
+      simState.letterCustomTitle || (isEn ? simState.letterTitleEn : simState.letterTitleId);
+
+    stageBody.innerHTML = `
+      <div class="sim-panel">
+        <label class="sim-label" for="simLetterInput">${isEn ? 'Institutional document subject' : 'Perihal dokumen institusi'}</label>
+        <input id="simLetterInput" class="sim-input" type="text" value="${currentSubject}" />
+        <div class="sim-stepper" role="list">
+          ${steps
+            .map(
+              (label, idx) => `
+            <button type="button" class="step-chip${idx <= simState.letterStage ? ' is-done' : ''}" data-letter-step="${idx}">
+              ${label}
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+        <p class="sim-caption tabular-nums">
+          ${
+            simState.letterStage === 3
+              ? isEn
+                ? `Official reference issued: ${refNumber} (${currentSubject})`
+                : `Nomor surat diterbitkan: ${refNumber} (${currentSubject})`
+              : isEn
+                ? `Active stage: ${steps[simState.letterStage]} - click next stage to simulate approval.`
+                : `Tahap aktif: ${steps[simState.letterStage]} - klik tahap berikutnya untuk simulasi disposisi.`
+          }
+        </p>
+      </div>
+    `;
+  }
+
   function renderStage() {
-    const project =
-      portfolioData.projects.find((p) => p.id === activeProjectId) || portfolioData.projects[0];
+    const projects = getPortfolioData().projects;
+    const project = projects.find((p) => p.id === activeProjectId) || projects[0];
 
     titleEl.textContent = project.title;
     metaEl.textContent = `${project.org} · ${project.period} · ${project.stackText}`;
@@ -352,6 +434,9 @@ export function initProjectShowcase() {
   });
 
   stageBody.addEventListener('click', (event) => {
+    const lang = getLang();
+    const isEn = lang === 'en';
+
     const mockBtn = event.target.closest('[data-mock-screen]');
     if (mockBtn) {
       soundEngine.playClick();
@@ -371,48 +456,57 @@ export function initProjectShowcase() {
     if (event.target.id === 'simCheckinBtn') {
       soundEngine.playChime();
       const select = document.getElementById('simShiftSelect');
-      if (select) simState.presensiShift = select.value;
+      if (select) simState.presensiShiftIdx = Number(select.value) || 0;
+      const shiftName = SHIFT_LABELS[lang][simState.presensiShiftIdx];
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, '0');
       const mm = String(now.getMinutes()).padStart(2, '0');
-      simState.presensiLogs.unshift(
-        `${hh}:${mm} WIB - ${simState.presensiShift} · Lokasi Cilegon Valid`
+      simState.presensiCustomLogs.unshift(
+        isEn
+          ? `${hh}:${mm} WIB - ${shiftName} · Cilegon Location Valid`
+          : `${hh}:${mm} WIB - ${shiftName} · Lokasi Cilegon Valid`
       );
-      simState.presensiLogs = simState.presensiLogs.slice(0, 4);
+      simState.presensiCustomLogs = simState.presensiCustomLogs.slice(0, 3);
       renderStage();
       return;
     }
 
-    const polyBtn = event.target.closest('[data-doklinc-poly]');
+    const polyBtn = event.target.closest('[data-doklinc-idx]');
     if (polyBtn) {
       soundEngine.playClick();
-      simState.doklincPoly = polyBtn.dataset.doklincPoly;
+      simState.doklincPolyIdx = Number(polyBtn.dataset.doklincIdx) || 0;
       renderStage();
       return;
     }
 
     if (event.target.id === 'simDoklincTicketBtn') {
       soundEngine.playChime();
-      const code = `A-0${15 + simState.doklincTickets.length}`;
-      simState.doklincTickets.unshift(`${code} · ${simState.doklincPoly} · Terdaftar di doklinc`);
-      simState.doklincTickets = simState.doklincTickets.slice(0, 4);
+      const polyName = DOKLINC_POLIES[lang][simState.doklincPolyIdx];
+      const code = `A-0${15 + simState.doklincCustomTickets.length}`;
+      simState.doklincCustomTickets.unshift(
+        isEn ? `${code} · ${polyName} · Registered on doklinc` : `${code} · ${polyName} · Terdaftar di doklinc`
+      );
+      simState.doklincCustomTickets = simState.doklincCustomTickets.slice(0, 3);
       renderStage();
       return;
     }
 
     const quizBtn = event.target.closest('[data-quiz-opt]');
     if (quizBtn) {
+      const questions = QUIZ_QUESTIONS[lang];
       const chosen = Number(quizBtn.dataset.quizOpt);
-      const item = QUIZ_QUESTIONS[simState.quizIndex];
+      const item = questions[simState.quizIndex];
       if (chosen === item.correct) {
         soundEngine.playChime();
         simState.quizScore += 1;
-        simState.quizFeedback = 'Jawaban tepat!';
+        simState.quizFeedback = isEn ? 'Correct answer!' : 'Jawaban tepat!';
       } else {
         soundEngine.playClick();
-        simState.quizFeedback = `Kurang tepat. Jawaban sesuai: ${item.options[item.correct]}.`;
+        simState.quizFeedback = isEn
+          ? `Not quite. Expected answer: ${item.options[item.correct]}.`
+          : `Kurang tepat. Jawaban sesuai: ${item.options[item.correct]}.`;
       }
-      if (simState.quizIndex + 1 >= QUIZ_QUESTIONS.length) {
+      if (simState.quizIndex + 1 >= questions.length) {
         simState.quizFinished = true;
       } else {
         simState.quizIndex += 1;
@@ -447,8 +541,14 @@ export function initProjectShowcase() {
       return;
     }
     if (event.target.id === 'simLetterInput') {
-      simState.letterTitle = event.target.value || 'Surat Resmi Institusi';
+      simState.letterCustomTitle = event.target.value;
     }
+  });
+
+  onLangChange(() => {
+    simState.quizFeedback = '';
+    renderProjectList();
+    renderStage();
   });
 
   renderProjectList();
@@ -456,7 +556,7 @@ export function initProjectShowcase() {
 
   return {
     selectProject(projectId) {
-      if (!portfolioData.projects.some((p) => p.id === projectId)) return;
+      if (!getPortfolioData().projects.some((p) => p.id === projectId)) return;
       activeProjectId = projectId;
       activeArchIndex = 0;
       renderProjectList();

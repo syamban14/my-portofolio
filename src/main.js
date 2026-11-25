@@ -1,6 +1,7 @@
 import './styles/tokens.css';
 import './styles/main.css';
 
+import { getLang, getPortfolioData, onLangChange, setLang, t } from './data/i18n.js';
 import { soundEngine } from './modules/soundEngine.js';
 import { initLivingWorkspace } from './modules/livingWorkspace.js';
 import { initAiAgent } from './modules/aiAgent.js';
@@ -21,10 +22,40 @@ function showToast(message) {
   window.setTimeout(() => item.remove(), 3400);
 }
 
+function renderPrintCvSheet(lang) {
+  const sheet = document.getElementById('printCvSheet');
+  if (!sheet) return;
+  const isEn = lang === 'en';
+  const data = getPortfolioData(lang);
+  const gpaLabel = isEn ? 'GPA' : 'IPK';
+
+  sheet.innerHTML = `
+    <h1>${data.name} - ${data.title}</h1>
+    <p>${data.contact.location} · ${data.contact.phone} · ${data.contact.email} · ${data.contact.githubHandle} · ${data.contact.linkedinHandle}</p>
+    <p>${data.summary}</p>
+    <h2>${isEn ? 'Work Experience' : 'Pengalaman Kerja'}</h2>
+    ${data.experience
+      .map(
+        (exp) =>
+          `<p><strong>${exp.company}</strong> - ${exp.role} (${exp.period}): ${exp.details.join(', ')}.</p>`
+      )
+      .join('')}
+    <h2>${isEn ? 'Skills & Certification' : 'Keahlian & Sertifikasi'}</h2>
+    <p>${data.skills.map((s) => `${s.name} (${s.level}%)`).join(', ')}.</p>
+    <p>${isEn ? 'Certification' : 'Sertifikasi'}: ${data.certifications[0].title} (${data.certifications[0].date}).</p>
+    <h2>${isEn ? 'Education & Awards' : 'Pendidikan & Prestasi'}</h2>
+    <p>${data.education
+      .map((edu) => `${edu.degree}, ${edu.institution} (${gpaLabel} ${edu.gpa}, ${edu.period})`)
+      .join(' · ')}.</p>
+    <p>${data.awards.map((aw) => `${aw.title} - ${aw.detail}`).join(' · ')}.</p>
+  `;
+}
+
 function initStudioApp() {
   const header = document.getElementById('siteHeader');
   const nav = document.getElementById('mainNav');
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const langSwitch = document.getElementById('langSwitch');
   const timeSwitch = document.getElementById('timeModeSwitch');
   const soundToggleBtn = document.getElementById('soundToggleBtn');
 
@@ -35,6 +66,35 @@ function initStudioApp() {
 
   let workspaceApi = null;
   let projectsApi = null;
+
+  function applyTranslations(lang = getLang()) {
+    document.documentElement.lang = lang;
+    document.title = t('pageTitle', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.dataset.i18n;
+      if (key) el.textContent = t(key, lang);
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.dataset.i18nPlaceholder;
+      if (key) el.setAttribute('placeholder', t(key, lang));
+    });
+
+    if (soundToggleBtn) {
+      soundToggleBtn.textContent = soundEngine.enabled ? t('soundOn', lang) : t('soundOff', lang);
+    }
+
+    if (langSwitch) {
+      langSwitch.querySelectorAll('[data-lang]').forEach((btn) => {
+        const match = btn.dataset.lang === lang;
+        btn.classList.toggle('is-active', match);
+        btn.setAttribute('aria-checked', String(match));
+      });
+    }
+
+    renderPrintCvSheet(lang);
+  }
 
   function applyTimeMode(mode, { silent = false } = {}) {
     currentMode = mode;
@@ -54,6 +114,14 @@ function initStudioApp() {
     }
   }
 
+  function applyLanguage(nextLang, { silent = false } = {}) {
+    const resolved = setLang(nextLang);
+    applyTranslations(resolved);
+    if (!silent) {
+      showToast(resolved === 'en' ? 'Switched portfolio language to English' : 'Bahasa portofolio diubah ke Bahasa Indonesia');
+    }
+  }
+
   function scrollToTarget(selector, projectId) {
     if (projectId) {
       projectsApi?.selectProject(projectId);
@@ -65,8 +133,8 @@ function initStudioApp() {
   }
 
   applyTimeMode(currentMode, { silent: true });
+  applyTranslations(getLang());
 
-  // Scroll header state & active nav indicator
   const sectionNodes = Array.from(document.querySelectorAll('main > section[id]'));
   const navLinks = Array.from(document.querySelectorAll('.main-nav a[href^="#"]'));
 
@@ -91,7 +159,6 @@ function initStudioApp() {
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
-  // Mobile nav toggle
   mobileMenuBtn?.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('is-open');
     mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
@@ -109,7 +176,17 @@ function initStudioApp() {
     });
   });
 
-  // Studio Time switcher
+  langSwitch?.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-lang]');
+    if (!btn) return;
+    soundEngine.playClick();
+    applyLanguage(btn.dataset.lang);
+  });
+
+  onLangChange((newLang) => {
+    applyTranslations(newLang);
+  });
+
   timeSwitch?.addEventListener('click', (event) => {
     const btn = event.target.closest('[data-time-mode]');
     if (!btn) return;
@@ -117,15 +194,13 @@ function initStudioApp() {
     applyTimeMode(btn.dataset.timeMode);
   });
 
-  // Sound toggle
   soundToggleBtn?.addEventListener('click', () => {
     const active = soundEngine.toggle();
     soundToggleBtn.setAttribute('aria-pressed', String(active));
-    soundToggleBtn.textContent = active ? 'Suara: Nyala' : 'Suara: Mati';
-    showToast(active ? 'Efek suara interaktif diaktifkan' : 'Efek suara dimatikan');
+    soundToggleBtn.textContent = active ? t('soundOn') : t('soundOff');
+    showToast(active ? t('soundEnabledToast') : t('soundDisabledToast'));
   });
 
-  // Initialize interactive modules
   projectsApi = initProjectShowcase();
   initGithubShowcase();
 
@@ -137,6 +212,7 @@ function initStudioApp() {
 
   initAiAgent({
     setTimeMode: (mode) => applyTimeMode(mode),
+    setLanguage: (lang) => applyLanguage(lang),
     toggleLamp: () => workspaceApi?.toggleLamp(),
     onRequestSection: (target, projectId) => scrollToTarget(target, projectId),
     onPrintCv: () => window.print(),
@@ -155,6 +231,7 @@ function initStudioApp() {
 
   initCommandPalette({
     setTimeMode: (mode) => applyTimeMode(mode),
+    setLanguage: (lang) => applyLanguage(lang),
     toggleLamp: () => workspaceApi?.toggleLamp(),
     onRequestSection: (target) => scrollToTarget(target),
     onPrintCv: () => window.print(),

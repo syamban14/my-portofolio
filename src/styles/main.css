@@ -109,7 +109,7 @@ textarea {
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
 }
 
 .main-nav a {
@@ -148,7 +148,7 @@ textarea {
   color: var(--text-muted);
   font-size: var(--text-sm);
   font-weight: 500;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
@@ -1474,6 +1474,10 @@ html[data-studio-time='senja'] .workspace-bg-img {
 
 .contact-cv-row {
   margin-top: 18px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 /* Footer */
@@ -1663,6 +1667,14 @@ html[data-studio-time='senja'] .workspace-bg-img {
 @media (max-width: 640px) {
   .container {
     padding-inline: 16px;
+  }
+
+  .header-controls {
+    gap: 5px;
+  }
+
+  .header-controls .seg-btn {
+    padding: 5px 8px;
   }
 
   .header-controls .icon-control-btn {

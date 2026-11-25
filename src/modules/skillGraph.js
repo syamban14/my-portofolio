@@ -1,4 +1,4 @@
-import { portfolioData } from '../data/portfolioData.js';
+import { getLang, getPortfolioData, onLangChange, t } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
 const CATEGORY_COLORS = {
@@ -32,12 +32,12 @@ export function initSkillGraph({ onSelectProject }) {
   let width = 640;
   let height = 420;
   let activeCategory = 'all';
-  let selectedId = portfolioData.skills[0].id;
+  let selectedId = getPortfolioData().skills[0].id;
   let hoveredId = null;
   let draggingNode = null;
 
-  const nodes = portfolioData.skills.map((skill, idx) => {
-    const angle = (idx / portfolioData.skills.length) * Math.PI * 2;
+  const nodes = getPortfolioData().skills.map((skill, idx, arr) => {
+    const angle = (idx / arr.length) * Math.PI * 2;
     return {
       ...skill,
       x: 320 + Math.cos(angle) * 150,
@@ -73,18 +73,19 @@ export function initSkillGraph({ onSelectProject }) {
   }
 
   function renderInspector(skillId) {
-    const skill = portfolioData.skills.find((s) => s.id === skillId) || portfolioData.skills[0];
+    const data = getPortfolioData();
+    const skill = data.skills.find((s) => s.id === skillId) || data.skills[0];
     selectedId = skill.id;
 
     inspectorName.textContent = skill.name;
-    inspectorCat.textContent = `Kategori: ${skill.category}`;
+    inspectorCat.textContent = `${t('skillsCategoryPrefix')}: ${skill.category}`;
     inspectorScore.textContent = `${skill.level}%`;
     inspectorBar.style.width = `${skill.level}%`;
     inspectorUsage.textContent = skill.usage;
 
     inspectorProjects.innerHTML = skill.relatedProjects
       .map((pid) => {
-        const proj = portfolioData.projects.find((p) => p.id === pid);
+        const proj = data.projects.find((p) => p.id === pid);
         if (!proj) return '';
         return `<button type="button" class="inline-jump-btn" data-project-id="${proj.id}">${proj.shortTitle}</button>`;
       })
@@ -98,10 +99,11 @@ export function initSkillGraph({ onSelectProject }) {
   }
 
   function renderAccessibleList() {
+    const skills = getPortfolioData().skills;
     const visibleSkills =
       activeCategory === 'all'
-        ? portfolioData.skills
-        : portfolioData.skills.filter((s) => s.category === activeCategory);
+        ? skills
+        : skills.filter((s) => s.category === activeCategory);
 
     listWrap.innerHTML = visibleSkills
       .map(
@@ -336,6 +338,10 @@ export function initSkillGraph({ onSelectProject }) {
 
   renderAccessibleList();
   renderInspector(selectedId);
+  onLangChange(() => {
+    renderAccessibleList();
+    renderInspector(selectedId);
+  });
   requestAnimationFrame(drawCanvas);
 
   return {

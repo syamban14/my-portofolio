@@ -19,27 +19,31 @@
       <a href="#home" class="brand-wordmark" aria-label="Beranda M. Syamsul">M. Syamsul</a>
 
       <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
-        <a href="#home">Studio</a>
-        <a href="#ai-studio">Tanya AI</a>
-        <a href="#skills">Keahlian</a>
-        <a href="#projects">Proyek</a>
-        <a href="#experience">Jejak</a>
-        <a href="#contact">Kontak</a>
+        <a href="#home" data-i18n="navStudio">Studio</a>
+        <a href="#ai-studio" data-i18n="navAi">Tanya AI</a>
+        <a href="#skills" data-i18n="navSkills">Keahlian</a>
+        <a href="#projects" data-i18n="navProjects">Proyek</a>
+        <a href="#experience" data-i18n="navExperience">Jejak</a>
+        <a href="#contact" data-i18n="navContact">Kontak</a>
       </nav>
 
       <div class="header-controls">
-        <div class="segmented-control" id="timeModeSwitch" role="radiogroup" aria-label="Mode waktu studio">
-          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="pagi">Pagi</button>
-          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="senja">Senja</button>
-          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-time-mode="malam">Malam</button>
+        <div class="segmented-control" id="langSwitch" role="radiogroup" aria-label="Bahasa portofolio">
+          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-lang="id">ID</button>
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-lang="en">EN</button>
         </div>
-        <button type="button" class="icon-control-btn" id="soundToggleBtn" aria-pressed="false" title="Aktifkan suara interaktif">
+        <div class="segmented-control" id="timeModeSwitch" role="radiogroup" aria-label="Mode waktu studio">
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="pagi" data-i18n="timePagi">Pagi</button>
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="senja" data-i18n="timeSenja">Senja</button>
+          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-time-mode="malam" data-i18n="timeMalam">Malam</button>
+        </div>
+        <button type="button" class="icon-control-btn" id="soundToggleBtn" aria-pressed="false" data-i18n="soundOff">
           Suara: Mati
         </button>
-        <button type="button" class="icon-control-btn" id="commandTriggerBtn" title="Buka palet perintah (Cmd+K)">
+        <button type="button" class="icon-control-btn" id="commandTriggerBtn" data-i18n="quickMenu">
           Menu cepat
         </button>
-        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="mainNav">
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="mainNav" data-i18n="mobileMenu">
           Menu
         </button>
       </div>
@@ -50,12 +54,12 @@
     <!-- Hero: Centered Monumental Headline + Living Workspace Diorama Stage -->
     <section id="home" class="hero-section">
       <div class="container hero-header-block">
-        <h1 class="hero-title">M. Syamsul merancang agen AI dan aplikasi institusi</h1>
-        <p class="hero-subtitle">
+        <h1 class="hero-title" data-i18n="heroTitle">M. Syamsul merancang agen AI dan aplikasi institusi</h1>
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
           Programmer IT dan spesialis AI di Cilegon dengan delapan tahun pengalaman membangun solusi web, mobile, dan infrastruktur.
         </p>
         <div class="hero-action-row">
-          <a href="#ai-studio" class="btn-primary">Mulai eksplorasi interaktif</a>
+          <a href="#ai-studio" class="btn-primary" data-i18n="heroCta">Mulai eksplorasi interaktif</a>
         </div>
       </div>
 
@@ -86,7 +90,7 @@
         </div>
 
         <div class="char-speech is-visible" id="charSpeechBubble" role="status" aria-live="polite">
-          <p id="charSpeechText">
+          <p id="charSpeechText" data-i18n="welcomeSpeech">
             Selamat datang di ruang kerja saya. Klik titik bernomor di ruangan ini untuk menelusuri karya atau ubah suasana waktu di atas.
           </p>
         </div>
@@ -99,10 +103,10 @@
             </p>
           </div>
           <div class="hud-actions">
-            <button type="button" class="hud-lamp-btn" id="workspaceLampBtn" aria-pressed="true">
+            <button type="button" class="hud-lamp-btn" id="workspaceLampBtn" aria-pressed="true" data-i18n="lampOnBtn">
               Lampu meja: Nyala
             </button>
-            <button type="button" class="hud-lamp-btn" id="workspaceGreetBtn">
+            <button type="button" class="hud-lamp-btn" id="workspaceGreetBtn" data-i18n="greetBtn">
               Sapa Syamsul
             </button>
             <button type="button" class="btn-secondary" id="hudHotspotAction" data-target="#ai-studio">
@@ -117,8 +121,8 @@
     <section id="ai-studio" class="section-block section-tinted">
       <div class="container">
         <div class="section-head">
-          <h2>Tanya AI Syamsul</h2>
-          <p class="section-desc">
+          <h2 data-i18n="aiTitle">Tanya AI Syamsul</h2>
+          <p class="section-desc" data-i18n="aiDesc">
             Uji kemampuan asisten portofolio untuk menelusuri pengalaman, arsitektur proyek, sertifikasi Hacktiv8, atau jalankan perintah studio.
           </p>
         </div>
@@ -127,18 +131,19 @@
           <div class="ai-chat-pane">
             <div class="ai-presets" id="aiPresets" aria-label="Pertanyaan cepat"></div>
             <div class="ai-chat-feed" id="aiChatFeed" aria-live="polite"></div>
-            <p class="ai-status-line" id="aiStatusText">
-              Siap menjawab pertanyaan atau perintah (/pagi, /senja, /malam, /lampu)
+            <p class="ai-status-line" id="aiStatusText" data-i18n="aiStatusIdle">
+              Siap menjawab pertanyaan atau perintah (/pagi, /senja, /malam, /lampu, /en)
             </p>
             <form class="ai-input-row" id="aiChatForm">
               <label for="aiChatInput" class="sr-only">Tulis pertanyaan untuk AI Syamsul</label>
               <input
                 id="aiChatInput"
                 type="text"
+                data-i18n-placeholder="aiPlaceholder"
                 placeholder="Tanya pengalaman BCS Logistics, proyek doklinc, atau ketik /pagi..."
                 autocomplete="off"
               />
-              <button type="submit" class="btn-primary">Kirim</button>
+              <button type="submit" class="btn-primary" data-i18n="aiSendBtn">Kirim</button>
             </form>
           </div>
 
@@ -152,13 +157,13 @@
       <div class="container">
         <div class="section-head section-head-split">
           <div>
-            <h2>Konstelasi keahlian interaktif</h2>
-            <p class="section-desc">
+            <h2 data-i18n="skillsTitle">Konstelasi keahlian interaktif</h2>
+            <p class="section-desc" data-i18n="skillsDesc">
               Seret atau klik simpul teknologi pada kanvas untuk melihat penerapan nyata dan proyek terkait.
             </p>
           </div>
           <div class="segmented-control" id="skillCategoryTabs" role="tablist" aria-label="Filter kategori keahlian">
-            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-category="all">Semua</button>
+            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-category="all" data-i18n="skillsTabAll">Semua</button>
             <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="AI">AI</button>
             <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="Language">Language</button>
             <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="Database">Database</button>
@@ -184,7 +189,7 @@
             </div>
             <p class="skill-usage-text" id="skillInspectorUsage"></p>
             <div class="skill-related-block">
-              <p class="inspector-meta">Proyek terkait</p>
+              <p class="inspector-meta" data-i18n="skillsRelatedProjects">Proyek terkait</p>
               <div class="skill-related-links" id="skillInspectorProjects"></div>
             </div>
             <div class="skill-list-compact" id="skillAccessibleList" aria-label="Daftar keahlian yang dapat dipilih"></div>
@@ -193,12 +198,12 @@
       </div>
     </section>
 
-    <!-- Section 4: Interactive 5-Project Simulator & Architecture Lab -->
+    <!-- Section 4: Interactive 5-Project Simulator, UI Mockups, Architecture & Live GitHub -->
     <section id="projects" class="section-block section-tinted">
       <div class="container">
         <div class="section-head">
-          <h2>Simulasi proyek dan arsitektur</h2>
-          <p class="section-desc">
+          <h2 data-i18n="projectsTitle">Simulasi proyek dan arsitektur</h2>
+          <p class="section-desc" data-i18n="projectsDesc">
             Coba langsung alur kerja kelima aplikasi yang telah dibangun untuk industri logistik, layanan kesehatan masyarakat, dan perguruan tinggi.
           </p>
         </div>
@@ -213,9 +218,9 @@
                 <p class="inspector-meta" id="projectStageMeta">PT. BCS Logistics · 2024 - 2026 · Web · Android · iOS</p>
               </div>
               <div class="segmented-control" id="projectModeTabs" role="tablist" aria-label="Mode tampilan proyek">
-                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="simulasi">Simulasi Aplikasi</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="antarmuka">Pratinjau UI</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="arsitektur">Arsitektur Sistem</button>
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="simulasi" data-i18n="modeSim">Simulasi Aplikasi</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="antarmuka" data-i18n="modeUi">Pratinjau UI</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="arsitektur" data-i18n="modeArch">Arsitektur Sistem</button>
               </div>
             </div>
 
@@ -230,25 +235,26 @@
         <div class="github-workbench" id="github-repos">
           <div class="github-head-row">
             <div>
-              <h3>Repositori terbuka & eksperimen GitHub (@syamban14)</h3>
+              <h3 data-i18n="githubHeading">Repositori terbuka & eksperimen GitHub (@syamban14)</h3>
               <p class="inspector-meta" id="githubStatusMeta">Menyelaraskan repositori publik @syamban14...</p>
             </div>
-            <a href="https://github.com/syamban14" target="_blank" rel="noopener" class="inline-jump-btn">Lihat profil GitHub</a>
+            <a href="https://github.com/syamban14" target="_blank" rel="noopener" class="inline-jump-btn" data-i18n="githubViewProfile">Lihat profil GitHub</a>
           </div>
 
           <div class="github-toolbar">
             <div class="segmented-control" id="githubFilterTabs" role="tablist" aria-label="Filter repositori GitHub">
-              <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-gh-filter="featured">Unggulan</button>
-              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="ai">AI & Python</button>
-              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="web3d">3D & Interaktif</button>
-              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="fullstack">Full-Stack & ERP</button>
-              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="all">Semua</button>
+              <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-gh-filter="featured" data-i18n="githubFilterFeatured">Unggulan</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="ai" data-i18n="githubFilterAi">AI & Python</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="web3d" data-i18n="githubFilter3d">3D & Interaktif</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="fullstack" data-i18n="githubFilterFullstack">Full-Stack & ERP</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="all" data-i18n="githubFilterAll">Semua</button>
             </div>
             <label for="githubSearchInput" class="sr-only">Cari repositori GitHub</label>
             <input
               id="githubSearchInput"
               type="search"
               class="github-search-input"
+              data-i18n-placeholder="githubSearchPlaceholder"
               placeholder="Cari repo (hermes, mixa, 3d, qhse)..."
               autocomplete="off"
             />
@@ -263,22 +269,22 @@
     <section id="experience" class="section-block">
       <div class="container">
         <div class="section-head">
-          <h2>Jejak karir dan latar belakang</h2>
+          <h2 data-i18n="expTitle">Jejak karir dan latar belakang</h2>
           <p class="section-desc" id="aboutSummaryText"></p>
         </div>
 
         <div class="timeline-controls-bar">
           <div class="segmented-control" id="timelineFilterTabs" role="tablist" aria-label="Filter riwayat hidup">
-            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-timeline-filter="all">Semua</button>
-            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="karir">Karir</button>
-            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="pendidikan">Pendidikan & Sertifikasi</button>
-            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="prestasi">Prestasi</button>
+            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-timeline-filter="all" data-i18n="timelineAll">Semua</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="karir" data-i18n="timelineCareer">Karir</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="pendidikan" data-i18n="timelineEdu">Pendidikan & Sertifikasi</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="prestasi" data-i18n="timelineAwards">Prestasi</button>
           </div>
 
           <div class="year-scrubber-wrap">
             <label for="timelineYearRange" class="tabular-nums" id="timelineSelectedYear">Semua tahun (2011 - 2026)</label>
             <input id="timelineYearRange" type="range" min="2011" max="2026" value="2025" />
-            <button type="button" class="seg-btn is-active" id="timelineShowAllBtn">Tampilkan semua</button>
+            <button type="button" class="seg-btn is-active" id="timelineShowAllBtn" data-i18n="timelineShowAll">Tampilkan semua</button>
           </div>
         </div>
 
@@ -286,12 +292,12 @@
       </div>
     </section>
 
-    <!-- Section 6: Interactive Collaboration Composer & Contact -->
+    <!-- Section 6: Interactive Collaboration Composer, ATS CV & Contact -->
     <section id="contact" class="section-block section-tinted">
       <div class="container">
         <div class="section-head">
-          <h2>Mari berkolaborasi</h2>
-          <p class="section-desc">
+          <h2 data-i18n="contactTitle">Mari berkolaborasi</h2>
+          <p class="section-desc" data-i18n="contactDesc">
             Terbuka untuk peluang kerja remote, proyek freelance, riset agen AI, maupun pengembangan aplikasi kustom institusi.
           </p>
         </div>
@@ -299,72 +305,72 @@
         <div class="contact-workbench">
           <div class="composer-panel">
             <div class="composer-group">
-              <p class="composer-label">Fokus kebutuhan Anda</p>
+              <p class="composer-label" data-i18n="contactScopeLabel">Fokus kebutuhan Anda</p>
               <div class="segmented-control" id="contactScopeTabs" role="tablist" aria-label="Pilih fokus kolaborasi">
-                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-scope="Agen AI & Otomasi">Agen AI & Otomasi</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Aplikasi Web & Mobile">Aplikasi Web & Mobile</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Remote / Kontrak">Remote / Kontrak</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Diskusi Umum">Diskusi Umum</button>
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-scope-key="ai" data-i18n="scopeAi">Agen AI & Otomasi</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope-key="web" data-i18n="scopeWeb">Aplikasi Web & Mobile</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope-key="remote" data-i18n="scopeRemote">Remote / Kontrak</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope-key="general" data-i18n="scopeGeneral">Diskusi Umum</button>
               </div>
             </div>
 
             <div class="composer-fields-row">
               <div class="composer-field">
-                <label for="contactName">Nama lengkap</label>
-                <input id="contactName" type="text" placeholder="Nama Anda" autocomplete="name" />
+                <label for="contactName" data-i18n="contactNameLabel">Nama lengkap</label>
+                <input id="contactName" type="text" data-i18n-placeholder="contactNamePlaceholder" placeholder="Nama Anda" autocomplete="name" />
               </div>
               <div class="composer-field">
-                <label for="contactOrg">Instansi / UMKM</label>
-                <input id="contactOrg" type="text" placeholder="Nama perusahaan atau usaha" autocomplete="organization" />
+                <label for="contactOrg" data-i18n="contactOrgLabel">Instansi / UMKM</label>
+                <input id="contactOrg" type="text" data-i18n-placeholder="contactOrgPlaceholder" placeholder="Nama perusahaan atau usaha" autocomplete="organization" />
               </div>
             </div>
 
             <div class="composer-field">
-              <label for="contactBrief">Ceritakan kebutuhan singkat</label>
-              <textarea id="contactBrief" rows="3" placeholder="Jelaskan tantangan atau target aplikasi yang ingin dibangun..."></textarea>
+              <label for="contactBrief" data-i18n="contactBriefLabel">Ceritakan kebutuhan singkat</label>
+              <textarea id="contactBrief" rows="3" data-i18n-placeholder="contactBriefPlaceholder" placeholder="Jelaskan tantangan atau target aplikasi yang ingin dibangun..."></textarea>
             </div>
 
             <div class="composer-preview-box">
-              <p class="inspector-meta">Pratinjau pesan otomatis</p>
+              <p class="inspector-meta" data-i18n="contactPreviewLabel">Pratinjau pesan otomatis</p>
               <p id="contactPreviewText"></p>
             </div>
 
             <div class="composer-submit-row">
               <div class="segmented-control" id="contactChannelTabs" role="tablist" aria-label="Pilih saluran pengiriman">
-                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-channel="whatsapp">WhatsApp</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="email">Email</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="copy">Salin Pesan</button>
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-channel="whatsapp" data-i18n="channelWa">WhatsApp</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="email" data-i18n="channelEmail">Email</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="copy" data-i18n="channelCopy">Salin Pesan</button>
               </div>
               <button type="button" class="btn-primary" id="contactSendBtn">Buka WhatsApp dengan pesan ini</button>
             </div>
           </div>
 
           <aside class="contact-directory" id="contactInfoList">
-            <h3>Informasi kontak langsung</h3>
+            <h3 data-i18n="contactDirectTitle">Informasi kontak langsung</h3>
             <div class="contact-dir-rows">
               <div class="contact-dir-row">
                 <div>
-                  <p class="inspector-meta">Telepon & WhatsApp</p>
+                  <p class="inspector-meta" data-i18n="contactPhoneLabel">Telepon & WhatsApp</p>
                   <p class="contact-dir-val tabular-nums">+62 821-1157-9944</p>
                 </div>
-                <button type="button" class="inline-jump-btn" data-copy-value="+62 821-1157-9944">Salin</button>
+                <button type="button" class="inline-jump-btn" data-copy-value="+62 821-1157-9944" data-i18n="copyBtn">Salin</button>
               </div>
               <div class="contact-dir-row">
                 <div>
                   <p class="inspector-meta">Email</p>
                   <p class="contact-dir-val">Syamsuliki.48@gmail.com</p>
                 </div>
-                <button type="button" class="inline-jump-btn" data-copy-value="Syamsuliki.48@gmail.com">Salin</button>
+                <button type="button" class="inline-jump-btn" data-copy-value="Syamsuliki.48@gmail.com" data-i18n="copyBtn">Salin</button>
               </div>
               <div class="contact-dir-row">
                 <div>
-                  <p class="inspector-meta">Lokasi</p>
+                  <p class="inspector-meta" data-i18n="contactLocationLabel">Lokasi</p>
                   <p class="contact-dir-val">Cilegon, Banten, Indonesia</p>
                 </div>
               </div>
               <div class="contact-dir-row">
                 <div>
-                  <p class="inspector-meta">Tautan profesional</p>
+                  <p class="inspector-meta" data-i18n="contactLinksLabel">Tautan profesional</p>
                   <p class="contact-dir-links">
                     <a href="https://github.com/syamban14" target="_blank" rel="noopener">GitHub</a>
                     <span aria-hidden="true">·</span>
@@ -376,7 +382,16 @@
               </div>
             </div>
             <div class="contact-cv-row">
-              <button type="button" class="btn-secondary" id="printCvBtn">Cetak ringkasan CV</button>
+              <a
+                id="downloadCvLink"
+                href="./cv/M-Syamsul-CV-ATS-ID.pdf"
+                download="M-Syamsul-CV-ATS-ID.pdf"
+                class="btn-secondary"
+                data-i18n="downloadCvBtn"
+              >
+                Unduh CV ATS (PDF)
+              </a>
+              <button type="button" class="inline-jump-btn" id="printCvBtn" data-i18n="printCvBtn">Cetak halaman CV</button>
             </div>
           </aside>
         </div>
@@ -386,8 +401,8 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>M. Syamsul · IT Programmer & AI Specialist · Cilegon, Banten</p>
-      <p class="footer-note">Dipersembahkan dengan data portofolio terverifikasi dan interaksi lokal tanpa pelacak.</p>
+      <p data-i18n="footerLeft">M. Syamsul · IT Programmer & AI Specialist · Cilegon, Banten</p>
+      <p class="footer-note" data-i18n="footerRight">Dipersembahkan dengan data portofolio terverifikasi dan interaksi lokal tanpa pelacak.</p>
     </div>
   </footer>
 
@@ -395,36 +410,24 @@
   <div class="command-modal" id="commandModal" role="dialog" aria-modal="true" aria-labelledby="commandTitle" hidden>
     <div class="command-dialog">
       <div class="command-header">
-        <h3 id="commandTitle">Menu perintah cepat</h3>
-        <button type="button" class="inline-jump-btn" id="commandCloseBtn">Tutup</button>
+        <h3 id="commandTitle" data-i18n="cmdTitle">Menu perintah cepat</h3>
+        <button type="button" class="inline-jump-btn" id="commandCloseBtn" data-i18n="cmdClose">Tutup</button>
       </div>
       <label for="commandSearchInput" class="sr-only">Cari navigasi atau aksi studio</label>
       <input
         id="commandSearchInput"
         type="text"
         class="command-input"
-        placeholder="Ketik tujuan bagian, pagi, malam, lampu, atau cetak..."
+        data-i18n-placeholder="cmdPlaceholder"
+        placeholder="Ketik tujuan bagian, pagi, malam, lampu, english, atau cetak..."
         autocomplete="off"
       />
       <div class="command-list" id="commandActionList"></div>
     </div>
   </div>
 
-  <!-- Print-ready 1-Page CV Summary (hidden on screen, shown on @media print) -->
-  <section class="print-cv-sheet" aria-hidden="true">
-    <h1>M. SYAMSUL - IT Programmer & AI Specialist</h1>
-    <p>Cilegon, Banten, Indonesia · +62 821-1157-9944 · Syamsuliki.48@gmail.com · github.com/syamban14 · linkedin.com/in/m-syamsul</p>
-    <p>Seorang IT Programmer dan IT Specialist berpengalaman dengan latar belakang Sistem Informasi dan Manajemen Informatika, berfokus pada riset AI Agent, aplikasi web & mobile, dan manajemen infrastruktur IT.</p>
-    <h2>Pengalaman Kerja</h2>
-    <p><strong>PT. BCS Logistics</strong> - IT Programmer (Agustus 2024 - Agustus 2026): Aplikasi Presensi Online Android & iOS, aplikasi kesehatan doklinc, pemeliharaan web & database.</p>
-    <p><strong>LP3I Business College</strong> - IT Support (Januari 2017 - Agustus 2024): Program kerja tahunan IT, infrastruktur jaringan, hardware/software, aplikasi internal kampus.</p>
-    <h2>Keahlian & Sertifikasi</h2>
-    <p>AI Agent Dev (92%), Prompt Engineering (90%), AI API Integration (88%), Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Web & Mobile Dev (90%), IT Support (92%), Networking (80%).</p>
-    <p>Sertifikasi: AI Productivity and AI API Integration for Developers - Hacktiv8 (Agustus 2025).</p>
-    <h2>Pendidikan & Prestasi</h2>
-    <p>S1 Sistem Informasi, STMIK Bina Sarana Global (IPK 3.32, 2014 - 2016) · D3 Manajemen Informatika, Politeknik LP3I Bandung (IPK 2.92, 2011 - 2014).</p>
-    <p>Juara 1 Lomba PTK PNFI Kota Cilegon (2017) · Juara 3 Lomba PTK PNFI Provinsi Banten (2018) · Mahasiswa Berprestasi Futsal LP3I College (2011).</p>
-  </section>
+  <!-- Print-ready 1-Page ATS CV Summary (rendered in active ID/EN language) -->
+  <section class="print-cv-sheet" id="printCvSheet" aria-hidden="true"></section>
 
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 

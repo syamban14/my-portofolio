@@ -44,3 +44,7 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Pengguna meminta **Poin 2 (Live LLM API)** dilewati sementara hingga provider LLM siap, dan langsung mengerjakan **Poin 3**.
 - Mengganti layer karakter statis dengan rig kanvas 2x DPR (`#workspaceCharCanvas`) pada koordinat terkalibrasi (`character_anime_clean.png` 576x1024): kedipan mata natural berkala, ekspresi tersenyum saat disapa (`#workspaceGreetBtn`), lip-sync mulut saat berdialog/AI streaming, serta *rim-light* `source-atop` yang beradaptasi terhadap lampu meja dan waktu (`Pagi | Senja | Malam`).
 - Menyempurnakan diorama ruangan (`#workspaceCanvas`): langit jendela dua panel (bintang, bulan sabit, bintang jatuh, awan senja/pagi, sorot matahari), bayangan lantai dinamis di bawah sepatu karakter, serta layar laptop interaktif dengan bar kode dan equalizer AI.
+
+## 7. Eksekusi Poin 4 `v2.0` — Dwibahasa `ID | EN` & Unduhan CV ATS PDF (2026-11-25)
+- Membangun modul `src/data/i18n.js` yang menerjemahkan secara reaktif seluruh UI, biodata, 5 simulasi proyek + mockup UI, repositori GitHub, scrubber timeline, composer brief, menu perintah `Cmd+K`, dan AI Playground via tombol **`ID | EN`** di header (maupun perintah `/en` & `/id`).
+- Membuat skrip generator zero-dependency `scripts/generate-ats-cv.mjs` menghasilkan dua file PDF 1.4 standar ATS 1-halaman (`M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`) yang tersinkron dengan tautan unduhan dan tampilan cetak `@media print`.

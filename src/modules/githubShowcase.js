@@ -1,40 +1,27 @@
-import { portfolioData } from '../data/portfolioData.js';
+import { getLang, getPortfolioData, onLangChange, t } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
 const CACHE_KEY = 'gh_syamban14_showcase_v1';
 const CACHE_TTL_MS = 15 * 60 * 1000;
 
-const MONTH_NAMES_ID = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'Mei',
-  'Jun',
-  'Jul',
-  'Agu',
-  'Sep',
-  'Okt',
-  'Nov',
-  'Des',
-];
+const MONTH_NAMES = {
+  id: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+};
 
-function formatRepoDate(isoString) {
+function formatRepoDate(isoString, lang = getLang()) {
   if (!isoString) return '2026';
   const dt = new Date(isoString);
   if (Number.isNaN(dt.getTime())) return '2026';
-  return `${MONTH_NAMES_ID[dt.getMonth()]} ${dt.getFullYear()}`;
+  const months = MONTH_NAMES[lang] || MONTH_NAMES.id;
+  return `${months[dt.getMonth()]} ${dt.getFullYear()}`;
 }
 
 function inferCategory(repoName, language, curated) {
   if (curated?.category) return curated.category;
   const lowerName = repoName.toLowerCase();
   const lowerLang = (language || '').toLowerCase();
-  if (
-    lowerName.includes('3d') ||
-    lowerName.includes('tebak') ||
-    lowerName.includes('game')
-  ) {
+  if (lowerName.includes('3d') || lowerName.includes('tebak') || lowerName.includes('game')) {
     return 'web3d';
   }
   if (
@@ -48,15 +35,14 @@ function inferCategory(repoName, language, curated) {
   return 'fullstack';
 }
 
-function mergeWithCurated(liveRepos) {
-  const curatedMap = new Map(
-    portfolioData.githubCuratedRepos.map((item) => [item.name.toLowerCase(), item])
-  );
+function mergeWithCurated(rawRepos, lang = getLang()) {
+  const curatedList = getPortfolioData(lang).githubCuratedRepos;
+  const curatedMap = new Map(curatedList.map((item) => [item.name.toLowerCase(), item]));
 
   const merged = [];
   const seen = new Set();
 
-  liveRepos.forEach((raw) => {
+  rawRepos.forEach((raw) => {
     if (raw.fork || raw.private) return;
     const key = raw.name.toLowerCase();
     if (key === 'my-portofolio') return;
@@ -70,16 +56,17 @@ function mergeWithCurated(liveRepos) {
       description:
         curated?.description ||
         raw.description ||
-        `Repositori proyek ${raw.name} oleh M. Syamsul di GitHub.`,
+        (lang === 'en'
+          ? `Project repository ${raw.name} by M. Syamsul on GitHub.`
+          : `Repositori proyek ${raw.name} oleh M. Syamsul di GitHub.`),
       htmlUrl: raw.html_url || `https://github.com/syamban14/${raw.name}`,
       demoUrl: raw.homepage || curated?.demoUrl || '',
       updatedAt: raw.updated_at || curated?.updatedAt || '',
-      updatedLabel: formatRepoDate(raw.updated_at || curated?.updatedAt),
+      updatedLabel: formatRepoDate(raw.updated_at || curated?.updatedAt, lang),
     });
   });
 
-  // Ensure curated featured items remain available if truncated by pagination
-  portfolioData.githubCuratedRepos.forEach((curated) => {
+  curatedList.forEach((curated) => {
     const key = curated.name.toLowerCase();
     if (seen.has(key)) return;
     merged.push({
@@ -91,7 +78,7 @@ function mergeWithCurated(liveRepos) {
       htmlUrl: `https://github.com/syamban14/${curated.name}`,
       demoUrl: curated.demoUrl || '',
       updatedAt: curated.updatedAt || '',
-      updatedLabel: formatRepoDate(curated.updatedAt),
+      updatedLabel: formatRepoDate(curated.updatedAt, lang),
     });
   });
 
@@ -101,16 +88,16 @@ function mergeWithCurated(liveRepos) {
   });
 }
 
-async function fetchLiveRepos() {
+async function fetchRawRepos() {
   try {
     const cachedRaw = sessionStorage.getItem(CACHE_KEY);
     if (cachedRaw) {
       const parsed = JSON.parse(cachedRaw);
-      if (Date.now() - parsed.savedAt < CACHE_TTL_MS && Array.isArray(parsed.repos)) {
+      if (Date.now() - parsed.savedAt < CACHE_TTL_MS && Array.isArray(parsed.rawRepos)) {
         return {
-          repos: parsed.repos,
+          mode: 'cache',
           publicRepoCount: parsed.publicRepoCount,
-          sourceLabel: 'Data cache sinkron GitHub (@syamban14)',
+          rawRepos: parsed.rawRepos,
         };
       }
     }
@@ -125,42 +112,27 @@ async function fetchLiveRepos() {
     ]);
     if (!reposRes.ok) throw new Error(`GitHub status ${reposRes.status}`);
 
-    const reposJson = await reposRes.json();
+    const rawRepos = await reposRes.json();
     const profileJson = profileRes.ok ? await profileRes.json() : null;
-    const publicRepoCount = profileJson?.public_repos || reposJson.length;
-    const merged = mergeWithCurated(reposJson);
+    const publicRepoCount = profileJson?.public_repos || rawRepos.length;
 
     try {
       sessionStorage.setItem(
         CACHE_KEY,
-        JSON.stringify({
-          savedAt: Date.now(),
-          publicRepoCount,
-          repos: merged,
-        })
+        JSON.stringify({ savedAt: Date.now(), publicRepoCount, rawRepos })
       );
     } catch {
-      // Ignore storage quota issues
+      // Ignore quota restriction
     }
 
-    return {
-      repos: merged,
-      publicRepoCount,
-      sourceLabel: `Tersinkron langsung dari GitHub API (${publicRepoCount} repositori publik @syamban14)`,
-    };
+    return { mode: 'live', publicRepoCount, rawRepos };
   } catch {
-    const fallback = mergeWithCurated([]);
-    return {
-      repos: fallback,
-      publicRepoCount: 51,
-      sourceLabel: 'Menampilkan kurasi repositori utama @syamban14 (mode offline)',
-    };
+    return { mode: 'offline', publicRepoCount: 51, rawRepos: [] };
   }
 }
 
 /**
- * Interactive Live GitHub Repository Showcase for @syamban14.
- * Supports category tabs, live text search, and direct links to source & live 3D demos.
+ * Interactive Live GitHub Repository Showcase for @syamban14 with full ID/EN support.
  */
 export function initGithubShowcase() {
   const filterWrap = document.getElementById('githubFilterTabs');
@@ -170,19 +142,41 @@ export function initGithubShowcase() {
 
   if (!filterWrap || !gridEl || !statusEl) return null;
 
-  let allRepos = mergeWithCurated([]);
+  let rawState = { mode: 'loading', publicRepoCount: 51, rawRepos: [] };
   let activeFilter = 'featured';
   let query = '';
 
+  function formatStatusLabel() {
+    const lang = getLang();
+    if (rawState.mode === 'loading') {
+      return lang === 'en'
+        ? 'Syncing public repositories for @syamban14...'
+        : 'Menyelaraskan repositori publik @syamban14...';
+    }
+    if (rawState.mode === 'cache') {
+      return lang === 'en'
+        ? `Cached GitHub sync (@syamban14 · ${rawState.publicRepoCount} public repos)`
+        : `Data cache sinkron GitHub (${rawState.publicRepoCount} repositori publik @syamban14)`;
+    }
+    if (rawState.mode === 'live') {
+      return lang === 'en'
+        ? `Synced live from GitHub API (${rawState.publicRepoCount} public repos @syamban14)`
+        : `Tersinkron langsung dari GitHub API (${rawState.publicRepoCount} repositori publik @syamban14)`;
+    }
+    return lang === 'en'
+      ? 'Showing curated @syamban14 repositories (offline mode)'
+      : 'Menampilkan kurasi repositori utama @syamban14 (mode offline)';
+  }
+
   function renderRepos() {
+    const lang = getLang();
+    statusEl.textContent = formatStatusLabel();
+    const allRepos = mergeWithCurated(rawState.rawRepos, lang);
+
     const q = query.trim().toLowerCase();
     const filtered = allRepos.filter((repo) => {
       if (activeFilter === 'featured' && !repo.featured) return false;
-      if (
-        activeFilter !== 'all' &&
-        activeFilter !== 'featured' &&
-        repo.category !== activeFilter
-      ) {
+      if (activeFilter !== 'all' && activeFilter !== 'featured' && repo.category !== activeFilter) {
         return false;
       }
       if (q) {
@@ -193,8 +187,7 @@ export function initGithubShowcase() {
     });
 
     if (!filtered.length) {
-      gridEl.innerHTML =
-        '<p class="github-empty">Tidak ada repositori yang cocok dengan filter atau pencarian tersebut.</p>';
+      gridEl.innerHTML = `<p class="github-empty">${t('githubEmpty')}</p>`;
       return;
     }
 
@@ -208,10 +201,10 @@ export function initGithubShowcase() {
         </div>
         <p class="github-repo-desc">${repo.description}</p>
         <div class="github-repo-links">
-          <a href="${repo.htmlUrl}" target="_blank" rel="noopener" class="inline-jump-btn">Kode sumber</a>
+          <a href="${repo.htmlUrl}" target="_blank" rel="noopener" class="inline-jump-btn">${t('githubCodeBtn')}</a>
           ${
             repo.demoUrl
-              ? `<a href="${repo.demoUrl}" target="_blank" rel="noopener" class="inline-jump-btn inline-jump-accent">Demo langsung</a>`
+              ? `<a href="${repo.demoUrl}" target="_blank" rel="noopener" class="inline-jump-btn inline-jump-accent">${t('githubDemoBtn')}</a>`
               : ''
           }
         </div>
@@ -239,13 +232,11 @@ export function initGithubShowcase() {
     renderRepos();
   });
 
-  // Render curated items immediately so UI is ready before network settles
-  statusEl.textContent = 'Menyelaraskan repositori publik @syamban14...';
+  onLangChange(renderRepos);
   renderRepos();
 
-  fetchLiveRepos().then((result) => {
-    allRepos = result.repos;
-    statusEl.textContent = result.sourceLabel;
+  fetchRawRepos().then((result) => {
+    rawState = result;
     renderRepos();
   });
 

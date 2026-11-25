@@ -47,10 +47,10 @@ tags:
 - [x] Tambahkan *rim-light* dinamis (`source-atop`) pada karakter yang bereaksi terhadap sakelar lampu meja dan mode `Pagi | Senja | Malam`
 - [x] Tingkatkan diorama ruangan: langit jendela dua panel terpisah (bintang, bulan sabit, bintang jatuh, awan senja/pagi, sorot matahari pagi), bayangan kaki karakter di lantai, serta layar laptop meja interaktif (bar kode & equalizer AI)
 
-### Poin 4 — Dukungan Dwibahasa (`ID | EN`) & Export CV ATS-Friendly
-- [ ] Buat sistem lokalisasi `src/data/i18n.js` + sakelar `ID | EN` di header
-- [ ] Terjemahkan seluruh elemen UI, data biodata, proyek, & AI response ke Bahasa Inggris profesional
-- [ ] Perbarui template CV ATS-Friendly (`print-cv-sheet`) + tombol ekspor PDF/cetak sesuai bahasa aktif
+### Poin 4 — Dukungan Dwibahasa (`ID | EN`) & Export CV ATS-Friendly (Selesai)
+- [x] Buat sistem lokalisasi `src/data/i18n.js` + sakelar `ID | EN` di header (persist `localStorage`)
+- [x] Terjemahkan seluruh elemen UI, data biodata, 5 simulasi proyek, konstelasi keahlian, repositori GitHub, composer kontak, & respons AI ke Bahasa Inggris profesional
+- [x] Buat skrip `scripts/generate-ats-cv.mjs` untuk menghasilkan PDF ATS 1-halaman bersih (`public/cv/M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`), tombol unduh otomatis sesuai bahasa aktif, serta lembar cetak `@media print` dwibahasa
 
 ### Poin 5 — Open Graph Preview Card, SEO Schema.org, & Optimasi URL
 - [ ] Buat aset kartu sosial `public/og-preview.png` (`1200x630`)

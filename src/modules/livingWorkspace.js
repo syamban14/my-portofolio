@@ -1,11 +1,18 @@
-import { portfolioData } from '../data/portfolioData.js';
+import { getLang, getPortfolioData, onLangChange, t } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
-const CHAR_QUOTES = [
-  'Halo! Klik titik bernomor di ruangan ini untuk menelusuri proyek, keahlian AI, atau nyalakan lampu meja.',
-  'Di PT. BCS Logistics saya merancang aplikasi Presensi Online Android & iOS serta layanan kesehatan doklinc.',
-  'Tertarik kolaborasi AI Agent atau sistem kampus? Coba tanya asisten AI saya di bagian bawah.',
-];
+const CHAR_QUOTES = {
+  id: [
+    'Halo! Klik titik bernomor di ruangan ini untuk menelusuri proyek, keahlian AI, atau nyalakan lampu meja.',
+    'Di PT. BCS Logistics saya merancang aplikasi Presensi Online Android & iOS serta layanan kesehatan doklinc.',
+    'Tertarik kolaborasi AI Agent atau sistem kampus? Coba tanya asisten AI saya di bagian bawah.',
+  ],
+  en: [
+    'Hi! Click the numbered hotspots around this room to explore projects, AI skills, or toggle the desk lamp.',
+    'At PT. BCS Logistics I engineered the Android & iOS Online Attendance App and the doklinc healthcare app.',
+    'Interested in AI Agent workflows or custom institutional apps? Try asking my AI assistant below.',
+  ],
+};
 
 // Measured normalized pixel coordinates on character_anime_clean.png (576 x 1024)
 const CHAR_RIG = {
@@ -18,10 +25,7 @@ const CHAR_RIG = {
 };
 
 /**
- * Interactive 2.5D Living Workspace Diorama Stage.
- * Renders dynamic room atmosphere, dual-pane window sky, live desk laptop telemetry,
- * ground contact shadow, and a pixel-locked living character canvas rig with blinking,
- * smile expressions, lip-sync mouth motion, and dynamic rim lighting.
+ * Interactive 2.5D Living Workspace Diorama Stage with full ID/EN support.
  */
 export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToast }) {
   const stage = document.getElementById('workspaceStage');
@@ -57,7 +61,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   let charHeight = 338;
   let quoteIdx = 0;
 
-  // Character animation states
   let charImgReady = Boolean(charSourceImg?.complete && charSourceImg.naturalWidth > 0);
   let nextBlinkAt = performance.now() + 2600;
   let blinkStart = -1;
@@ -81,7 +84,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   }));
 
   const stars = Array.from({ length: 28 }, (_, idx) => {
-    // Split evenly across left & right glass panes
     const isLeft = idx % 2 === 0;
     return {
       x: isLeft ? 0.368 + Math.random() * 0.12 : 0.512 + Math.random() * 0.118,
@@ -121,7 +123,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   }
 
   function renderHotspots() {
-    hotspotsWrap.innerHTML = portfolioData.workspaceHotspots
+    const hotspots = getPortfolioData().workspaceHotspots;
+    hotspotsWrap.innerHTML = hotspots
       .map(
         (hs, index) => `
       <button
@@ -152,10 +155,15 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     }, 6500);
   }
 
+  function syncLampButtonText() {
+    if (!lampSwitchBtn) return;
+    lampSwitchBtn.setAttribute('aria-pressed', String(lampOn));
+    lampSwitchBtn.textContent = lampOn ? t('lampOnBtn') : t('lampOffBtn');
+  }
+
   function updateHud(hotspotId) {
-    const hotspot =
-      portfolioData.workspaceHotspots.find((item) => item.id === hotspotId) ||
-      portfolioData.workspaceHotspots[0];
+    const hotspots = getPortfolioData().workspaceHotspots;
+    const hotspot = hotspots.find((item) => item.id === hotspotId) || hotspots[0];
     if (!hotspot) return;
 
     activeHotspotId = hotspot.id;
@@ -174,22 +182,16 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   function toggleLamp(forceState) {
     lampOn = typeof forceState === 'boolean' ? forceState : !lampOn;
     stage.dataset.lamp = lampOn ? 'on' : 'off';
-    if (lampSwitchBtn) {
-      lampSwitchBtn.setAttribute('aria-pressed', String(lampOn));
-      lampSwitchBtn.textContent = lampOn ? 'Lampu meja: Nyala' : 'Lampu meja: Mati';
-    }
+    syncLampButtonText();
     soundEngine.playLampToggle(lampOn);
-    showSpeech(
-      lampOn
-        ? 'Lampu meja dinyalakan. Fokus coding dan riset AI siap dijalankan.'
-        : 'Lampu meja dimatikan. Mode layar redup untuk eksplorasi santai.'
-    );
+    showSpeech(lampOn ? t('lampOnSpeech') : t('lampOffSpeech'));
     return lampOn;
   }
 
   function triggerGreeting() {
     soundEngine.playChime();
-    showSpeech(CHAR_QUOTES[quoteIdx % CHAR_QUOTES.length]);
+    const quotes = CHAR_QUOTES[getLang()] || CHAR_QUOTES.id;
+    showSpeech(quotes[quoteIdx % quotes.length]);
     quoteIdx += 1;
     smileUntil = performance.now() + 1800;
     if (charCanvas) {
@@ -199,7 +201,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   }
 
   function selectHotspot(hotspotId, { announce = true } = {}) {
-    const hotspot = portfolioData.workspaceHotspots.find((item) => item.id === hotspotId);
+    const hotspots = getPortfolioData().workspaceHotspots;
+    const hotspot = hotspots.find((item) => item.id === hotspotId);
     if (!hotspot) return;
 
     updateHud(hotspot.id);
@@ -309,7 +312,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     const isSmiling = smileUntil > timeMs;
     const blinkAmt = isSmiling ? 0 : getBlinkAmount(timeMs);
 
-    // 1. Eye Expressions (Smiling arcs on greet OR natural blink eyelids)
     if (isSmiling) {
       [CHAR_RIG.leftEye, CHAR_RIG.rightEye].forEach((eye) => {
         const cx = eye.cx * cw;
@@ -350,7 +352,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       });
     }
 
-    // 2. Lip-Sync Mouth Animation when speaking or AI is streaming
     const isTalking = !prefersReducedMotion && (aiBusy || talkingUntil > timeMs);
     if (isTalking) {
       const mx = CHAR_RIG.mouth.cx * cw;
@@ -375,7 +376,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctxChar.stroke();
     }
 
-    // 3. Silhouette-Masked Dynamic Rim Lighting (source-atop keeps alpha silhouette crisp)
     ctxChar.globalCompositeOperation = 'source-atop';
 
     if (mode === 'malam') {
@@ -416,9 +416,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   }
 
   function drawWindowPanes(t, w, h, mode) {
-    // Dual glass panes leaving central window mullion crisp
     const panes = [
-      { x: w * 0.364, y: h * 0.214, w: w * 0.130, h: h * 0.324 },
+      { x: w * 0.364, y: h * 0.214, w: w * 0.13, h: h * 0.324 },
       { x: w * 0.506, y: h * 0.214, w: w * 0.128, h: h * 0.324 },
     ];
 
@@ -437,7 +436,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillStyle = skyGrad;
       ctx.fillRect(w * 0.36, winY, w * 0.28, winH);
 
-      // Crescent moon in upper-right pane
       const moonX = w * 0.592;
       const moonY = h * 0.268;
       const moonR = Math.max(7, w * 0.012);
@@ -450,7 +448,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.arc(moonX + moonR * 0.42, moonY - moonR * 0.2, moonR * 0.86, 0, Math.PI * 2);
       ctx.fill();
 
-      // Twinkling stars
       stars.forEach((star) => {
         const alpha = 0.38 + 0.56 * (0.5 + 0.5 * Math.sin(t * 1.6 + star.phase));
         ctx.fillStyle = `rgba(220, 245, 255, ${alpha.toFixed(2)})`;
@@ -459,7 +456,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
         ctx.fill();
       });
 
-      // Occasional shooting star across left-to-right window sky
       if (!prefersReducedMotion) {
         const cycle = t % 9;
         if (cycle < 1.1) {
@@ -514,7 +510,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   }
 
   function drawLaptopScreen(t, w, h, mode) {
-    // Clipped to desk laptop screen quad on room_anime_bg.png
     const sx = w * 0.674;
     const sy = h * 0.522;
     const sw = w * 0.042;
@@ -550,7 +545,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       for (let i = 0; i < lineCount; i += 1) {
         const pulse = prefersReducedMotion ? 0.7 : 0.45 + 0.45 * Math.sin(t * 2.5 + i);
         const lw = sw * (0.38 + ((i * 19) % 40) / 100);
-        ctx.fillStyle = i % 2 === 0 ? `rgba(24, 210, 182, ${pulse})` : `rgba(147, 176, 190, ${pulse})`;
+        ctx.fillStyle =
+          i % 2 === 0 ? `rgba(24, 210, 182, ${pulse})` : `rgba(147, 176, 190, ${pulse})`;
         ctx.fillRect(sx + sw * 0.14, sy + sh * (0.2 + i * 0.14), lw, 1.8);
       }
     }
@@ -565,11 +561,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     const mode = getTimeMode();
 
     ctx.clearRect(0, 0, w, h);
-
-    // 1. Dynamic sky inside split window panes
     drawWindowPanes(t, w, h, mode);
 
-    // 2. Overall ambient tint for evening/night immersion
     if (mode === 'malam') {
       ctx.fillStyle = 'rgba(6, 16, 26, 0.46)';
       ctx.fillRect(0, 0, w, h);
@@ -577,7 +570,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillStyle = 'rgba(34, 18, 28, 0.20)';
       ctx.fillRect(0, 0, w, h);
     } else {
-      // Soft diagonal sunbeam across room floor in Pagi mode
       const beam = ctx.createLinearGradient(w * 0.38, h * 0.25, w * 0.68, h * 0.96);
       beam.addColorStop(0, 'rgba(255, 245, 200, 0.14)');
       beam.addColorStop(1, 'rgba(255, 245, 200, 0)');
@@ -591,7 +583,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fill();
     }
 
-    // 3. Live laptop display & cyan desk telemetry glow
     drawLaptopScreen(t, w, h, mode);
 
     const screenGlow = ctx.createRadialGradient(
@@ -602,13 +593,13 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       h * 0.54,
       w * 0.22
     );
-    const screenAlpha = (mode === 'malam' ? 0.34 : mode === 'senja' ? 0.22 : 0.1) + (aiBusy ? 0.12 : 0);
+    const screenAlpha =
+      (mode === 'malam' ? 0.34 : mode === 'senja' ? 0.22 : 0.1) + (aiBusy ? 0.12 : 0);
     screenGlow.addColorStop(0, `rgba(24, 210, 182, ${screenAlpha.toFixed(2)})`);
     screenGlow.addColorStop(1, 'rgba(24, 210, 182, 0)');
     ctx.fillStyle = screenGlow;
     ctx.fillRect(0, 0, w, h);
 
-    // 4. Warm bedside lamp light cone when lamp is ON
     if (lampOn) {
       const lampStrength = mode === 'malam' ? 0.48 : mode === 'senja' ? 0.34 : 0.15;
       const cone = ctx.createRadialGradient(
@@ -626,18 +617,19 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillRect(0, 0, w, h);
     }
 
-    // 5. Dynamic ground contact shadow under Syamsul's sneakers
     const shadowX = w * 0.495 + currentPointer.x * 16 + (lampOn ? 6 : 0);
     const shadowY = h * 0.968;
     const shadowGrad = ctx.createRadialGradient(shadowX, shadowY, 4, shadowX, shadowY, w * 0.085);
-    shadowGrad.addColorStop(0, mode === 'pagi' ? 'rgba(11, 25, 34, 0.26)' : 'rgba(2, 8, 14, 0.46)');
+    shadowGrad.addColorStop(
+      0,
+      mode === 'pagi' ? 'rgba(11, 25, 34, 0.26)' : 'rgba(2, 8, 14, 0.46)'
+    );
     shadowGrad.addColorStop(1, 'rgba(2, 8, 14, 0)');
     ctx.fillStyle = shadowGrad;
     ctx.beginPath();
     ctx.ellipse(shadowX, shadowY, w * 0.085, h * 0.025, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // 6. Interactive pointer spotlight
     if (pointerCanvas.x > 0 && pointerCanvas.y > 0) {
       const spot = ctx.createRadialGradient(
         pointerCanvas.x,
@@ -656,7 +648,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillRect(0, 0, w, h);
     }
 
-    // 7. Floating dust motes / ambient particles
     particles.forEach((p) => {
       if (!prefersReducedMotion) {
         p.x += p.vx;
@@ -695,8 +686,18 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     requestAnimationFrame(animate);
   }
 
+  onLangChange(() => {
+    renderHotspots();
+    updateHud(activeHotspotId);
+    syncLampButtonText();
+    if (speechBubble?.classList.contains('is-visible')) {
+      showSpeech(t('welcomeSpeech'));
+    }
+  });
+
   renderHotspots();
   updateHud(activeHotspotId);
+  syncLampButtonText();
   resizeCanvases();
 
   if (typeof ResizeObserver !== 'undefined') {
@@ -716,13 +717,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       aiBusy = Boolean(busy);
     },
     refreshMode() {
-      const modeLabel =
-        getTimeMode() === 'pagi'
-          ? 'Pagi cerah di Cilegon'
-          : getTimeMode() === 'senja'
-            ? 'Senja pelabuhan'
-            : 'Malam fokus developer';
-      onActionToast?.(`Suasana studio diubah ke ${modeLabel}`);
+      const mode = getTimeMode();
+      const toastKey =
+        mode === 'pagi' ? 'modePagiToast' : mode === 'senja' ? 'modeSenjaToast' : 'modeMalamToast';
+      onActionToast?.(t(toastKey));
     },
   };
 }
