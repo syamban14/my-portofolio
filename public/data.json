@@ -1,0 +1,92 @@
+{
+  "name": "M. SYAMSUL",
+  "title": "IT Programmer & AI Specialist",
+  "tagline": "Membangun solusi digital yang memberdayakan UMKM dan institusi.",
+  "contact": {
+    "phone": "+62 821-1157-9944",
+    "email": "Syamsuliki.48@gmail.com",
+    "linkedin": "https://linkedin.com/in/m-syamsul",
+    "blog": "https://Syamsul14.blogspot.com",
+    "location": "Cilegon, Banten, Indonesia"
+  },
+  "summary": "Seorang IT Programmer dan IT Specialist berpengalaman dengan latar belakang pendidikan kuat di Sistem Informasi dan Manajemen Informatika. Memiliki ketertarikan besar dan keahlian mendalam dalam mempelajari, meriset, serta aktif mengembangkan teknologi AI Agent. Rekam jejak solid dalam pemeliharaan & pengembangan aplikasi web, manajemen infrastruktur IT, serta pembuatan perangkat lunak kustom untuk institusi.",
+  "stats": [
+    { "label": "Years Exp.", "value": "8+" },
+    { "label": "Projects", "value": "10+" },
+    { "label": "Awards", "value": "2" },
+    { "label": "Apps Built", "value": "5+" }
+  ],
+  "experience": [
+    {
+      "company": "PT. BCS Logistics",
+      "role": "IT Programmer",
+      "period": "Agustus 2024 – Agustus 2026",
+      "location": "Cilegon, Banten",
+      "details": [
+        "Rancang & bangun Aplikasi Presensi Online Android & iOS",
+        "Kembangkan aplikasi kesehatan doklinc",
+        "Maintenance & pengembangan aplikasi web",
+        "Debugging, penambahan fitur, manajemen database"
+      ]
+    },
+    {
+      "company": "LP3I Business College",
+      "role": "IT Support",
+      "period": "Januari 2017 - Agustus 2024",
+      "location": "Cilegon, Banten",
+      "details": [
+        "Rancang program kerja tahunan IT",
+        "Manajemen infrastruktur jaringan, hardware, software",
+        "Dukungan teknis harian",
+        "Pengembangan aplikasi internal institusi"
+      ]
+    }
+  ],
+  "skills": [
+    { "name": "AI Agent Dev", "level": 92, "category": "AI" },
+    { "name": "Prompt Engineering", "level": 90, "category": "AI" },
+    { "name": "AI API Integration", "level": 88, "category": "AI" },
+    { "name": "Python", "level": 90, "category": "Language" },
+    { "name": "JavaScript", "level": 85, "category": "Language" },
+    { "name": "PHP", "level": 88, "category": "Language" },
+    { "name": "MySQL", "level": 85, "category": "Database" },
+    { "name": "Web & Mobile Dev", "level": 90, "category": "Tech" },
+    { "name": "IT Support", "level": 92, "category": "Tech" },
+    { "name": "Networking", "level": 80, "category": "Tech" }
+  ],
+  "certifications": [
+    {
+      "title": "AI Productivity and AI API Integration for Developers – Hacktiv8",
+      "date": "Agustus 2025",
+      "desc": "Intensive 1-week training focusing on AI API integration & productivity."
+    }
+  ],
+  "projects": [
+    "Aplikasi Surat (LP3I College)",
+    "Aplikasi Ujian Online (LP3I College)",
+    "Aplikasi Test Online Masuk (LP3I College)",
+    "Aplikasi Presensi Online (BCS Logistics)",
+    "Aplikasi Kesehatan doklinc (Masyarakat Cilegon)"
+  ],
+  "awards": [
+    "Juara 1 Lomba PTK PNFI (2017) – Instruktur Komputer tingkat Kota Cilegon",
+    "Juara 3 Lomba PTK PNFI (2018) – Instruktur Komputer tingkat Provinsi Banten",
+    "Mahasiswa Berprestasi (2011) – Olahraga Futsal LP3I College"
+  ],
+  "education": [
+    {
+      "institution": "STMIK Bina Sarana Global",
+      "location": "Tangerang, Banten",
+      "degree": "S1 Sistem Informasi",
+      "gpa": "3.32",
+      "period": "Sep 2014 – Nov 2016"
+    },
+    {
+      "institution": "Politeknik LP3I Bandung",
+      "location": "Bandung, Jawa Barat",
+      "degree": "D3 Manajemen Informatika",
+      "gpa": "2.92",
+      "period": "Sep 2011 – Sep 2014"
+    }
+  ]
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id" data-studio-time="malam">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portofolio interaktif M. Syamsul - IT Programmer & AI Specialist di Cilegon, Banten." />
+  <title>M. Syamsul | IT Programmer & AI Specialist</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#home" class="brand-wordmark" aria-label="Beranda M. Syamsul">M. Syamsul</a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <a href="#home">Studio</a>
+        <a href="#ai-studio">Tanya AI</a>
+        <a href="#skills">Keahlian</a>
+        <a href="#projects">Proyek</a>
+        <a href="#experience">Jejak</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+
+      <div class="header-controls">
+        <div class="segmented-control" id="timeModeSwitch" role="radiogroup" aria-label="Mode waktu studio">
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="pagi">Pagi</button>
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="senja">Senja</button>
+          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-time-mode="malam">Malam</button>
+        </div>
+        <button type="button" class="icon-control-btn" id="soundToggleBtn" aria-pressed="false" title="Aktifkan suara interaktif">
+          Suara: Mati
+        </button>
+        <button type="button" class="icon-control-btn" id="commandTriggerBtn" title="Buka palet perintah (Cmd+K)">
+          Menu cepat
+        </button>
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="mainNav">
+          Menu
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero: Centered Monumental Headline + Living Workspace Diorama Stage -->
+    <section id="home" class="hero-section">
+      <div class="container hero-header-block">
+        <h1 class="hero-title">M. Syamsul merancang agen AI dan aplikasi institusi</h1>
+        <p class="hero-subtitle">
+          Programmer IT dan spesialis AI di Cilegon dengan delapan tahun pengalaman membangun solusi web, mobile, dan infrastruktur.
+        </p>
+        <div class="hero-action-row">
+          <a href="#ai-studio" class="btn-primary">Mulai eksplorasi interaktif</a>
+        </div>
+      </div>
+
+      <div class="container stage-shell">
+        <div class="workspace-stage" id="workspaceStage" data-lamp="on">
+          <img
+            src="./assets/room_anime_bg.png"
+            alt="Ruang kerja interaktif M. Syamsul"
+            class="workspace-bg-img"
+            id="workspaceBgLayer"
+          />
+          <canvas class="workspace-canvas" id="workspaceCanvas" aria-hidden="true"></canvas>
+          <img
+            src="./assets/character_anime_clean.png"
+            alt="Karakter M. Syamsul di ruang kerja"
+            class="workspace-char-img"
+            id="workspaceCharLayer"
+            role="button"
+            tabindex="0"
+            title="Klik karakter untuk berinteraksi"
+          />
+          <div class="workspace-hotspots" id="workspaceHotspots"></div>
+        </div>
+
+        <div class="char-speech is-visible" id="charSpeechBubble" role="status" aria-live="polite">
+          <p id="charSpeechText">
+            Selamat datang di ruang kerja saya. Klik titik bernomor di ruangan ini untuk menelusuri karya atau ubah suasana waktu di atas.
+          </p>
+        </div>
+
+        <div class="workspace-hud">
+          <div class="hud-info">
+            <h3 id="hudHotspotTitle">Terminal Agen AI</h3>
+            <p id="hudHotspotSummary">
+              Fokus utama saat ini: AI Agent Dev (92%), Prompt Engineering (90%), Python (90%), dan AI API Integration (88%).
+            </p>
+          </div>
+          <div class="hud-actions">
+            <button type="button" class="hud-lamp-btn" id="workspaceLampBtn" aria-pressed="true">
+              Lampu meja: Nyala
+            </button>
+            <button type="button" class="btn-secondary" id="hudHotspotAction" data-target="#ai-studio">
+              Tanya AI Syamsul
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Interactive AI Syamsul Playground -->
+    <section id="ai-studio" class="section-block section-tinted">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tanya AI Syamsul</h2>
+          <p class="section-desc">
+            Uji kemampuan asisten portofolio untuk menelusuri pengalaman, arsitektur proyek, sertifikasi Hacktiv8, atau jalankan perintah studio.
+          </p>
+        </div>
+
+        <div class="ai-studio-grid">
+          <div class="ai-chat-pane">
+            <div class="ai-presets" id="aiPresets" aria-label="Pertanyaan cepat"></div>
+            <div class="ai-chat-feed" id="aiChatFeed" aria-live="polite"></div>
+            <p class="ai-status-line" id="aiStatusText">
+              Siap menjawab pertanyaan atau perintah (/pagi, /senja, /malam, /lampu)
+            </p>
+            <form class="ai-input-row" id="aiChatForm">
+              <label for="aiChatInput" class="sr-only">Tulis pertanyaan untuk AI Syamsul</label>
+              <input
+                id="aiChatInput"
+                type="text"
+                placeholder="Tanya pengalaman BCS Logistics, proyek doklinc, atau ketik /pagi..."
+                autocomplete="off"
+              />
+              <button type="submit" class="btn-primary">Kirim</button>
+            </form>
+          </div>
+
+          <aside class="ai-inspector-pane" id="aiInspectorBody" aria-label="Data terstruktur terkait jawaban"></aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Interactive Skill Constellation -->
+    <section id="skills" class="section-block">
+      <div class="container">
+        <div class="section-head section-head-split">
+          <div>
+            <h2>Konstelasi keahlian interaktif</h2>
+            <p class="section-desc">
+              Seret atau klik simpul teknologi pada kanvas untuk melihat penerapan nyata dan proyek terkait.
+            </p>
+          </div>
+          <div class="segmented-control" id="skillCategoryTabs" role="tablist" aria-label="Filter kategori keahlian">
+            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-category="all">Semua</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="AI">AI</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="Language">Language</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="Database">Database</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-category="Tech">Tech</button>
+          </div>
+        </div>
+
+        <div class="skills-workbench">
+          <div class="constellation-canvas-wrap" id="skillCanvasWrap">
+            <canvas id="skillCanvas" aria-label="Grafik interaktif keahlian M. Syamsul"></canvas>
+          </div>
+
+          <aside class="skill-inspector-pane">
+            <div class="skill-inspector-head">
+              <div>
+                <h3 id="skillInspectorName">AI Agent Dev</h3>
+                <p class="inspector-meta" id="skillInspectorCat">Kategori: AI</p>
+              </div>
+              <span class="skill-score-readout tabular-nums" id="skillInspectorScore">92%</span>
+            </div>
+            <div class="inspector-bar-track">
+              <div class="inspector-bar-fill" id="skillInspectorBar" style="width: 92%"></div>
+            </div>
+            <p class="skill-usage-text" id="skillInspectorUsage"></p>
+            <div class="skill-related-block">
+              <p class="inspector-meta">Proyek terkait</p>
+              <div class="skill-related-links" id="skillInspectorProjects"></div>
+            </div>
+            <div class="skill-list-compact" id="skillAccessibleList" aria-label="Daftar keahlian yang dapat dipilih"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Interactive 5-Project Simulator & Architecture Lab -->
+    <section id="projects" class="section-block section-tinted">
+      <div class="container">
+        <div class="section-head">
+          <h2>Simulasi proyek dan arsitektur</h2>
+          <p class="section-desc">
+            Coba langsung alur kerja kelima aplikasi yang telah dibangun untuk industri logistik, layanan kesehatan masyarakat, dan perguruan tinggi.
+          </p>
+        </div>
+
+        <div class="projects-workbench">
+          <div class="project-selector-list" id="projectSelectorList" role="region" aria-label="Pilih proyek"></div>
+
+          <div class="project-stage-panel">
+            <div class="project-stage-top">
+              <div>
+                <h3 id="projectStageTitle">Aplikasi Presensi Online (BCS Logistics)</h3>
+                <p class="inspector-meta" id="projectStageMeta">PT. BCS Logistics · 2024 - 2026 · Web · Android · iOS</p>
+              </div>
+              <div class="segmented-control" id="projectModeTabs" role="tablist" aria-label="Mode tampilan proyek">
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="simulasi">Simulasi Aplikasi</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="arsitektur">Arsitektur Sistem</button>
+              </div>
+            </div>
+
+            <p class="project-summary-copy" id="projectStageSummary"></p>
+            <p class="project-role-copy" id="projectStageRole"></p>
+
+            <div class="project-interactive-body" id="projectStageBody"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Interactive Career, Education, Certification & Award Scrubber -->
+    <section id="experience" class="section-block">
+      <div class="container">
+        <div class="section-head">
+          <h2>Jejak karir dan latar belakang</h2>
+          <p class="section-desc" id="aboutSummaryText"></p>
+        </div>
+
+        <div class="timeline-controls-bar">
+          <div class="segmented-control" id="timelineFilterTabs" role="tablist" aria-label="Filter riwayat hidup">
+            <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-timeline-filter="all">Semua</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="karir">Karir</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="pendidikan">Pendidikan & Sertifikasi</button>
+            <button type="button" class="seg-btn" role="tab" aria-selected="false" data-timeline-filter="prestasi">Prestasi</button>
+          </div>
+
+          <div class="year-scrubber-wrap">
+            <label for="timelineYearRange" class="tabular-nums" id="timelineSelectedYear">Semua tahun (2011 - 2026)</label>
+            <input id="timelineYearRange" type="range" min="2011" max="2026" value="2025" />
+            <button type="button" class="seg-btn is-active" id="timelineShowAllBtn">Tampilkan semua</button>
+          </div>
+        </div>
+
+        <div class="timeline-stream" id="timelineStream"></div>
+      </div>
+    </section>
+
+    <!-- Section 6: Interactive Collaboration Composer & Contact -->
+    <section id="contact" class="section-block section-tinted">
+      <div class="container">
+        <div class="section-head">
+          <h2>Mari berkolaborasi</h2>
+          <p class="section-desc">
+            Terbuka untuk peluang kerja remote, proyek freelance, riset agen AI, maupun pengembangan aplikasi kustom institusi.
+          </p>
+        </div>
+
+        <div class="contact-workbench">
+          <div class="composer-panel">
+            <div class="composer-group">
+              <p class="composer-label">Fokus kebutuhan Anda</p>
+              <div class="segmented-control" id="contactScopeTabs" role="tablist" aria-label="Pilih fokus kolaborasi">
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-scope="Agen AI & Otomasi">Agen AI & Otomasi</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Aplikasi Web & Mobile">Aplikasi Web & Mobile</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Remote / Kontrak">Remote / Kontrak</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-scope="Diskusi Umum">Diskusi Umum</button>
+              </div>
+            </div>
+
+            <div class="composer-fields-row">
+              <div class="composer-field">
+                <label for="contactName">Nama lengkap</label>
+                <input id="contactName" type="text" placeholder="Nama Anda" autocomplete="name" />
+              </div>
+              <div class="composer-field">
+                <label for="contactOrg">Instansi / UMKM</label>
+                <input id="contactOrg" type="text" placeholder="Nama perusahaan atau usaha" autocomplete="organization" />
+              </div>
+            </div>
+
+            <div class="composer-field">
+              <label for="contactBrief">Ceritakan kebutuhan singkat</label>
+              <textarea id="contactBrief" rows="3" placeholder="Jelaskan tantangan atau target aplikasi yang ingin dibangun..."></textarea>
+            </div>
+
+            <div class="composer-preview-box">
+              <p class="inspector-meta">Pratinjau pesan otomatis</p>
+              <p id="contactPreviewText"></p>
+            </div>
+
+            <div class="composer-submit-row">
+              <div class="segmented-control" id="contactChannelTabs" role="tablist" aria-label="Pilih saluran pengiriman">
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-channel="whatsapp">WhatsApp</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="email">Email</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-channel="copy">Salin Pesan</button>
+              </div>
+              <button type="button" class="btn-primary" id="contactSendBtn">Buka WhatsApp dengan pesan ini</button>
+            </div>
+          </div>
+
+          <aside class="contact-directory" id="contactInfoList">
+            <h3>Informasi kontak langsung</h3>
+            <div class="contact-dir-rows">
+              <div class="contact-dir-row">
+                <div>
+                  <p class="inspector-meta">Telepon & WhatsApp</p>
+                  <p class="contact-dir-val tabular-nums">+62 821-1157-9944</p>
+                </div>
+                <button type="button" class="inline-jump-btn" data-copy-value="+62 821-1157-9944">Salin</button>
+              </div>
+              <div class="contact-dir-row">
+                <div>
+                  <p class="inspector-meta">Email</p>
+                  <p class="contact-dir-val">Syamsuliki.48@gmail.com</p>
+                </div>
+                <button type="button" class="inline-jump-btn" data-copy-value="Syamsuliki.48@gmail.com">Salin</button>
+              </div>
+              <div class="contact-dir-row">
+                <div>
+                  <p class="inspector-meta">Lokasi</p>
+                  <p class="contact-dir-val">Cilegon, Banten, Indonesia</p>
+                </div>
+              </div>
+              <div class="contact-dir-row">
+                <div>
+                  <p class="inspector-meta">Tautan profesional</p>
+                  <p class="contact-dir-links">
+                    <a href="https://linkedin.com/in/m-syamsul" target="_blank" rel="noopener">LinkedIn</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="https://Syamsul14.blogspot.com" target="_blank" rel="noopener">Blog</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="contact-cv-row">
+              <button type="button" class="btn-secondary" id="printCvBtn">Cetak ringkasan CV</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>M. Syamsul · IT Programmer & AI Specialist · Cilegon, Banten</p>
+      <p class="footer-note">Dipersembahkan dengan data portofolio terverifikasi dan interaksi lokal tanpa pelacak.</p>
+    </div>
+  </footer>
+
+  <!-- Command Palette Modal -->
+  <div class="command-modal" id="commandModal" role="dialog" aria-modal="true" aria-labelledby="commandTitle" hidden>
+    <div class="command-dialog">
+      <div class="command-header">
+        <h3 id="commandTitle">Menu perintah cepat</h3>
+        <button type="button" class="inline-jump-btn" id="commandCloseBtn">Tutup</button>
+      </div>
+      <label for="commandSearchInput" class="sr-only">Cari navigasi atau aksi studio</label>
+      <input
+        id="commandSearchInput"
+        type="text"
+        class="command-input"
+        placeholder="Ketik tujuan bagian, pagi, malam, lampu, atau cetak..."
+        autocomplete="off"
+      />
+      <div class="command-list" id="commandActionList"></div>
+    </div>
+  </div>
+
+  <!-- Print-ready 1-Page CV Summary (hidden on screen, shown on @media print) -->
+  <section class="print-cv-sheet" aria-hidden="true">
+    <h1>M. SYAMSUL - IT Programmer & AI Specialist</h1>
+    <p>Cilegon, Banten, Indonesia · +62 821-1157-9944 · Syamsuliki.48@gmail.com · linkedin.com/in/m-syamsul</p>
+    <p>Seorang IT Programmer dan IT Specialist berpengalaman dengan latar belakang Sistem Informasi dan Manajemen Informatika, berfokus pada riset AI Agent, aplikasi web & mobile, dan manajemen infrastruktur IT.</p>
+    <h2>Pengalaman Kerja</h2>
+    <p><strong>PT. BCS Logistics</strong> - IT Programmer (Agustus 2024 - Agustus 2026): Aplikasi Presensi Online Android & iOS, aplikasi kesehatan doklinc, pemeliharaan web & database.</p>
+    <p><strong>LP3I Business College</strong> - IT Support (Januari 2017 - Agustus 2024): Program kerja tahunan IT, infrastruktur jaringan, hardware/software, aplikasi internal kampus.</p>
+    <h2>Keahlian & Sertifikasi</h2>
+    <p>AI Agent Dev (92%), Prompt Engineering (90%), AI API Integration (88%), Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Web & Mobile Dev (90%), IT Support (92%), Networking (80%).</p>
+    <p>Sertifikasi: AI Productivity and AI API Integration for Developers - Hacktiv8 (Agustus 2025).</p>
+    <h2>Pendidikan & Prestasi</h2>
+    <p>S1 Sistem Informasi, STMIK Bina Sarana Global (IPK 3.32, 2014 - 2016) · D3 Manajemen Informatika, Politeknik LP3I Bandung (IPK 2.92, 2011 - 2014).</p>
+    <p>Juara 1 Lomba PTK PNFI Kota Cilegon (2017) · Juara 3 Lomba PTK PNFI Provinsi Banten (2018) · Mahasiswa Berprestasi Futsal LP3I College (2011).</p>
+  </section>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

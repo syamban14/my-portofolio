@@ -1,0 +1,59 @@
+:root {
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Strictly 3 body font sizes below the hero H1 and brand wordmark */
+  --text-heading: clamp(1.75rem, 3vw, 2.5rem);
+  --text-body: 1rem;
+  --text-sm: 0.875rem;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --container-max: 1180px;
+}
+
+/* Default: Malam (Deep Marine Obsidian) */
+:root,
+html[data-studio-time='malam'] {
+  --bg-page: #071118;
+  --bg-surface: #0d1c26;
+  --bg-elevated: #132836;
+  --text-primary: #eef6f9;
+  --text-muted: #93b0be;
+  --accent: #18d2b6;
+  --accent-ink: #04221d;
+  --lamp-glow: #ffb454;
+  --border-subtle: rgba(147, 176, 190, 0.16);
+  --header-scrolled: rgba(7, 17, 24, 0.86);
+}
+
+/* Senja (Harbor Dusk - Cilegon) */
+html[data-studio-time='senja'] {
+  --bg-page: #101824;
+  --bg-surface: #182436;
+  --bg-elevated: #213148;
+  --text-primary: #f4f6fa;
+  --text-muted: #9fb0c7;
+  --accent: #ff8a4c;
+  --accent-ink: #230d02;
+  --lamp-glow: #ffd166;
+  --border-subtle: rgba(159, 176, 199, 0.18);
+  --header-scrolled: rgba(16, 24, 36, 0.88);
+}
+
+/* Pagi (Crisp Architectural Gallery Daylight) */
+html[data-studio-time='pagi'] {
+  --bg-page: #f3f7f9;
+  --bg-surface: #ffffff;
+  --bg-elevated: #e6eff4;
+  --text-primary: #0b1922;
+  --text-muted: #466170;
+  --accent: #007a6c;
+  --accent-ink: #ffffff;
+  --lamp-glow: #f59e0b;
+  --border-subtle: rgba(11, 25, 34, 0.12);
+  --header-scrolled: rgba(243, 247, 249, 0.9);
+}
