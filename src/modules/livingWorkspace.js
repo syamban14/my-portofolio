@@ -1,15 +1,33 @@
 import { portfolioData } from '../data/portfolioData.js';
 import { soundEngine } from './soundEngine.js';
 
+const CHAR_QUOTES = [
+  'Halo! Klik titik bernomor di ruangan ini untuk menelusuri proyek, keahlian AI, atau nyalakan lampu meja.',
+  'Di PT. BCS Logistics saya merancang aplikasi Presensi Online Android & iOS serta layanan kesehatan doklinc.',
+  'Tertarik kolaborasi AI Agent atau sistem kampus? Coba tanya asisten AI saya di bagian bawah.',
+];
+
+// Measured normalized pixel coordinates on character_anime_clean.png (576 x 1024)
+const CHAR_RIG = {
+  skinTone: '#ffeed9',
+  lashColor: '#3a261c',
+  mouthInterior: '#a4544c',
+  leftEye: { cx: 0.449, cy: 0.1255, rx: 0.017, ry: 0.0068 },
+  rightEye: { cx: 0.5205, cy: 0.124, rx: 0.0185, ry: 0.0068 },
+  mouth: { cx: 0.489, cy: 0.1592, w: 0.026 },
+};
+
 /**
  * Interactive 2.5D Living Workspace Diorama Stage.
- * Combines layered room background, procedural canvas lighting/particles,
- * pointer-reactive parallax character, clickable hotspots, and synced HUD.
+ * Renders dynamic room atmosphere, dual-pane window sky, live desk laptop telemetry,
+ * ground contact shadow, and a pixel-locked living character canvas rig with blinking,
+ * smile expressions, lip-sync mouth motion, and dynamic rim lighting.
  */
 export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToast }) {
   const stage = document.getElementById('workspaceStage');
   const bgLayer = document.getElementById('workspaceBgLayer');
-  const charLayer = document.getElementById('workspaceCharLayer');
+  const charCanvas = document.getElementById('workspaceCharCanvas');
+  const charSourceImg = document.getElementById('workspaceCharSource');
   const canvas = document.getElementById('workspaceCanvas');
   const hotspotsWrap = document.getElementById('workspaceHotspots');
   const speechBubble = document.getElementById('charSpeechBubble');
@@ -18,13 +36,16 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   const hudSummary = document.getElementById('hudHotspotSummary');
   const hudActionBtn = document.getElementById('hudHotspotAction');
   const lampSwitchBtn = document.getElementById('workspaceLampBtn');
+  const greetBtn = document.getElementById('workspaceGreetBtn');
 
   if (!stage || !canvas || !hotspotsWrap) return null;
 
   const ctx = canvas.getContext('2d');
+  const ctxChar = charCanvas ? charCanvas.getContext('2d') : null;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let lampOn = true;
+  let aiBusy = false;
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
   let currentPointer = { x: 0, y: 0 };
@@ -32,32 +53,71 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   let speechTimer = null;
   let stageWidth = 960;
   let stageHeight = 540;
+  let charWidth = 190;
+  let charHeight = 338;
+  let quoteIdx = 0;
+
+  // Character animation states
+  let charImgReady = Boolean(charSourceImg?.complete && charSourceImg.naturalWidth > 0);
+  let nextBlinkAt = performance.now() + 2600;
+  let blinkStart = -1;
+  let pendingDoubleBlink = false;
+  let smileUntil = 0;
+  let talkingUntil = performance.now() + 2200;
+
+  if (charSourceImg && !charImgReady) {
+    charSourceImg.addEventListener('load', () => {
+      charImgReady = true;
+    });
+  }
 
   const particles = Array.from({ length: 34 }, () => ({
     x: Math.random(),
     y: Math.random(),
-    r: 1.2 + Math.random() * 2.2,
+    r: 1.2 + Math.random() * 2.1,
     vx: (Math.random() - 0.5) * 0.00025,
     vy: -0.00018 - Math.random() * 0.00028,
     phase: Math.random() * Math.PI * 2,
   }));
 
-  const stars = Array.from({ length: 24 }, () => ({
-    x: 0.37 + Math.random() * 0.25,
-    y: 0.19 + Math.random() * 0.26,
-    r: 0.9 + Math.random() * 1.4,
-    phase: Math.random() * Math.PI * 2,
-  }));
+  const stars = Array.from({ length: 28 }, (_, idx) => {
+    // Split evenly across left & right glass panes
+    const isLeft = idx % 2 === 0;
+    return {
+      x: isLeft ? 0.368 + Math.random() * 0.12 : 0.512 + Math.random() * 0.118,
+      y: 0.215 + Math.random() * 0.25,
+      r: 0.85 + Math.random() * 1.4,
+      phase: Math.random() * Math.PI * 2,
+    };
+  });
 
-  function resizeCanvas() {
+  const clouds = [
+    { baseX: 0.38, y: 0.29, w: 0.085, h: 0.022, speed: 0.0035 },
+    { baseX: 0.52, y: 0.25, w: 0.095, h: 0.024, speed: 0.0026 },
+    { baseX: 0.45, y: 0.37, w: 0.075, h: 0.018, speed: 0.0042 },
+  ];
+
+  function resizeCanvases() {
     const rect = stage.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     stageWidth = rect.width;
     stageHeight = rect.height;
     canvas.width = Math.round(rect.width * dpr);
     canvas.height = Math.round(rect.height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    if (charCanvas && ctxChar) {
+      const charRect = charCanvas.getBoundingClientRect();
+      if (charRect.width && charRect.height) {
+        charWidth = charRect.width;
+        charHeight = charRect.height;
+        charCanvas.width = Math.round(charRect.width * dpr);
+        charCanvas.height = Math.round(charRect.height * dpr);
+        ctxChar.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+    }
   }
 
   function renderHotspots() {
@@ -85,6 +145,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     if (!speechBubble || !speechText) return;
     speechText.textContent = message;
     speechBubble.classList.add('is-visible');
+    talkingUntil = performance.now() + Math.min(3400, 900 + message.length * 22);
     clearTimeout(speechTimer);
     speechTimer = window.setTimeout(() => {
       speechBubble.classList.remove('is-visible');
@@ -126,6 +187,17 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     return lampOn;
   }
 
+  function triggerGreeting() {
+    soundEngine.playChime();
+    showSpeech(CHAR_QUOTES[quoteIdx % CHAR_QUOTES.length]);
+    quoteIdx += 1;
+    smileUntil = performance.now() + 1800;
+    if (charCanvas) {
+      charCanvas.classList.add('is-greeting');
+      window.setTimeout(() => charCanvas.classList.remove('is-greeting'), 500);
+    }
+  }
+
   function selectHotspot(hotspotId, { announce = true } = {}) {
     const hotspot = portfolioData.workspaceHotspots.find((item) => item.id === hotspotId);
     if (!hotspot) return;
@@ -163,19 +235,17 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     });
   }
 
-  if (charLayer) {
-    const charQuotes = [
-      'Halo! Klik titik bernomor di ruangan ini untuk menelusuri proyek, keahlian AI, atau nyalakan lampu meja.',
-      'Di PT. BCS Logistics saya merancang aplikasi Presensi Online Android & iOS serta layanan kesehatan doklinc.',
-      'Tertarik kolaborasi AI Agent atau sistem kampus? Coba tanya asisten AI saya di bagian bawah.',
-    ];
-    let quoteIdx = 0;
-    charLayer.addEventListener('click', () => {
-      soundEngine.playChime();
-      showSpeech(charQuotes[quoteIdx % charQuotes.length]);
-      quoteIdx += 1;
-      charLayer.classList.add('is-greeting');
-      window.setTimeout(() => charLayer.classList.remove('is-greeting'), 420);
+  if (greetBtn) {
+    greetBtn.addEventListener('click', triggerGreeting);
+  }
+
+  if (charCanvas) {
+    charCanvas.addEventListener('click', triggerGreeting);
+    charCanvas.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        triggerGreeting();
+      }
     });
   }
 
@@ -198,6 +268,296 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     pointerCanvas = { x: -999, y: -999 };
   });
 
+  function getBlinkAmount(timeMs) {
+    if (prefersReducedMotion) return 0;
+
+    if (blinkStart < 0 && timeMs >= nextBlinkAt) {
+      blinkStart = timeMs;
+    }
+
+    if (blinkStart < 0) return 0;
+
+    const elapsed = timeMs - blinkStart;
+    const duration = 150;
+    if (elapsed >= duration) {
+      blinkStart = -1;
+      if (!pendingDoubleBlink && Math.random() < 0.25) {
+        pendingDoubleBlink = true;
+        nextBlinkAt = timeMs + 130;
+      } else {
+        pendingDoubleBlink = false;
+        nextBlinkAt = timeMs + 2800 + Math.random() * 2400;
+      }
+      return 0;
+    }
+
+    const phase = elapsed / duration;
+    return phase <= 0.5 ? phase * 2 : (1 - phase) * 2;
+  }
+
+  function drawCharacter(timeMs) {
+    if (!ctxChar || !charImgReady || !charWidth || !charHeight) return;
+
+    const cw = charWidth;
+    const ch = charHeight;
+    const mode = getTimeMode();
+
+    ctxChar.clearRect(0, 0, cw, ch);
+    ctxChar.globalCompositeOperation = 'source-over';
+    ctxChar.drawImage(charSourceImg, 0, 0, cw, ch);
+
+    const isSmiling = smileUntil > timeMs;
+    const blinkAmt = isSmiling ? 0 : getBlinkAmount(timeMs);
+
+    // 1. Eye Expressions (Smiling arcs on greet OR natural blink eyelids)
+    if (isSmiling) {
+      [CHAR_RIG.leftEye, CHAR_RIG.rightEye].forEach((eye) => {
+        const cx = eye.cx * cw;
+        const cy = eye.cy * ch;
+        const rx = eye.rx * cw;
+        const ry = eye.ry * ch;
+
+        ctxChar.fillStyle = CHAR_RIG.skinTone;
+        ctxChar.fillRect(cx - rx, cy - ry, rx * 2, ry * 2.15);
+
+        ctxChar.strokeStyle = CHAR_RIG.lashColor;
+        ctxChar.lineWidth = Math.max(1.4, cw * 0.007);
+        ctxChar.lineCap = 'round';
+        ctxChar.beginPath();
+        ctxChar.arc(cx, cy + ry * 0.45, rx * 0.8, Math.PI * 1.15, Math.PI * 1.85);
+        ctxChar.stroke();
+      });
+    } else if (blinkAmt > 0.05) {
+      [CHAR_RIG.leftEye, CHAR_RIG.rightEye].forEach((eye) => {
+        const cx = eye.cx * cw;
+        const cy = eye.cy * ch;
+        const rx = eye.rx * cw;
+        const ry = eye.ry * ch;
+        const coverH = ry * 2.1 * blinkAmt;
+
+        ctxChar.fillStyle = CHAR_RIG.skinTone;
+        ctxChar.fillRect(cx - rx, cy - ry, rx * 2, coverH);
+
+        if (blinkAmt > 0.55) {
+          ctxChar.strokeStyle = CHAR_RIG.lashColor;
+          ctxChar.lineWidth = Math.max(1.3, cw * 0.0065);
+          ctxChar.lineCap = 'round';
+          ctxChar.beginPath();
+          ctxChar.moveTo(cx - rx * 0.8, cy + ry * 0.15);
+          ctxChar.quadraticCurveTo(cx, cy + ry * 0.55, cx + rx * 0.8, cy + ry * 0.15);
+          ctxChar.stroke();
+        }
+      });
+    }
+
+    // 2. Lip-Sync Mouth Animation when speaking or AI is streaming
+    const isTalking = !prefersReducedMotion && (aiBusy || talkingUntil > timeMs);
+    if (isTalking) {
+      const mx = CHAR_RIG.mouth.cx * cw;
+      const my = CHAR_RIG.mouth.cy * ch;
+      const mw = CHAR_RIG.mouth.w * cw;
+      const openRatio = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(timeMs * 0.026));
+      const mh = Math.max(1.2, mw * 0.48 * openRatio);
+
+      ctxChar.fillStyle = CHAR_RIG.skinTone;
+      ctxChar.fillRect(mx - mw * 0.65, my - 2, mw * 1.3, mh + 4);
+
+      ctxChar.fillStyle = CHAR_RIG.mouthInterior;
+      ctxChar.beginPath();
+      ctxChar.ellipse(mx, my + mh * 0.25, mw * 0.48, mh, 0, 0, Math.PI * 2);
+      ctxChar.fill();
+
+      ctxChar.strokeStyle = CHAR_RIG.lashColor;
+      ctxChar.lineWidth = Math.max(1, cw * 0.0045);
+      ctxChar.beginPath();
+      ctxChar.moveTo(mx - mw * 0.48, my);
+      ctxChar.quadraticCurveTo(mx, my + 0.8, mx + mw * 0.48, my);
+      ctxChar.stroke();
+    }
+
+    // 3. Silhouette-Masked Dynamic Rim Lighting (source-atop keeps alpha silhouette crisp)
+    ctxChar.globalCompositeOperation = 'source-atop';
+
+    if (mode === 'malam') {
+      ctxChar.fillStyle = 'rgba(7, 20, 34, 0.26)';
+      ctxChar.fillRect(0, 0, cw, ch);
+
+      if (lampOn) {
+        const leftRim = ctxChar.createLinearGradient(0, ch * 0.1, cw * 0.55, ch * 0.35);
+        leftRim.addColorStop(0, 'rgba(255, 198, 108, 0.36)');
+        leftRim.addColorStop(1, 'rgba(255, 198, 108, 0)');
+        ctxChar.fillStyle = leftRim;
+        ctxChar.fillRect(0, 0, cw, ch);
+      }
+
+      const rightRim = ctxChar.createLinearGradient(cw, ch * 0.25, cw * 0.45, ch * 0.45);
+      rightRim.addColorStop(0, `rgba(24, 210, 182, ${aiBusy ? 0.34 : 0.22})`);
+      rightRim.addColorStop(1, 'rgba(24, 210, 182, 0)');
+      ctxChar.fillStyle = rightRim;
+      ctxChar.fillRect(0, 0, cw, ch);
+    } else if (mode === 'senja') {
+      ctxChar.fillStyle = 'rgba(46, 20, 32, 0.13)';
+      ctxChar.fillRect(0, 0, cw, ch);
+
+      const duskRim = ctxChar.createLinearGradient(0, 0, cw * 0.65, ch * 0.4);
+      duskRim.addColorStop(0, `rgba(255, 152, 86, ${lampOn ? 0.28 : 0.16})`);
+      duskRim.addColorStop(1, 'rgba(255, 152, 86, 0)');
+      ctxChar.fillStyle = duskRim;
+      ctxChar.fillRect(0, 0, cw, ch);
+    } else {
+      const dayRim = ctxChar.createLinearGradient(0, 0, cw * 0.5, ch * 0.3);
+      dayRim.addColorStop(0, 'rgba(255, 252, 232, 0.08)');
+      dayRim.addColorStop(1, 'rgba(255, 252, 232, 0)');
+      ctxChar.fillStyle = dayRim;
+      ctxChar.fillRect(0, 0, cw, ch);
+    }
+
+    ctxChar.globalCompositeOperation = 'source-over';
+  }
+
+  function drawWindowPanes(t, w, h, mode) {
+    // Dual glass panes leaving central window mullion crisp
+    const panes = [
+      { x: w * 0.364, y: h * 0.214, w: w * 0.130, h: h * 0.324 },
+      { x: w * 0.506, y: h * 0.214, w: w * 0.128, h: h * 0.324 },
+    ];
+
+    ctx.save();
+    ctx.beginPath();
+    panes.forEach((p) => ctx.rect(p.x, p.y, p.w, p.h));
+    ctx.clip();
+
+    const winY = h * 0.214;
+    const winH = h * 0.324;
+
+    if (mode === 'malam') {
+      const skyGrad = ctx.createLinearGradient(0, winY, 0, winY + winH);
+      skyGrad.addColorStop(0, 'rgba(6, 17, 32, 0.90)');
+      skyGrad.addColorStop(1, 'rgba(14, 42, 64, 0.72)');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(w * 0.36, winY, w * 0.28, winH);
+
+      // Crescent moon in upper-right pane
+      const moonX = w * 0.592;
+      const moonY = h * 0.268;
+      const moonR = Math.max(7, w * 0.012);
+      ctx.fillStyle = 'rgba(235, 248, 255, 0.88)';
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, moonR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(9, 25, 44, 0.95)';
+      ctx.beginPath();
+      ctx.arc(moonX + moonR * 0.42, moonY - moonR * 0.2, moonR * 0.86, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Twinkling stars
+      stars.forEach((star) => {
+        const alpha = 0.38 + 0.56 * (0.5 + 0.5 * Math.sin(t * 1.6 + star.phase));
+        ctx.fillStyle = `rgba(220, 245, 255, ${alpha.toFixed(2)})`;
+        ctx.beginPath();
+        ctx.arc(star.x * w, star.y * h, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Occasional shooting star across left-to-right window sky
+      if (!prefersReducedMotion) {
+        const cycle = t % 9;
+        if (cycle < 1.1) {
+          const prog = cycle / 1.1;
+          const sx = w * (0.39 + prog * 0.17);
+          const sy = h * (0.24 + prog * 0.11);
+          const tailGrad = ctx.createLinearGradient(sx, sy, sx - w * 0.045, sy - h * 0.03);
+          tailGrad.addColorStop(0, 'rgba(210, 255, 248, 0.85)');
+          tailGrad.addColorStop(1, 'rgba(210, 255, 248, 0)');
+          ctx.strokeStyle = tailGrad;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx - w * 0.045, sy - h * 0.03);
+          ctx.stroke();
+        }
+      }
+    } else if (mode === 'senja') {
+      const duskGrad = ctx.createLinearGradient(0, winY, 0, winY + winH);
+      duskGrad.addColorStop(0, 'rgba(42, 31, 66, 0.55)');
+      duskGrad.addColorStop(0.58, 'rgba(232, 114, 58, 0.45)');
+      duskGrad.addColorStop(1, 'rgba(255, 198, 108, 0.34)');
+      ctx.fillStyle = duskGrad;
+      ctx.fillRect(w * 0.36, winY, w * 0.28, winH);
+
+      clouds.forEach((cloud) => {
+        const shift = prefersReducedMotion ? 0 : (t * cloud.speed) % 0.28;
+        const cx = w * (0.34 + ((cloud.baseX - 0.34 + shift) % 0.28));
+        ctx.fillStyle = 'rgba(255, 212, 168, 0.32)';
+        ctx.beginPath();
+        ctx.ellipse(cx, h * cloud.y, w * cloud.w * 0.5, h * cloud.h, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    } else {
+      const sunGrad = ctx.createLinearGradient(w * 0.36, winY, w * 0.64, winY + winH);
+      sunGrad.addColorStop(0, 'rgba(255, 252, 230, 0.22)');
+      sunGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = sunGrad;
+      ctx.fillRect(w * 0.36, winY, w * 0.28, winH);
+
+      clouds.forEach((cloud) => {
+        const shift = prefersReducedMotion ? 0 : (t * cloud.speed) % 0.28;
+        const cx = w * (0.34 + ((cloud.baseX - 0.34 + shift) % 0.28));
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.36)';
+        ctx.beginPath();
+        ctx.ellipse(cx, h * cloud.y, w * cloud.w * 0.5, h * cloud.h, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    ctx.restore();
+  }
+
+  function drawLaptopScreen(t, w, h, mode) {
+    // Clipped to desk laptop screen quad on room_anime_bg.png
+    const sx = w * 0.674;
+    const sy = h * 0.522;
+    const sw = w * 0.042;
+    const sh = h * 0.049;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(w * 0.677, h * 0.521);
+    ctx.lineTo(w * 0.717, h * 0.521);
+    ctx.lineTo(w * 0.713, h * 0.571);
+    ctx.lineTo(w * 0.674, h * 0.571);
+    ctx.closePath();
+    ctx.clip();
+
+    ctx.fillStyle = mode === 'pagi' ? '#0e2432' : '#05111a';
+    ctx.fillRect(sx, sy, sw + 4, sh + 4);
+
+    if (aiBusy || activeHotspotId === 'ai-terminal') {
+      const bars = 7;
+      const barW = sw / (bars * 1.5);
+      for (let i = 0; i < bars; i += 1) {
+        const wave = prefersReducedMotion
+          ? 0.55
+          : 0.3 + 0.65 * (0.5 + 0.5 * Math.sin(t * (aiBusy ? 11 : 4) + i * 0.8));
+        const bh = sh * 0.62 * wave;
+        const bx = sx + sw * 0.14 + i * (barW * 1.35);
+        const by = sy + sh * 0.82 - bh;
+        ctx.fillStyle = aiBusy ? '#18d2b6' : '#68b5ff';
+        ctx.fillRect(bx, by, barW, bh);
+      }
+    } else {
+      const lineCount = 5;
+      for (let i = 0; i < lineCount; i += 1) {
+        const pulse = prefersReducedMotion ? 0.7 : 0.45 + 0.45 * Math.sin(t * 2.5 + i);
+        const lw = sw * (0.38 + ((i * 19) % 40) / 100);
+        ctx.fillStyle = i % 2 === 0 ? `rgba(24, 210, 182, ${pulse})` : `rgba(147, 176, 190, ${pulse})`;
+        ctx.fillRect(sx + sw * 0.14, sy + sh * (0.2 + i * 0.14), lw, 1.8);
+      }
+    }
+
+    ctx.restore();
+  }
+
   function drawAtmosphere(timeMs) {
     const t = timeMs * 0.001;
     const w = stageWidth;
@@ -206,66 +566,49 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
 
     ctx.clearRect(0, 0, w, h);
 
-    // 1. Dynamic sky inside window rectangle (aligns with 16:9 room illustration)
-    const winX = w * 0.362;
-    const winY = h * 0.194;
-    const winW = w * 0.276;
-    const winH = h * 0.326;
-
-    if (mode === 'malam') {
-      const skyGrad = ctx.createLinearGradient(0, winY, 0, winY + winH);
-      skyGrad.addColorStop(0, 'rgba(6, 17, 32, 0.88)');
-      skyGrad.addColorStop(1, 'rgba(14, 42, 64, 0.72)');
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(winX, winY, winW, winH);
-
-      stars.forEach((star) => {
-        const alpha = 0.35 + 0.55 * (0.5 + 0.5 * Math.sin(t * 1.6 + star.phase));
-        ctx.fillStyle = `rgba(220, 245, 255, ${alpha.toFixed(2)})`;
-        ctx.beginPath();
-        ctx.arc(star.x * w, star.y * h, star.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    } else if (mode === 'senja') {
-      const duskGrad = ctx.createLinearGradient(0, winY, 0, winY + winH);
-      duskGrad.addColorStop(0, 'rgba(42, 31, 66, 0.52)');
-      duskGrad.addColorStop(0.58, 'rgba(232, 114, 58, 0.45)');
-      duskGrad.addColorStop(1, 'rgba(255, 198, 108, 0.35)');
-      ctx.fillStyle = duskGrad;
-      ctx.fillRect(winX, winY, winW, winH);
-    } else {
-      const sunGrad = ctx.createLinearGradient(winX, winY, winX + winW * 0.9, winY + winH * 1.4);
-      sunGrad.addColorStop(0, 'rgba(255, 250, 224, 0.24)');
-      sunGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = sunGrad;
-      ctx.fillRect(winX, winY, winW, winH);
-    }
+    // 1. Dynamic sky inside split window panes
+    drawWindowPanes(t, w, h, mode);
 
     // 2. Overall ambient tint for evening/night immersion
     if (mode === 'malam') {
       ctx.fillStyle = 'rgba(6, 16, 26, 0.46)';
       ctx.fillRect(0, 0, w, h);
     } else if (mode === 'senja') {
-      ctx.fillStyle = 'rgba(34, 18, 28, 0.22)';
+      ctx.fillStyle = 'rgba(34, 18, 28, 0.20)';
       ctx.fillRect(0, 0, w, h);
+    } else {
+      // Soft diagonal sunbeam across room floor in Pagi mode
+      const beam = ctx.createLinearGradient(w * 0.38, h * 0.25, w * 0.68, h * 0.96);
+      beam.addColorStop(0, 'rgba(255, 245, 200, 0.14)');
+      beam.addColorStop(1, 'rgba(255, 245, 200, 0)');
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.37, h * 0.54);
+      ctx.lineTo(w * 0.63, h * 0.54);
+      ctx.lineTo(w * 0.78, h);
+      ctx.lineTo(w * 0.46, h);
+      ctx.closePath();
+      ctx.fill();
     }
 
-    // 3. Laptop screen cyan telemetry glow on the desk (full canvas fill prevents clip edge)
+    // 3. Live laptop display & cyan desk telemetry glow
+    drawLaptopScreen(t, w, h, mode);
+
     const screenGlow = ctx.createRadialGradient(
-      w * 0.68,
-      h * 0.52,
+      w * 0.69,
+      h * 0.54,
       w * 0.01,
-      w * 0.68,
-      h * 0.52,
+      w * 0.69,
+      h * 0.54,
       w * 0.22
     );
-    const screenAlpha = mode === 'malam' ? 0.34 : mode === 'senja' ? 0.22 : 0.1;
-    screenGlow.addColorStop(0, `rgba(24, 210, 182, ${screenAlpha})`);
+    const screenAlpha = (mode === 'malam' ? 0.34 : mode === 'senja' ? 0.22 : 0.1) + (aiBusy ? 0.12 : 0);
+    screenGlow.addColorStop(0, `rgba(24, 210, 182, ${screenAlpha.toFixed(2)})`);
     screenGlow.addColorStop(1, 'rgba(24, 210, 182, 0)');
     ctx.fillStyle = screenGlow;
     ctx.fillRect(0, 0, w, h);
 
-    // 4. Warm bedside lamp light cone when lamp is ON (full canvas fill prevents clip edge)
+    // 4. Warm bedside lamp light cone when lamp is ON
     if (lampOn) {
       const lampStrength = mode === 'malam' ? 0.48 : mode === 'senja' ? 0.34 : 0.15;
       const cone = ctx.createRadialGradient(
@@ -283,7 +626,18 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillRect(0, 0, w, h);
     }
 
-    // 5. Interactive pointer spotlight
+    // 5. Dynamic ground contact shadow under Syamsul's sneakers
+    const shadowX = w * 0.495 + currentPointer.x * 16 + (lampOn ? 6 : 0);
+    const shadowY = h * 0.968;
+    const shadowGrad = ctx.createRadialGradient(shadowX, shadowY, 4, shadowX, shadowY, w * 0.085);
+    shadowGrad.addColorStop(0, mode === 'pagi' ? 'rgba(11, 25, 34, 0.26)' : 'rgba(2, 8, 14, 0.46)');
+    shadowGrad.addColorStop(1, 'rgba(2, 8, 14, 0)');
+    ctx.fillStyle = shadowGrad;
+    ctx.beginPath();
+    ctx.ellipse(shadowX, shadowY, w * 0.085, h * 0.025, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 6. Interactive pointer spotlight
     if (pointerCanvas.x > 0 && pointerCanvas.y > 0) {
       const spot = ctx.createRadialGradient(
         pointerCanvas.x,
@@ -302,7 +656,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       ctx.fillRect(0, 0, w, h);
     }
 
-    // 6. Floating dust motes / ambient particles
+    // 7. Floating dust motes / ambient particles
     particles.forEach((p) => {
       if (!prefersReducedMotion) {
         p.x += p.vx;
@@ -330,32 +684,37 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       if (bgLayer) {
         bgLayer.style.transform = `translate3d(${(-currentPointer.x * 10).toFixed(2)}px, ${(-currentPointer.y * 6).toFixed(2)}px, 0) scale(1.03)`;
       }
-      if (charLayer) {
-        const floatY = Math.sin(timeMs * 0.0018) * 3;
-        charLayer.style.transform = `translate3d(${(currentPointer.x * 18).toFixed(2)}px, ${(currentPointer.y * 8 + floatY).toFixed(2)}px, 0)`;
+      if (charCanvas) {
+        const breathScale = 1 + Math.sin(timeMs * 0.0022) * 0.006;
+        charCanvas.style.transform = `translate3d(${(currentPointer.x * 18).toFixed(2)}px, ${(currentPointer.y * 7).toFixed(2)}px, 0) scaleY(${breathScale.toFixed(4)})`;
       }
     }
 
     drawAtmosphere(timeMs);
+    drawCharacter(timeMs);
     requestAnimationFrame(animate);
   }
 
   renderHotspots();
   updateHud(activeHotspotId);
-  resizeCanvas();
+  resizeCanvases();
 
   if (typeof ResizeObserver !== 'undefined') {
-    const ro = new ResizeObserver(resizeCanvas);
+    const ro = new ResizeObserver(resizeCanvases);
     ro.observe(stage);
   } else {
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvases);
   }
 
   requestAnimationFrame(animate);
 
   return {
     toggleLamp,
+    triggerGreeting,
     selectHotspot,
+    setAiBusy(busy) {
+      aiBusy = Boolean(busy);
+    },
     refreshMode() {
       const modeLabel =
         getTimeMode() === 'pagi'

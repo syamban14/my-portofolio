@@ -334,20 +334,21 @@ html[data-studio-time='senja'] .workspace-bg-img {
   pointer-events: none;
 }
 
-.workspace-char-img {
+.workspace-char-canvas {
   position: absolute;
   left: 38%;
   bottom: 2%;
   height: 74%;
+  aspect-ratio: 576 / 1024;
   width: auto;
-  object-fit: contain;
   cursor: pointer;
-  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.36));
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.34));
   transition: filter 200ms var(--ease-out);
 }
 
-.workspace-char-img.is-greeting {
-  filter: drop-shadow(0 18px 28px rgba(24, 210, 182, 0.45));
+.workspace-char-canvas.is-greeting {
+  filter: drop-shadow(0 16px 28px rgba(24, 210, 182, 0.45));
 }
 
 .workspace-hotspots {

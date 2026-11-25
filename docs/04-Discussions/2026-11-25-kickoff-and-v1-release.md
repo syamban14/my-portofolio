@@ -39,3 +39,8 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Menambahkan `impactMetrics` serta tab **Pratinjau UI** (device mockup seluler & portal web) untuk seluruh 5 proyek utama di `projectShowcase.js`.
 - Membangun `src/modules/githubShowcase.js` yang menarik repositori publik live `@syamban14` via GitHub REST API (dengan cache `sessionStorage`, pencarian, filter kategori, dan tautan demo langsung ke `step-100-3d` & `beach-3d`).
 - Menautkan repositori GitHub di `aiAgent.js`, `commandPalette.js`, `#contact`, dan ringkasan CV cetak.
+
+## 6. Penundaan Poin 2 & Eksekusi Poin 3 `v2.0` (2026-11-25)
+- Pengguna meminta **Poin 2 (Live LLM API)** dilewati sementara hingga provider LLM siap, dan langsung mengerjakan **Poin 3**.
+- Mengganti layer karakter statis dengan rig kanvas 2x DPR (`#workspaceCharCanvas`) pada koordinat terkalibrasi (`character_anime_clean.png` 576x1024): kedipan mata natural berkala, ekspresi tersenyum saat disapa (`#workspaceGreetBtn`), lip-sync mulut saat berdialog/AI streaming, serta *rim-light* `source-atop` yang beradaptasi terhadap lampu meja dan waktu (`Pagi | Senja | Malam`).
+- Menyempurnakan diorama ruangan (`#workspaceCanvas`): langit jendela dua panel (bintang, bulan sabit, bintang jatuh, awan senja/pagi, sorot matahari), bayangan lantai dinamis di bawah sepatu karakter, serta layar laptop interaktif dengan bar kode dan equalizer AI.

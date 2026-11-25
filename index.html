@@ -70,13 +70,18 @@
           <canvas class="workspace-canvas" id="workspaceCanvas" aria-hidden="true"></canvas>
           <img
             src="./assets/character_anime_clean.png"
-            alt="Karakter M. Syamsul di ruang kerja"
-            class="workspace-char-img"
-            id="workspaceCharLayer"
+            alt=""
+            id="workspaceCharSource"
+            hidden
+          />
+          <canvas
+            class="workspace-char-canvas"
+            id="workspaceCharCanvas"
             role="button"
             tabindex="0"
-            title="Klik karakter untuk berinteraksi"
-          />
+            aria-label="Karakter interaktif M. Syamsul di ruang kerja - klik untuk menyapa"
+            title="Klik Syamsul untuk menyapa"
+          ></canvas>
           <div class="workspace-hotspots" id="workspaceHotspots"></div>
         </div>
 
@@ -96,6 +101,9 @@
           <div class="hud-actions">
             <button type="button" class="hud-lamp-btn" id="workspaceLampBtn" aria-pressed="true">
               Lampu meja: Nyala
+            </button>
+            <button type="button" class="hud-lamp-btn" id="workspaceGreetBtn">
+              Sapa Syamsul
             </button>
             <button type="button" class="btn-secondary" id="hudHotspotAction" data-target="#ai-studio">
               Tanya AI Syamsul

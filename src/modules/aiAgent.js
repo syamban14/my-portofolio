@@ -33,7 +33,13 @@ const PRESETS = [
  * Interactive AI Syamsul Playground with semantic intent matching, slash commands,
  * animated streaming response, and a synchronized structured Context Inspector.
  */
-export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrintCv }) {
+export function initAiAgent({
+  setTimeMode,
+  toggleLamp,
+  onRequestSection,
+  onPrintCv,
+  onStreamingChange,
+}) {
   const presetsWrap = document.getElementById('aiPresets');
   const chatFeed = document.getElementById('aiChatFeed');
   const statusEl = document.getElementById('aiStatusText');
@@ -384,6 +390,7 @@ export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrint
   async function askQuestion(questionText) {
     if (!questionText.trim() || isStreaming) return;
     isStreaming = true;
+    onStreamingChange?.(true);
 
     soundEngine.playClick();
     appendMessage('user', questionText.trim());
@@ -407,6 +414,7 @@ export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrint
 
     if (statusEl) statusEl.textContent = 'Siap menjawab pertanyaan atau perintah (/pagi, /senja, /malam, /lampu)';
     isStreaming = false;
+    onStreamingChange?.(false);
   }
 
   form.addEventListener('submit', (event) => {

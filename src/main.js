@@ -140,6 +140,7 @@ function initStudioApp() {
     toggleLamp: () => workspaceApi?.toggleLamp(),
     onRequestSection: (target, projectId) => scrollToTarget(target, projectId),
     onPrintCv: () => window.print(),
+    onStreamingChange: (busy) => workspaceApi?.setAiBusy(busy),
   });
 
   initSkillGraph({

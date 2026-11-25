@@ -37,14 +37,15 @@ tags:
 - [x] Buat modul `src/modules/githubShowcase.js` untuk fetch repositori publik `@syamban14` (dengan cache `sessionStorage` + fallback kurasi repo unggulan `hermes-mix-ai`, `mixa-frontend`, `mixa-backend`, `step-100-3d`, `beach-3d`, `qhse-app`, `bcs-fit`)
 - [x] Tambahkan filter kategori (`Unggulan`, `AI & Python`, `3D & Interaktif`, `Full-Stack & ERP`, `Semua`) serta pencarian pada daftar repositori terbuka
 
-### Poin 2 — Upgrade "Tanya AI Syamsul"
+### Poin 2 — Upgrade "Tanya AI Syamsul" (Ditunda Sementara)
+- *Status:* Ditunda atas permintaan pengguna karena perlu menyiapkan provider & model LLM terlebih dahulu.
 - [ ] Perkuat logika penalaran lokal dwibahasa (ID/EN), memori percakapan, & perbandingan arsitektur proyek
 - [ ] Tambahkan opsi koneksi LLM API/Serverless Proxy (endpoint + status aktif) dengan fallback lokal otomatis
 
-### Poin 3 — Visual Karakter & Diorama Lebih Hidup
-- [ ] Tambahkan animasi kedipan mata natural & reaksi ekspresi karakter di `livingWorkspace.js`
-- [ ] Tambahkan *rim-light* dinamis pada karakter yang berubah sesuai sakelar lampu meja & mode `Pagi/Senja/Malam`
-- [ ] Tambahkan denyut layar laptop interaktif saat AI berpikir / hotspot aktif
+### Poin 3 — Visual Karakter & Diorama Lebih Hidup (Selesai)
+- [x] Ganti layer karakter statis dengan rig kanvas 2x DPR (`#workspaceCharCanvas`) beranimasi kedipan mata natural, ekspresi mata tersenyum (`Sapa Syamsul`), dan gerak mulut lip-sync saat dialog/AI aktif
+- [x] Tambahkan *rim-light* dinamis (`source-atop`) pada karakter yang bereaksi terhadap sakelar lampu meja dan mode `Pagi | Senja | Malam`
+- [x] Tingkatkan diorama ruangan: langit jendela dua panel terpisah (bintang, bulan sabit, bintang jatuh, awan senja/pagi, sorot matahari pagi), bayangan kaki karakter di lantai, serta layar laptop meja interaktif (bar kode & equalizer AI)
 
 ### Poin 4 — Dukungan Dwibahasa (`ID | EN`) & Export CV ATS-Friendly
 - [ ] Buat sistem lokalisasi `src/data/i18n.js` + sakelar `ID | EN` di header
