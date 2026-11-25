@@ -48,3 +48,8 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 ## 7. Eksekusi Poin 4 `v2.0` — Dwibahasa `ID | EN` & Unduhan CV ATS PDF (2026-11-25)
 - Membangun modul `src/data/i18n.js` yang menerjemahkan secara reaktif seluruh UI, biodata, 5 simulasi proyek + mockup UI, repositori GitHub, scrubber timeline, composer brief, menu perintah `Cmd+K`, dan AI Playground via tombol **`ID | EN`** di header (maupun perintah `/en` & `/id`).
 - Membuat skrip generator zero-dependency `scripts/generate-ats-cv.mjs` menghasilkan dua file PDF 1.4 standar ATS 1-halaman (`M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`) yang tersinkron dengan tautan unduhan dan tampilan cetak `@media print`.
+
+## 8. Eksekusi Poin 5 `v2.0` — Open Graph, SEO Schema.org, Sitemap & README (2026-11-25)
+- Membuat gambar preview sosial `public/og-preview.png` (`1200x630`) dari tampilan diorama `Malam`.
+- Menambahkan meta `canonical`, Open Graph, Twitter Card (`summary_large_image`), serta structured data JSON-LD `@graph` (`ProfilePage` & `Person`) ke `index.html`.
+- Menambahkan `public/robots.txt`, `public/sitemap.xml`, dan `README.md` pada repositori `syamban14/my-portofolio`.

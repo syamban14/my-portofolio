@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syamban14.github.io/my-portofolio/sitemap.xml

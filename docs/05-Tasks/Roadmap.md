@@ -52,7 +52,7 @@ tags:
 - [x] Terjemahkan seluruh elemen UI, data biodata, 5 simulasi proyek, konstelasi keahlian, repositori GitHub, composer kontak, & respons AI ke Bahasa Inggris profesional
 - [x] Buat skrip `scripts/generate-ats-cv.mjs` untuk menghasilkan PDF ATS 1-halaman bersih (`public/cv/M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`), tombol unduh otomatis sesuai bahasa aktif, serta lembar cetak `@media print` dwibahasa
 
-### Poin 5 — Open Graph Preview Card, SEO Schema.org, & Optimasi URL
-- [ ] Buat aset kartu sosial `public/og-preview.png` (`1200x630`)
-- [ ] Tambahkan meta tags `og:*`, `twitter:card`, `canonical`, dan JSON-LD `Person` di `index.html`
-- [ ] Validasi final dengan `npm run build`, audit browser desktop + mobile, lalu commit & push otomatis ke GitHub Pages
+### Poin 5 — Open Graph Preview Card, SEO Schema.org, & Optimasi URL (Selesai)
+- [x] Buat aset kartu sosial `public/og-preview.png` (`1200x630`)
+- [x] Tambahkan meta tags `og:*`, `twitter:card`, `canonical`, `public/robots.txt`, `public/sitemap.xml`, dan JSON-LD `Person` / `ProfilePage` di `index.html`, serta `README.md`
+- [x] Validasi final dengan `npm run build`, verifikasi `HTTP 200` seluruh aset SEO/OG di GitHub Pages (`https://syamban14.github.io/my-portofolio/`)
