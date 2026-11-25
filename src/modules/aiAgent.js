@@ -144,6 +144,34 @@ export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrint
       return;
     }
 
+    if (topic === 'github') {
+      const featured = portfolioData.githubCuratedRepos.filter((r) => r.featured).slice(0, 5);
+      inspectorBody.innerHTML = `
+        <div class="inspector-card">
+          <h3>Repositori Terbuka @syamban14</h3>
+          <div class="inspector-rows">
+            ${featured
+              .map(
+                (repo) => `
+              <div class="inspector-row">
+                <div>
+                  <p class="inspector-primary">${repo.name}</p>
+                  <p class="inspector-meta">${repo.language}</p>
+                </div>
+                <a href="https://github.com/syamban14/${repo.name}" target="_blank" rel="noopener" class="inline-jump-btn">Buka repo</a>
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+          <button type="button" class="inline-jump-btn inspector-cta" data-jump-section="#github-repos">
+            Lihat seluruh repositori GitHub
+          </button>
+        </div>
+      `;
+      return;
+    }
+
     if (topic === 'contact') {
       const c = portfolioData.contact;
       inspectorBody.innerHTML = `
@@ -163,8 +191,8 @@ export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrint
               <p class="inspector-primary">${c.email}</p>
             </div>
             <div class="inspector-block">
-              <p class="inspector-meta">LinkedIn & Blog</p>
-              <p class="inspector-primary">${c.linkedinHandle} · ${c.blogHost}</p>
+              <p class="inspector-meta">GitHub, LinkedIn, & Blog</p>
+              <p class="inspector-primary">${c.githubHandle} · ${c.linkedinHandle} · ${c.blogHost}</p>
             </div>
           </div>
           <button type="button" class="btn-primary inspector-cta" data-jump-section="#contact">
@@ -286,6 +314,22 @@ export function initAiAgent({ setTimeMode, toggleLamp, onRequestSection, onPrint
       return {
         topic: 'edu',
         text: 'Syamsul menyelesaikan S1 Sistem Informasi di STMIK Bina Sarana Global (IPK 3.32) setelah D3 Manajemen Informatika di Politeknik LP3I Bandung (IPK 2.92). Pada Agustus 2025 ia meraih sertifikasi AI Productivity and AI API Integration for Developers dari Hacktiv8, serta pernah meraih Juara 1 PTK PNFI tingkat Kota Cilegon (2017) dan Juara 3 tingkat Provinsi Banten (2018).',
+      };
+    }
+
+    if (
+      q.includes('github') ||
+      q.includes('open source') ||
+      q.includes('repo') ||
+      q.includes('hermes') ||
+      q.includes('mixa') ||
+      q.includes('3d') ||
+      q.includes('qhse') ||
+      q.includes('odoo')
+    ) {
+      return {
+        topic: 'github',
+        text: 'Di GitHub @syamban14 tersedia 50+ repositori publik mencakup orkestrator agen AI (hermes-mix-ai), ekosistem aplikasi Mixa (mixa-frontend Svelte & mixa-backend Python), eksperimen Web 3D interaktif yang tayang langsung di GitHub Pages (step-100-3d dan beach-3d), modul ERP Odoo 17, serta aplikasi Laravel QHSE.',
       };
     }
 

@@ -27,6 +27,7 @@ export function initProjectShowcase() {
   const listWrap = document.getElementById('projectSelectorList');
   const titleEl = document.getElementById('projectStageTitle');
   const metaEl = document.getElementById('projectStageMeta');
+  const impactStripEl = document.getElementById('projectImpactStrip');
   const summaryEl = document.getElementById('projectStageSummary');
   const roleEl = document.getElementById('projectStageRole');
   const modeWrap = document.getElementById('projectModeTabs');
@@ -37,6 +38,7 @@ export function initProjectShowcase() {
   let activeProjectId = portfolioData.projects[0].id;
   let activeMode = 'simulasi';
   let activeArchIndex = 0;
+  let activeMockScreen = 'utama';
 
   // Per-project interactive simulation states
   const simState = {
@@ -245,17 +247,82 @@ export function initProjectShowcase() {
     `;
   }
 
+  function renderUiMockup(project) {
+    const mockup = project.uiMockup;
+    if (!mockup) return;
+
+    const isSecondary = activeMockScreen === 'data';
+    stageBody.innerHTML = `
+      <div class="mockup-stage">
+        <div class="mockup-toolbar">
+          <div class="segmented-control" role="tablist" aria-label="Pilih layar pratinjau antarmuka">
+            <button type="button" class="seg-btn${!isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${!isSecondary}" data-mock-screen="utama">Layar Utama</button>
+            <button type="button" class="seg-btn${isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${isSecondary}" data-mock-screen="data">Panel Data</button>
+          </div>
+          <span class="sim-caption">Tampilan konsep ${mockup.device === 'mobile' ? 'aplikasi seluler' : 'portal web'}</span>
+        </div>
+
+        <div class="ui-mockup-frame ui-mockup-${mockup.device}">
+          <div class="mockup-chrome">
+            <span class="mockup-chrome-title">${mockup.headerTitle}</span>
+            <span class="mockup-chrome-meta">${project.stackText}</span>
+          </div>
+          <div class="mockup-screen-body">
+            ${
+              !isSecondary
+                ? `
+              <p class="mockup-screen-heading">${mockup.primaryTitle}</p>
+              <div class="mockup-kv-grid">
+                ${mockup.primaryStats
+                  .map(
+                    (st) => `
+                  <div class="mockup-kv-item">
+                    <span class="mockup-kv-label">${st.k}</span>
+                    <span class="mockup-kv-val tabular-nums">${st.v}</span>
+                  </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            `
+                : `
+              <p class="mockup-screen-heading">${mockup.secondaryTitle}</p>
+              <ul class="mockup-list-rows">
+                ${mockup.secondaryRows.map((row) => `<li>${row}</li>`).join('')}
+              </ul>
+            `
+            }
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   function renderStage() {
     const project =
       portfolioData.projects.find((p) => p.id === activeProjectId) || portfolioData.projects[0];
 
     titleEl.textContent = project.title;
     metaEl.textContent = `${project.org} · ${project.period} · ${project.stackText}`;
+    if (impactStripEl && project.impactMetrics) {
+      impactStripEl.innerHTML = project.impactMetrics
+        .map(
+          (m) => `
+        <div class="impact-cell">
+          <span class="impact-value tabular-nums">${m.value}</span>
+          <span class="impact-label">${m.label}</span>
+        </div>
+      `
+        )
+        .join('');
+    }
     summaryEl.textContent = project.summary;
     roleEl.textContent = project.roleContribution;
 
     if (activeMode === 'arsitektur') {
       renderArchitecture(project);
+    } else if (activeMode === 'antarmuka') {
+      renderUiMockup(project);
     } else {
       renderSimulation(project);
     }
@@ -285,6 +352,14 @@ export function initProjectShowcase() {
   });
 
   stageBody.addEventListener('click', (event) => {
+    const mockBtn = event.target.closest('[data-mock-screen]');
+    if (mockBtn) {
+      soundEngine.playClick();
+      activeMockScreen = mockBtn.dataset.mockScreen;
+      renderStage();
+      return;
+    }
+
     const archBtn = event.target.closest('[data-arch-idx]');
     if (archBtn) {
       soundEngine.playClick();

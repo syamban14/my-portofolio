@@ -6,6 +6,7 @@ import { initLivingWorkspace } from './modules/livingWorkspace.js';
 import { initAiAgent } from './modules/aiAgent.js';
 import { initSkillGraph } from './modules/skillGraph.js';
 import { initProjectShowcase } from './modules/projectShowcase.js';
+import { initGithubShowcase } from './modules/githubShowcase.js';
 import { initTimelineScrubber } from './modules/timelineScrubber.js';
 import { initCollaborationComposer } from './modules/collaborationComposer.js';
 import { initCommandPalette } from './modules/commandPalette.js';
@@ -126,6 +127,7 @@ function initStudioApp() {
 
   // Initialize interactive modules
   projectsApi = initProjectShowcase();
+  initGithubShowcase();
 
   workspaceApi = initLivingWorkspace({
     getTimeMode: () => currentMode,

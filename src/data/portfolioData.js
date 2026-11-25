@@ -17,6 +17,9 @@ export const portfolioData = {
     email: 'Syamsuliki.48@gmail.com',
     linkedin: 'https://linkedin.com/in/m-syamsul',
     linkedinHandle: 'linkedin.com/in/m-syamsul',
+    github: 'https://github.com/syamban14',
+    githubHandle: 'github.com/syamban14',
+    githubUsername: 'syamban14',
     blog: 'https://Syamsul14.blogspot.com',
     blogHost: 'Syamsul14.blogspot.com',
     location: 'Cilegon, Banten, Indonesia',
@@ -181,6 +184,27 @@ export const portfolioData = {
         'Aplikasi manajemen kehadiran karyawan lintas platform untuk kebutuhan operasional logistik di PT. BCS Logistics.',
       roleContribution:
         'Merancang arsitektur aplikasi Android, iOS, serta panel pemantauan web dan manajemen database presensi.',
+      impactMetrics: [
+        { value: '3 Platform', label: 'Android, iOS, & Web' },
+        { value: 'Real-Time', label: 'Validasi Geofence GPS' },
+        { value: 'Multi-Shift', label: 'Operasional Logistik BCS' },
+      ],
+      uiMockup: {
+        device: 'mobile',
+        headerTitle: 'Presensi BCS Logistics',
+        primaryTitle: 'Check-In Lokasi Kantor Pusat Cilegon',
+        primaryStats: [
+          { k: 'Radius GPS', v: '18 m (Valid)' },
+          { k: 'Jadwal Shift', v: '08:00 - 17:00 WIB' },
+          { k: 'Sinkronisasi', v: 'Tercatat ke Server' },
+        ],
+        secondaryTitle: 'Rekap Kehadiran Harian Divisi',
+        secondaryRows: [
+          'Operasional Gudang · Hadir 07:56 WIB',
+          'Tim Pengiriman · Shift Lapangan Aktif',
+          'Admin Logistik · Terverifikasi Lokasi',
+        ],
+      },
       architecture: [
         {
           layer: 'Klien Mobile',
@@ -210,6 +234,27 @@ export const portfolioData = {
         'Platform kesehatan digital untuk memudahkan akses layanan medis dan antrean informasi kesehatan bagi masyarakat Cilegon.',
       roleContribution:
         'Mengembangkan fitur layanan aplikasi kesehatan, integrasi API, debugging, dan pemeliharaan basis data.',
+      impactMetrics: [
+        { value: 'Kota Cilegon', label: 'Cakupan Layanan Warga' },
+        { value: 'Terpusat', label: 'Antrean & Jadwal Poli' },
+        { value: 'Mobile + API', label: 'Arsitektur Terintegrasi' },
+      ],
+      uiMockup: {
+        device: 'mobile',
+        headerTitle: 'Layanan Kesehatan doklinc',
+        primaryTitle: 'Pendaftaran Poli & Antrean Langsung',
+        primaryStats: [
+          { k: 'Nomor Aktif', v: 'Antrean A-014' },
+          { k: 'Estimasi Tunggu', v: '10 Menit' },
+          { k: 'Status API', v: 'Terhubung Klinik' },
+        ],
+        secondaryTitle: 'Riwayat Kunjungan & Rujukan Pasien',
+        secondaryRows: [
+          'Konsultasi Umum · Terjadwal 09:30 WIB',
+          'Cek Kesehatan Rutin · Selesai Verifikasi',
+          'Notifikasi Pasien · Terkirim Otomatis',
+        ],
+      },
       architecture: [
         {
           layer: 'Antarmuka Pengguna',
@@ -239,6 +284,27 @@ export const portfolioData = {
         'Platform pelaksanaan ujian berbasis komputer dan web untuk mengevaluasi kompetensi mahasiswa di lingkungan LP3I College.',
       roleContribution:
         'Membangun modul soal interaktif, pencatatan skor otomatis, dan menjaga kesiapan jaringan ruang ujian.',
+      impactMetrics: [
+        { value: '7+ Tahun', label: 'Masa Pakai di LP3I' },
+        { value: 'Otomatis', label: 'Kalkulasi Nilai Ujian' },
+        { value: 'Serentak', label: 'Dukungan Ujian LAN & Web' },
+      ],
+      uiMockup: {
+        device: 'desktop',
+        headerTitle: 'Portal Ujian Online LP3I College',
+        primaryTitle: 'Lembar Soal & Timer Sesi Lab Komputer',
+        primaryStats: [
+          { k: 'Status Sesi', v: 'Tersambung LAN' },
+          { k: 'Soal Terjawab', v: '28 / 30 Butir' },
+          { k: 'Auto-Save', v: 'Aktif ke MySQL' },
+        ],
+        secondaryTitle: 'Rekap Nilai & Kehadiran Kelas',
+        secondaryRows: [
+          'Manajemen Informatika · 32 Peserta Selesai',
+          'Validasi Token Ruang · Terkunci Per Sesi',
+          'Ekspor Nilai Dosen · Siap Unduh CSV',
+        ],
+      },
       architecture: [
         {
           layer: 'Browser Peserta',
@@ -268,6 +334,27 @@ export const portfolioData = {
         'Sistem seleksi penerimaan calon mahasiswa baru secara daring untuk mengukur kesiapan akademik dan minat program studi.',
       roleContribution:
         'Mengembangkan sistem penilaian seleksi, pemetaan rekomendasi kelulusan, dan dukungan operasional penerimaan.',
+      impactMetrics: [
+        { value: '3 Modul', label: 'Logika, Komputer, Inggris' },
+        { value: 'Instan', label: 'Rekomendasi Program Studi' },
+        { value: 'Paperless', label: 'Seleksi Mahasiswa Baru' },
+      ],
+      uiMockup: {
+        device: 'desktop',
+        headerTitle: 'Seleksi Test Online Masuk LP3I',
+        primaryTitle: 'Evaluasi Potensi Calon Mahasiswa Baru',
+        primaryStats: [
+          { k: 'Bobot Penilaian', v: '3 Komponen Tes' },
+          { k: 'Rekomendasi', v: 'Otomatis Sesuai Skor' },
+          { k: 'Verifikasi', v: 'Panel Panitia PMB' },
+        ],
+        secondaryTitle: 'Pemetaan Kelulusan & Minat Jurusan',
+        secondaryRows: [
+          'D3 Manajemen Informatika · Rekomendasi Utama',
+          'Sistem Skor Real-Time · Nol Koreksi Manual',
+          'Arsip Nilai Pendaftar · Tersimpan Terpusat',
+        ],
+      },
       architecture: [
         {
           layer: 'Portal Pendaftar',
@@ -297,6 +384,27 @@ export const portfolioData = {
         'Sistem manajemen surat masuk, surat keluar, disposisi, dan penomoran dokumen resmi untuk tata usaha institusi.',
       roleContribution:
         'Merancang alur persetujuan dokumen, penomoran otomatis, dan arsip pencarian surat internal.',
+      impactMetrics: [
+        { value: '4 Tahap', label: 'Alur Verifikasi & Disposisi' },
+        { value: 'Otomatis', label: 'Penomoran Surat Resmi' },
+        { value: 'Terindeks', label: 'Arsip Digital Institusi' },
+      ],
+      uiMockup: {
+        device: 'desktop',
+        headerTitle: 'Sistem Persuratan LP3I College',
+        primaryTitle: 'Penomoran Surat Resmi & Pelacakan Disposisi',
+        primaryStats: [
+          { k: 'Format Nomor', v: '042/LP3I-CLG/XI' },
+          { k: 'Tahap Disposisi', v: '4 Langkah Berurut' },
+          { k: 'Pencarian Arsip', v: 'Indeks Nomor & Tanggal' },
+        ],
+        secondaryTitle: 'Log Persetujuan Tata Usaha',
+        secondaryRows: [
+          'Draft Surat Tugas · Diperiksa Kabag',
+          'Disposisi Pimpinan · Disetujui Digital',
+          'Lampiran Resmi · Siap Cetak & Arsip',
+        ],
+      },
       architecture: [
         {
           layer: 'Antarmuka Tata Usaha',
@@ -421,6 +529,118 @@ export const portfolioData = {
         'Sertifikasi AI Productivity & AI API Integration (Hacktiv8, Agustus 2025), Juara 1 PTK PNFI Cilegon, dan Juara 3 Provinsi Banten.',
       ctaLabel: 'Lihat riwayat lengkap',
       targetSection: '#experience',
+    },
+  ],
+  githubCuratedRepos: [
+    {
+      name: 'hermes-mix-ai',
+      language: 'Python',
+      category: 'ai',
+      featured: true,
+      updatedAt: '2026-08-28T18:52:10Z',
+      description:
+        'Orkestrator efisiensi tinggi dan penghemat token untuk Hermes Agent dengan tiered routing, isolasi git worktree, dan zero-token gate.',
+    },
+    {
+      name: 'mixa-frontend',
+      language: 'Svelte',
+      category: 'fullstack',
+      featured: true,
+      updatedAt: '2026-11-11T09:08:29Z',
+      description:
+        'Antarmuka web reaktif berbasis Svelte dan Vite untuk ekosistem aplikasi cerdas Mixa.',
+    },
+    {
+      name: 'mixa-backend',
+      language: 'Python',
+      category: 'ai',
+      featured: false,
+      updatedAt: '2026-07-20T02:14:18Z',
+      description:
+        'Layanan backend Python pendukung pemrosesan data, integrasi model, dan orkestrasi API platform Mixa.',
+    },
+    {
+      name: 'step-100-3d',
+      language: 'JavaScript',
+      category: 'web3d',
+      featured: true,
+      demoUrl: 'https://syamban14.github.io/step-100-3d/',
+      updatedAt: '2026-11-20T02:59:43Z',
+      description:
+        'Eksperimen interaktif ruang tiga dimensi berbasis web dengan kontrol pergerakan langsung di browser.',
+    },
+    {
+      name: 'beach-3d',
+      language: 'Python',
+      category: 'web3d',
+      featured: true,
+      demoUrl: 'https://syamban14.github.io/beach-3d/',
+      updatedAt: '2026-11-16T03:41:29Z',
+      description:
+        'Visualisasi pemandangan pantai 3D interaktif yang dapat dijelajahi langsung melalui GitHub Pages.',
+    },
+    {
+      name: 'gemini-chatbot-api',
+      language: 'JavaScript',
+      category: 'ai',
+      featured: false,
+      updatedAt: '2025-08-19T03:22:12Z',
+      description:
+        'Implementasi chatbot percakapan menggunakan integrasi Google Gemini API.',
+    },
+    {
+      name: 'gemini-flash-api',
+      language: 'JavaScript',
+      category: 'ai',
+      featured: false,
+      updatedAt: '2025-08-15T07:30:31Z',
+      description:
+        'Eksperimen pemanggilan cepat dan integrasi layanan model Gemini Flash API.',
+    },
+    {
+      name: 'qhse-app',
+      language: 'Laravel / Blade',
+      category: 'fullstack',
+      featured: true,
+      updatedAt: '2025-12-08T04:31:01Z',
+      description:
+        'Aplikasi manajemen Quality, Health, Safety, and Environment (QHSE) berbasis Laravel.',
+    },
+    {
+      name: 'bcs-fit',
+      language: 'PHP',
+      category: 'fullstack',
+      featured: true,
+      updatedAt: '2024-10-18T09:23:44Z',
+      description:
+        'Sistem pemantauan aktivitas kebugaran dan kesehatan berbasis framework PHP CodeIgniter 4.',
+    },
+    {
+      name: 'odoo17-module-development',
+      language: 'Python',
+      category: 'fullstack',
+      featured: false,
+      updatedAt: '2025-06-09T09:42:59Z',
+      description:
+        'Pengembangan modul kustom ERP Odoo 17 berbasis Python untuk otomasi proses bisnis.',
+    },
+    {
+      name: 'irsyam_kidz_wear',
+      language: 'TypeScript',
+      category: 'fullstack',
+      featured: false,
+      updatedAt: '2026-03-22T14:59:38Z',
+      description:
+        'Katalog dan etalase web modern busana anak berbasis Next.js dan TypeScript.',
+    },
+    {
+      name: 'ngaji_geh',
+      language: 'HTML',
+      category: 'fullstack',
+      featured: false,
+      updatedAt: '2024-09-27T08:15:04Z',
+      description:
+        'Aplikasi program mengaji dan direktori pencarian guru mengaji untuk masyarakat.',
     },
   ],
 };

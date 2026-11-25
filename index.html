@@ -206,15 +206,47 @@
               </div>
               <div class="segmented-control" id="projectModeTabs" role="tablist" aria-label="Mode tampilan proyek">
                 <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="simulasi">Simulasi Aplikasi</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="antarmuka">Pratinjau UI</button>
                 <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="arsitektur">Arsitektur Sistem</button>
               </div>
             </div>
 
+            <div class="impact-strip" id="projectImpactStrip" aria-label="Ringkasan dampak operasional"></div>
             <p class="project-summary-copy" id="projectStageSummary"></p>
             <p class="project-role-copy" id="projectStageRole"></p>
 
             <div class="project-interactive-body" id="projectStageBody"></div>
           </div>
+        </div>
+
+        <div class="github-workbench" id="github-repos">
+          <div class="github-head-row">
+            <div>
+              <h3>Repositori terbuka & eksperimen GitHub (@syamban14)</h3>
+              <p class="inspector-meta" id="githubStatusMeta">Menyelaraskan repositori publik @syamban14...</p>
+            </div>
+            <a href="https://github.com/syamban14" target="_blank" rel="noopener" class="inline-jump-btn">Lihat profil GitHub</a>
+          </div>
+
+          <div class="github-toolbar">
+            <div class="segmented-control" id="githubFilterTabs" role="tablist" aria-label="Filter repositori GitHub">
+              <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-gh-filter="featured">Unggulan</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="ai">AI & Python</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="web3d">3D & Interaktif</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="fullstack">Full-Stack & ERP</button>
+              <button type="button" class="seg-btn" role="tab" aria-selected="false" data-gh-filter="all">Semua</button>
+            </div>
+            <label for="githubSearchInput" class="sr-only">Cari repositori GitHub</label>
+            <input
+              id="githubSearchInput"
+              type="search"
+              class="github-search-input"
+              placeholder="Cari repo (hermes, mixa, 3d, qhse)..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="github-repo-grid" id="githubRepoGrid"></div>
         </div>
       </div>
     </section>
@@ -326,6 +358,8 @@
                 <div>
                   <p class="inspector-meta">Tautan profesional</p>
                   <p class="contact-dir-links">
+                    <a href="https://github.com/syamban14" target="_blank" rel="noopener">GitHub</a>
+                    <span aria-hidden="true">·</span>
                     <a href="https://linkedin.com/in/m-syamsul" target="_blank" rel="noopener">LinkedIn</a>
                     <span aria-hidden="true">·</span>
                     <a href="https://Syamsul14.blogspot.com" target="_blank" rel="noopener">Blog</a>
@@ -371,7 +405,7 @@
   <!-- Print-ready 1-Page CV Summary (hidden on screen, shown on @media print) -->
   <section class="print-cv-sheet" aria-hidden="true">
     <h1>M. SYAMSUL - IT Programmer & AI Specialist</h1>
-    <p>Cilegon, Banten, Indonesia · +62 821-1157-9944 · Syamsuliki.48@gmail.com · linkedin.com/in/m-syamsul</p>
+    <p>Cilegon, Banten, Indonesia · +62 821-1157-9944 · Syamsuliki.48@gmail.com · github.com/syamban14 · linkedin.com/in/m-syamsul</p>
     <p>Seorang IT Programmer dan IT Specialist berpengalaman dengan latar belakang Sistem Informasi dan Manajemen Informatika, berfokus pada riset AI Agent, aplikasi web & mobile, dan manajemen infrastruktur IT.</p>
     <h2>Pengalaman Kerja</h2>
     <p><strong>PT. BCS Logistics</strong> - IT Programmer (Agustus 2024 - Agustus 2026): Aplikasi Presensi Online Android & iOS, aplikasi kesehatan doklinc, pemeliharaan web & database.</p>
