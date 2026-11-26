@@ -170,9 +170,9 @@ const cvId = {
   summary:
     'IT Programmer dan AI Specialist berpengalaman 8+ tahun dengan latar belakang S1 Sistem Informasi dan D3 Manajemen Informatika. Fokus utama pada pengembangan teknologi AI Agent, Prompt Engineering, integrasi AI API, pengembangan aplikasi web & mobile lintas platform, serta manajemen infrastruktur IT institusi.',
   skills: [
-    'AI & Otomasi: AI Agent Dev (92%), Prompt Engineering (90%), AI API Integration (88%), Hermes Agent Orchestration',
-    'Bahasa & Basis Data: Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Laravel / CodeIgniter / Svelte / Next.js',
-    'Platform & Infrastruktur: Web & Mobile Dev Android/iOS (90%), IT Support (92%), Networking & LAN Kampus (80%)',
+    'AI & Otomasi: AI Agent Dev, Prompt Engineering, AI API Integration, Hermes Agent Orchestration',
+    'Bahasa & Basis Data: Python, Go, PHP, JavaScript, PostgreSQL, MySQL, SQLite',
+    'Platform & Infra: REST / RESTful API, Docker, Web & Mobile Dev (Android/iOS), IT Support, Networking',
   ],
   experience: [
     {
@@ -226,9 +226,9 @@ const cvEn = {
   summary:
     'IT Programmer and AI Specialist with 8+ years of professional experience and degrees in Information Systems and Informatics Management. Focused on engineering AI Agent workflows, Prompt Engineering, AI API integrations, cross-platform web & mobile applications, and reliable institutional IT infrastructure.',
   skills: [
-    'AI & Automation: AI Agent Dev (92%), Prompt Engineering (90%), AI API Integration (88%), Hermes Agent Orchestration',
-    'Languages & Databases: Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Laravel / CodeIgniter / Svelte / Next.js',
-    'Platforms & Infra: Web & Mobile Dev Android/iOS (90%), IT Support (92%), Campus Networking & Operations (80%)',
+    'AI & Automation: AI Agent Dev, Prompt Engineering, AI API Integration, Hermes Agent Orchestration',
+    'Languages & Databases: Python, Go, PHP, JavaScript, PostgreSQL, MySQL, SQLite',
+    'Platforms & Infra: REST / RESTful API, Docker, Web & Mobile Dev (Android/iOS), IT Support, Networking',
   ],
   experience: [
     {

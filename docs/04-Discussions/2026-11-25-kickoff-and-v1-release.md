@@ -59,3 +59,8 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Menghapus tombol `Menu cepat` (`#commandTriggerBtn`) dari header untuk menjaga bar navigasi tetap ringkas; pintasan keyboard `Cmd/Ctrl + K` tetap tersedia sebagai akses sekunder.
 - Mengubah mode waktu studio (`Pagi | Senja | Malam`) agar secara default mengikuti jam lokal pengunjung (`05:00-15:59` Pagi, `16:00-18:29` Senja, `18:30-04:59` Malam) dengan sinkronisasi berkala setiap 60 detik, namun tetap dapat diganti secara manual lewat tombol atau perintah slash AI (`/pagi`, `/senja`, `/malam`, `/day`, `/dusk`, `/night`).
 - Status Poin 2 (Live LLM API Proxy) tetap ditunda sesuai arahan pengguna.
+
+## 10. Ekspansi 15 Keahlian & Penghapusan Angka Persentase (2026-11-26)
+- Menambahkan 5 keahlian baru: **PostgreSQL**, **SQLite** (Database), **Go** (Language), **Docker**, dan **REST / RESTful API** (Tech), sehingga total menjadi 15 keahlian aktif dwibahasa (`ID | EN`).
+- Menghapus seluruh angka persentase (`%`) dan progress bar skor diri pada konstelasi keahlian, inspector AI, ringkasan hotspot, lembar cetak CV, serta file ATS CV PDF (`M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`).
+- Mengganti visualisasi dengan kode monogram teknologi pada simpul graf serta fokus pada jumlah proyek terkait dan konteks penggunaan nyata di produksi.

@@ -68,7 +68,7 @@ export const portfolioData = {
     {
       id: 'ai-agent-dev',
       name: 'AI Agent Dev',
-      level: 92,
+      code: 'AI',
       category: 'AI',
       usage:
         'Merancang alur kerja agen otonom, tool calling, dan asisten tugas untuk otomasi produktivitas UMKM serta institusi.',
@@ -77,7 +77,7 @@ export const portfolioData = {
     {
       id: 'prompt-engineering',
       name: 'Prompt Engineering',
-      level: 90,
+      code: 'PE',
       category: 'AI',
       usage:
         'Menyusun instruksi terstruktur, guardrails, dan evaluasi output LLM agar akurat dan konsisten pada kasus bisnis.',
@@ -86,7 +86,7 @@ export const portfolioData = {
     {
       id: 'ai-api-integration',
       name: 'AI API Integration',
-      level: 88,
+      code: 'API',
       category: 'AI',
       usage:
         'Mengintegrasikan API model bahasa dan kecerdasan buatan ke layanan backend serta aplikasi web modern.',
@@ -95,16 +95,25 @@ export const portfolioData = {
     {
       id: 'python',
       name: 'Python',
-      level: 90,
+      code: 'PY',
       category: 'Language',
       usage:
         'Pengembangan skrip otomasi, riset eksperimen agen AI, pemrosesan data, serta layanan API backend.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
+      id: 'go',
+      name: 'Go',
+      code: 'GO',
+      category: 'Language',
+      usage:
+        'Membangun layanan backend berkinerja tinggi, konkurensi ringan, dan mikroservis RESTful API yang efisien.',
+      relatedProjects: ['presensi-online', 'doklinc'],
+    },
+    {
       id: 'javascript',
       name: 'JavaScript',
-      level: 85,
+      code: 'JS',
       category: 'Language',
       usage:
         'Membangun antarmuka web responsif, interaksi real-time, dan integrasi klien-server lintas platform.',
@@ -113,16 +122,25 @@ export const portfolioData = {
     {
       id: 'php',
       name: 'PHP',
-      level: 88,
+      code: 'PHP',
       category: 'Language',
       usage:
         'Fondasi sistem informasi kampus, portal ujian daring, seleksi mahasiswa baru, dan persuratan institusi.',
       relatedProjects: ['aplikasi-surat', 'ujian-online', 'test-masuk'],
     },
     {
+      id: 'postgresql',
+      name: 'PostgreSQL',
+      code: 'PG',
+      category: 'Database',
+      usage:
+        'Manajemen basis data relasional tingkat enterprise, konsistensi transaksi, dan optimasi indeks untuk sistem produksi.',
+      relatedProjects: ['presensi-online', 'doklinc'],
+    },
+    {
       id: 'mysql',
       name: 'MySQL',
-      level: 85,
+      code: 'SQL',
       category: 'Database',
       usage:
         'Perancangan skema relasional, optimasi kueri, pemeliharaan integritas data presensi, ujian, dan rekam layanan.',
@@ -135,9 +153,36 @@ export const portfolioData = {
       ],
     },
     {
+      id: 'sqlite',
+      name: 'SQLite',
+      code: 'LITE',
+      category: 'Database',
+      usage:
+        'Penyimpanan lokal ringan tanpa server untuk cache aplikasi mobile, pembuatan prototipe cepat, dan persistensi agen AI lokal.',
+      relatedProjects: ['presensi-online', 'doklinc'],
+    },
+    {
+      id: 'rest-api',
+      name: 'REST / RESTful API',
+      code: 'REST',
+      category: 'Tech',
+      usage:
+        'Perancangan arsitektur endpoint standar, autentikasi token, dan integrasi data JSON antara aplikasi mobile, web, serta layanan AI.',
+      relatedProjects: ['presensi-online', 'doklinc', 'ujian-online'],
+    },
+    {
+      id: 'docker',
+      name: 'Docker',
+      code: 'DKR',
+      category: 'Tech',
+      usage:
+        'Kontainerisasi layanan aplikasi, isolasi lingkungan pengembangan dan produksi, serta standarisasi deployment backend.',
+      relatedProjects: ['presensi-online', 'doklinc'],
+    },
+    {
       id: 'web-mobile-dev',
       name: 'Web & Mobile Dev',
-      level: 90,
+      code: 'APP',
       category: 'Tech',
       usage:
         'Pengembangan end-to-end aplikasi web, Android, dan iOS termasuk deployment serta pemeliharaan berkala.',
@@ -146,7 +191,7 @@ export const portfolioData = {
     {
       id: 'it-support',
       name: 'IT Support',
-      level: 92,
+      code: 'OPS',
       category: 'Tech',
       usage:
         'Penyusunan program kerja tahunan IT, pemeliharaan perangkat keras dan lunak, serta dukungan operasional harian.',
@@ -155,7 +200,7 @@ export const portfolioData = {
     {
       id: 'networking',
       name: 'Networking',
-      level: 80,
+      code: 'NET',
       category: 'Tech',
       usage:
         'Perencanaan dan pemeliharaan infrastruktur jaringan lokal kampus agar operasional akademik dan ujian berjalan stabil.',
@@ -490,7 +535,7 @@ export const portfolioData = {
       y: 38,
       speech: 'Di sinilah saya meriset dan merangkai agen AI serta integrasi API untuk kebutuhan nyata.',
       summary:
-        'Fokus utama saat ini: AI Agent Dev (92%), Prompt Engineering (90%), Python (90%), dan AI API Integration (88%).',
+        'Fokus utama saat ini: AI Agent Dev, Prompt Engineering, Python, Go, dan AI API Integration.',
       ctaLabel: 'Tanya AI Syamsul',
       targetSection: '#ai-studio',
     },
@@ -514,7 +559,7 @@ export const portfolioData = {
       y: 66,
       speech: 'Selama 2017 hingga 2024 di LP3I College, saya mengelola jaringan, hardware, dan sistem kampus.',
       summary:
-        'Delapan tahun lebih memadukan peran IT Support (92%), Networking (80%), dan pengembangan web internal berbasis PHP & MySQL.',
+        'Delapan tahun lebih memadukan peran IT Support, Networking, Docker, serta pengembangan sistem berbasis PHP, PostgreSQL, & MySQL.',
       ctaLabel: 'Telusuri jejak karir',
       targetSection: '#experience',
     },

@@ -25,11 +25,11 @@ Seluruh fakta biodata diekstrak dari `http://103.93.160.96:8082/data.json` dan d
 - **Pengalaman Kerja:**
   1. **PT. BCS Logistics** — IT Programmer (`Agustus 2024 - Agustus 2026`, Cilegon): Aplikasi Presensi Online Android & iOS, aplikasi kesehatan `doklinc`, maintenance & pengembangan web, debugging & database.
   2. **LP3I Business College** — IT Support (`Januari 2017 - Agustus 2024`, Cilegon): Program kerja tahunan IT, infrastruktur jaringan/hardware/software, dukungan teknis harian, aplikasi internal institusi.
-- **Keahlian (10 Kompetensi):**
-  - **AI:** AI Agent Dev (`92%`), Prompt Engineering (`90%`), AI API Integration (`88%`)
-  - **Language:** Python (`90%`), PHP (`88%`), JavaScript (`85%`)
-  - **Database:** MySQL (`85%`)
-  - **Tech:** IT Support (`92%`), Web & Mobile Dev (`90%`), Networking (`80%`)
+- **Keahlian (15 Kompetensi Tanpa Persentase):**
+  - **AI:** AI Agent Dev, Prompt Engineering, AI API Integration
+  - **Language:** Python, Go, JavaScript, PHP
+  - **Database:** PostgreSQL, MySQL, SQLite
+  - **Tech:** REST / RESTful API, Docker, Web & Mobile Dev, IT Support, Networking
 - **5 Proyek Utama:** Presensi Online (BCS Logistics), Aplikasi Kesehatan `doklinc` (Masyarakat Cilegon), Aplikasi Ujian Online (LP3I College), Aplikasi Test Online Masuk (LP3I College), Aplikasi Surat (LP3I College).
 - **Sertifikasi:** *AI Productivity and AI API Integration for Developers - Hacktiv8* (`Agustus 2025`).
 - **Pendidikan:** S1 Sistem Informasi STMIK Bina Sarana Global (`IPK 3.32`, `2014 - 2016`), D3 Manajemen Informatika Politeknik LP3I Bandung (`IPK 2.92`, `2011 - 2014`).

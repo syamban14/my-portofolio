@@ -61,3 +61,7 @@ tags:
 - [x] Hapus tombol `Menu cepat` (`#commandTriggerBtn`) dari header; pindahkan toggle `ID | EN` (`#langSwitch`) ke sisi paling kanan `.header-controls`
 - [x] Atur mode waktu studio (`Pagi | Senja | Malam`) otomatis mengikuti jam lokal secara default + sinkronisasi berkala 60 detik, tetap dapat dipilih manual lewat tombol/perintah AI
 - [x] Catatan: Poin 2 (Live LLM API Proxy) tetap ditunda sesuai keputusan pengguna
+
+### Ekspansi Keahlian & Fokus Bukti Proyek Tanpa Persentase (Selesai)
+- [x] Tambah 5 keahlian ke dataset (`public/data.json`, `portfolioData.js`, `i18n.js`): `PostgreSQL`, `SQLite`, `Go`, `Docker`, dan `REST / RESTful API`
+- [x] Hapus seluruh angka `%` & bar skor di `#skills`, `#ai-studio`, `#hudHotspotSummary`, cetak CV, dan regenerasi kedua file PDF ATS (`M-Syamsul-CV-ATS-ID.pdf` & `EN.pdf`)

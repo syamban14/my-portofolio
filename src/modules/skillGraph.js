@@ -8,6 +8,32 @@ const CATEGORY_COLORS = {
   Tech: '#f47a93',
 };
 
+const MOBILE_LABELS = {
+  'ai-agent-dev': 'AI Agent',
+  'prompt-engineering': 'Prompt Eng.',
+  'ai-api-integration': 'AI API',
+  'rest-api': 'RESTful API',
+  'web-mobile-dev': 'Web & Mobile',
+};
+
+const DESKTOP_SLOTS = {
+  'ai-agent-dev': { x: 0.15, y: 0.16 },
+  'prompt-engineering': { x: 0.38, y: 0.16 },
+  'ai-api-integration': { x: 0.26, y: 0.35 },
+  python: { x: 0.62, y: 0.15 },
+  go: { x: 0.85, y: 0.15 },
+  javascript: { x: 0.62, y: 0.36 },
+  php: { x: 0.85, y: 0.36 },
+  postgresql: { x: 0.15, y: 0.61 },
+  mysql: { x: 0.38, y: 0.61 },
+  sqlite: { x: 0.26, y: 0.82 },
+  'rest-api': { x: 0.60, y: 0.56 },
+  docker: { x: 0.86, y: 0.56 },
+  'web-mobile-dev': { x: 0.73, y: 0.70 },
+  'it-support': { x: 0.60, y: 0.84 },
+  networking: { x: 0.86, y: 0.84 },
+};
+
 /**
  * Interactive Force-Directed / Spring-Physics Skill Constellation on HTML5 Canvas.
  * Supports category filtering, pointer dragging, hover highlight, and synchronized Inspector.
@@ -20,7 +46,6 @@ export function initSkillGraph({ onSelectProject }) {
   const inspectorName = document.getElementById('skillInspectorName');
   const inspectorCat = document.getElementById('skillInspectorCat');
   const inspectorScore = document.getElementById('skillInspectorScore');
-  const inspectorBar = document.getElementById('skillInspectorBar');
   const inspectorUsage = document.getElementById('skillInspectorUsage');
   const inspectorProjects = document.getElementById('skillInspectorProjects');
 
@@ -30,7 +55,7 @@ export function initSkillGraph({ onSelectProject }) {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let width = 640;
-  let height = 420;
+  let height = 470;
   let activeCategory = 'all';
   let selectedId = getPortfolioData().skills[0].id;
   let hoveredId = null;
@@ -41,18 +66,43 @@ export function initSkillGraph({ onSelectProject }) {
     return {
       ...skill,
       x: 320 + Math.cos(angle) * 150,
-      y: 210 + Math.sin(angle) * 130,
+      y: 235 + Math.sin(angle) * 130,
       vx: 0,
       vy: 0,
-      radius: 15 + (skill.level - 78) * 0.45,
+      radius: 20,
     };
   });
 
-  function getHubTarget(category) {
-    if (category === 'AI') return { x: width * 0.26, y: height * 0.28 };
-    if (category === 'Language') return { x: width * 0.74, y: height * 0.28 };
-    if (category === 'Database') return { x: width * 0.26, y: height * 0.72 };
-    return { x: width * 0.72, y: height * 0.72 };
+  function getFilteredNodes() {
+    return activeCategory === 'all' ? nodes : nodes.filter((n) => n.category === activeCategory);
+  }
+
+  function getNodeTarget(node, idx, activeNodes) {
+    if (activeCategory !== 'all') {
+      const count = activeNodes.length || 1;
+      const angle = (idx / count) * Math.PI * 2 - Math.PI / 2;
+      const rx = Math.min(width * 0.3, 175);
+      const ry = Math.min(height * 0.28, 130);
+      return {
+        x: width * 0.5 + Math.cos(angle) * rx,
+        y: height * 0.48 + Math.sin(angle) * ry,
+      };
+    }
+
+    if (width < 520) {
+      const col = idx % 3;
+      const row = Math.floor(idx / 3);
+      return {
+        x: width * (0.18 + col * 0.32),
+        y: height * (0.11 + row * 0.19),
+      };
+    }
+
+    const slot = DESKTOP_SLOTS[node.id] || { x: 0.5, y: 0.5 };
+    return {
+      x: width * slot.x,
+      y: height * slot.y,
+    };
   }
 
   function resize() {
@@ -65,10 +115,19 @@ export function initSkillGraph({ onSelectProject }) {
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Keep nodes safely inside bounds after resize
+    const activeNodes = getFilteredNodes();
     nodes.forEach((node) => {
-      node.x = Math.max(46, Math.min(width - 46, node.x));
-      node.y = Math.max(46, Math.min(height - 46, node.y));
+      const idx = activeNodes.indexOf(node);
+      if (idx !== -1 && node !== draggingNode) {
+        const target = getNodeTarget(node, idx, activeNodes);
+        node.x = target.x;
+        node.y = target.y;
+        node.vx = 0;
+        node.vy = 0;
+      } else {
+        node.x = Math.max(46, Math.min(width - 46, node.x));
+        node.y = Math.max(46, Math.min(height - 46, node.y));
+      }
     });
   }
 
@@ -79,8 +138,9 @@ export function initSkillGraph({ onSelectProject }) {
 
     inspectorName.textContent = skill.name;
     inspectorCat.textContent = `${t('skillsCategoryPrefix')}: ${skill.category}`;
-    inspectorScore.textContent = `${skill.level}%`;
-    inspectorBar.style.width = `${skill.level}%`;
+    const count = skill.relatedProjects.length;
+    inspectorScore.textContent =
+      getLang() === 'en' ? `${count} ${count === 1 ? 'project' : 'projects'}` : `${count} proyek`;
     inspectorUsage.textContent = skill.usage;
 
     inspectorProjects.innerHTML = skill.relatedProjects
@@ -115,15 +175,11 @@ export function initSkillGraph({ onSelectProject }) {
         aria-pressed="${s.id === selectedId}"
       >
         <span>${s.name}</span>
-        <span class="tabular-nums">${s.level}%</span>
+        <span class="inspector-meta">${s.category}</span>
       </button>
     `
       )
       .join('');
-  }
-
-  function getFilteredNodes() {
-    return activeCategory === 'all' ? nodes : nodes.filter((n) => n.category === activeCategory);
   }
 
   function stepPhysics(timeMs) {
@@ -132,44 +188,42 @@ export function initSkillGraph({ onSelectProject }) {
     if (!prefersReducedMotion) {
       activeNodes.forEach((node, idx) => {
         if (node === draggingNode) return;
-        const target =
-          activeCategory === 'all'
-            ? getHubTarget(node.category)
-            : { x: width * 0.5, y: height * 0.5 };
+        const target = getNodeTarget(node, idx, activeNodes);
 
-        const floatX = Math.cos(timeMs * 0.0008 + idx) * 14;
-        const floatY = Math.sin(timeMs * 0.0009 + idx * 1.4) * 14;
+        const floatX = Math.cos(timeMs * 0.0008 + idx) * 3.5;
+        const floatY = Math.sin(timeMs * 0.0009 + idx * 1.4) * 3.5;
 
-        node.vx += (target.x + floatX - node.x) * 0.012;
-        node.vy += (target.y + floatY - node.y) * 0.012;
+        node.vx += (target.x + floatX - node.x) * 0.08;
+        node.vy += (target.y + floatY - node.y) * 0.08;
 
-        // Repulsion between visible nodes (extra room for node text labels)
+        // Short-range repulsion when a dragged node pushes neighbors
         for (let j = 0; j < activeNodes.length; j += 1) {
           if (idx === j) continue;
           const other = activeNodes[j];
           const dx = node.x - other.x;
           const dy = node.y - other.y;
           const dist = Math.hypot(dx, dy) || 1;
-          const minDist = node.radius + other.radius + 78;
+          const minDist = node.radius + other.radius + 18;
           if (dist < minDist) {
-            const force = ((minDist - dist) / minDist) * 1.85;
+            const force = ((minDist - dist) / minDist) * 1.4;
             node.vx += (dx / dist) * force;
             node.vy += (dy / dist) * force;
           }
         }
 
-        node.vx *= 0.84;
-        node.vy *= 0.84;
+        node.vx *= 0.78;
+        node.vy *= 0.78;
         node.x = Math.max(node.radius + 26, Math.min(width - node.radius - 26, node.x + node.vx));
-        node.y = Math.max(node.radius + 24, Math.min(height - node.radius - 24, node.y + node.vy));
+        node.y = Math.max(node.radius + 16, Math.min(height - node.radius - 26, node.y + node.vy));
       });
     } else {
       activeNodes.forEach((node, idx) => {
-        const cols = Math.min(4, activeNodes.length);
+        const cols = Math.min(width < 520 ? 3 : 4, activeNodes.length);
+        const rows = Math.ceil(activeNodes.length / cols);
         const row = Math.floor(idx / cols);
         const col = idx % cols;
         node.x = ((col + 1) / (cols + 1)) * width;
-        node.y = 85 + row * 120;
+        node.y = ((row + 1) / (rows + 1)) * height;
       });
     }
   }
@@ -228,17 +282,18 @@ export function initSkillGraph({ onSelectProject }) {
       ctx.strokeStyle = color;
       ctx.stroke();
 
-      // Percentage inside node
-      ctx.font = '600 13px "Plus Jakarta Sans", sans-serif';
+      // Short tech monogram inside node
+      ctx.font = '600 13px "Space Grotesk", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = isSelected ? '#04221d' : labelColor;
-      ctx.fillText(`${node.level}%`, node.x, node.y);
+      ctx.fillText(node.code || node.category.slice(0, 3).toUpperCase(), node.x, node.y);
 
       // Skill name below node
+      const displayLabel = width < 520 ? MOBILE_LABELS[node.id] || node.name : node.name;
       ctx.font = '600 13px "Space Grotesk", sans-serif';
       ctx.fillStyle = isSelected || isHovered ? labelColor : subColor;
-      ctx.fillText(node.name, node.x, node.y + node.radius + 14);
+      ctx.fillText(displayLabel, node.x, node.y + node.radius + 14);
     });
 
     requestAnimationFrame(drawCanvas);

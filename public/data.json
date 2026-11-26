@@ -43,16 +43,21 @@
     }
   ],
   "skills": [
-    { "name": "AI Agent Dev", "level": 92, "category": "AI" },
-    { "name": "Prompt Engineering", "level": 90, "category": "AI" },
-    { "name": "AI API Integration", "level": 88, "category": "AI" },
-    { "name": "Python", "level": 90, "category": "Language" },
-    { "name": "JavaScript", "level": 85, "category": "Language" },
-    { "name": "PHP", "level": 88, "category": "Language" },
-    { "name": "MySQL", "level": 85, "category": "Database" },
-    { "name": "Web & Mobile Dev", "level": 90, "category": "Tech" },
-    { "name": "IT Support", "level": 92, "category": "Tech" },
-    { "name": "Networking", "level": 80, "category": "Tech" }
+    { "name": "AI Agent Dev", "category": "AI" },
+    { "name": "Prompt Engineering", "category": "AI" },
+    { "name": "AI API Integration", "category": "AI" },
+    { "name": "Python", "category": "Language" },
+    { "name": "Go", "category": "Language" },
+    { "name": "JavaScript", "category": "Language" },
+    { "name": "PHP", "category": "Language" },
+    { "name": "PostgreSQL", "category": "Database" },
+    { "name": "MySQL", "category": "Database" },
+    { "name": "SQLite", "category": "Database" },
+    { "name": "REST / RESTful API", "category": "Tech" },
+    { "name": "Docker", "category": "Tech" },
+    { "name": "Web & Mobile Dev", "category": "Tech" },
+    { "name": "IT Support", "category": "Tech" },
+    { "name": "Networking", "category": "Tech" }
   ],
   "certifications": [
     {

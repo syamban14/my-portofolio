@@ -41,7 +41,7 @@ function renderPrintCvSheet(lang) {
       )
       .join('')}
     <h2>${isEn ? 'Skills & Certification' : 'Keahlian & Sertifikasi'}</h2>
-    <p>${data.skills.map((s) => `${s.name} (${s.level}%)`).join(', ')}.</p>
+    <p>${data.skills.map((s) => s.name).join(', ')}.</p>
     <p>${isEn ? 'Certification' : 'Sertifikasi'}: ${data.certifications[0].title} (${data.certifications[0].date}).</p>
     <h2>${isEn ? 'Education & Awards' : 'Pendidikan & Prestasi'}</h2>
     <p>${data.education

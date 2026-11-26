@@ -287,30 +287,55 @@ export const portfolioDataEn = {
     {
       ...portfolioData.skills[4],
       usage:
-        'Responsive web interfaces, real-time browser interactivity, and cross-platform client integrations.',
+        'Building high-performance backend services, lightweight concurrency, and low-latency RESTful API microservices.',
     },
     {
       ...portfolioData.skills[5],
       usage:
-        'Powering campus information systems, online examination engines, admissions portals, and official correspondence.',
+        'Responsive web interfaces, real-time browser interactivity, and cross-platform client integrations.',
     },
     {
       ...portfolioData.skills[6],
       usage:
-        'Relational schema design, query optimization, and data integrity for attendance, exams, and healthcare logs.',
+        'Powering campus information systems, online examination engines, admissions portals, and official correspondence.',
     },
     {
       ...portfolioData.skills[7],
       usage:
-        'End-to-end engineering of web, Android, and iOS applications including deployment and iterative maintenance.',
+        'Enterprise relational database architecture, transactional consistency, and index optimization for production systems.',
     },
     {
       ...portfolioData.skills[8],
       usage:
-        'Annual IT planning, hardware & software lifecycle management, and daily technical operations support.',
+        'Relational schema design, query optimization, and data integrity for attendance, exams, and healthcare logs.',
     },
     {
       ...portfolioData.skills[9],
+      usage:
+        'Embedded serverless storage for mobile client caching, rapid prototyping, and local AI agent state persistence.',
+    },
+    {
+      ...portfolioData.skills[10],
+      usage:
+        'Designing standardized RESTful endpoints, token authentication, and JSON contracts across mobile, web, and AI services.',
+    },
+    {
+      ...portfolioData.skills[11],
+      usage:
+        'Containerizing application services, isolating dev and production environments, and standardizing backend deployments.',
+    },
+    {
+      ...portfolioData.skills[12],
+      usage:
+        'End-to-end engineering of web, Android, and iOS applications including deployment and iterative maintenance.',
+    },
+    {
+      ...portfolioData.skills[13],
+      usage:
+        'Annual IT planning, hardware & software lifecycle management, and daily technical operations support.',
+    },
+    {
+      ...portfolioData.skills[14],
       usage:
         'Designing and stabilizing campus LAN infrastructure for synchronous computer-based examinations.',
     },
@@ -603,7 +628,7 @@ export const portfolioDataEn = {
       title: 'AI Agent Terminal',
       speech: 'This is where I research and orchestrate AI agents and API integrations for real workflows.',
       summary:
-        'Core focus: AI Agent Dev (92%), Prompt Engineering (90%), Python (90%), and AI API Integration (88%).',
+        'Core focus: AI Agent Dev, Prompt Engineering, Python, Go, and AI API Integration.',
       ctaLabel: 'Ask AI Syamsul',
     },
     {
@@ -619,7 +644,7 @@ export const portfolioDataEn = {
       title: 'LP3I Server & Infrastructure',
       speech: 'From 2017 to 2024 at LP3I College, I managed campus networks, hardware, and internal web systems.',
       summary:
-        'Eight+ years blending IT Support (92%), Networking (80%), and PHP/MySQL institutional web systems.',
+        'Eight+ years blending IT Support, Networking, Docker, and institutional systems with PHP, PostgreSQL, & MySQL.',
       ctaLabel: 'Explore career journey',
     },
     {

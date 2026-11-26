@@ -246,25 +246,25 @@ export function initAiAgent({
       return;
     }
 
-    const topSkills = data.skills.slice(0, 6);
+    const categories = [
+      { key: 'AI', label: isEn ? 'AI & Agents' : 'AI & Agen Otonom' },
+      { key: 'Language', label: isEn ? 'Programming Languages' : 'Bahasa Pemrograman' },
+      { key: 'Database', label: isEn ? 'Databases' : 'Basis Data' },
+      { key: 'Tech', label: isEn ? 'Architecture & Infra' : 'Arsitektur & Infrastruktur' },
+    ];
     inspectorBody.innerHTML = `
       <div class="inspector-card">
         <h3>${isEn ? 'Core Skills & AI Stack' : 'Keahlian Utama & AI Stack'}</h3>
-        <div class="inspector-bars">
-          ${topSkills
-            .map(
-              (skill) => `
-            <div class="inspector-bar-item">
-              <div class="inspector-bar-head">
-                <span>${skill.name}</span>
-                <span class="tabular-nums">${skill.level}%</span>
-              </div>
-              <div class="inspector-bar-track">
-                <div class="inspector-bar-fill" style="width: ${skill.level}%"></div>
-              </div>
-            </div>
-          `
-            )
+        <div class="inspector-rows">
+          ${categories
+            .map((cat) => {
+              const items = data.skills.filter((s) => s.category === cat.key).map((s) => s.name);
+              return `
+            <div class="inspector-block">
+              <p class="inspector-meta">${cat.label}</p>
+              <p class="inspector-primary">${items.join(' · ')}</p>
+            </div>`;
+            })
             .join('')}
         </div>
         <button type="button" class="inline-jump-btn" data-jump-section="#skills">
@@ -445,6 +445,14 @@ export function initAiAgent({
       q.includes('agent') ||
       q.includes('prompt') ||
       q.includes('python') ||
+      q.includes('go') ||
+      q.includes('golang') ||
+      q.includes('postgres') ||
+      q.includes('sqlite') ||
+      q.includes('docker') ||
+      q.includes('rest') ||
+      q.includes('api') ||
+      q.includes('database') ||
       q.includes('skill') ||
       q.includes('keahlian') ||
       q.includes('php') ||
@@ -453,8 +461,8 @@ export function initAiAgent({
       return {
         topic: 'ai',
         text: isEn
-          ? 'M. Syamsul pairs specialized AI engineering (AI Agent Dev 92%, Prompt Engineering 90%, and AI API Integration 88%) with solid full-stack fundamentals: Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Web & Mobile Dev (90%), and IT Support & Networking.'
-          : 'Kekuatan utama M. Syamsul memadukan pengembangan AI Agent Dev (92%), Prompt Engineering (90%), dan AI API Integration (88%) dengan fondasi rekayasa perangkat lunak full-stack: Python (90%), PHP (88%), JavaScript (85%), MySQL (85%), Web & Mobile Dev (90%), serta IT Support & Networking.',
+          ? 'M. Syamsul pairs specialized AI engineering (AI Agent Dev, Prompt Engineering, and AI API Integration) with production full-stack & infrastructure tools: Python, Go, PHP, JavaScript, PostgreSQL, MySQL, SQLite, REST / RESTful API, Docker, Web & Mobile Dev, and IT Support & Networking.'
+          : 'Kekuatan utama M. Syamsul memadukan pengembangan AI Agent Dev, Prompt Engineering, dan AI API Integration dengan stack full-stack serta infrastruktur produksi: Python, Go, PHP, JavaScript, PostgreSQL, MySQL, SQLite, REST / RESTful API, Docker, Web & Mobile Dev, serta IT Support & Networking.',
       };
     }
 
