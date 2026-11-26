@@ -41,6 +41,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   const hudActionBtn = document.getElementById('hudHotspotAction');
   const lampSwitchBtn = document.getElementById('workspaceLampBtn');
   const greetBtn = document.getElementById('workspaceGreetBtn');
+  const laptopOs = document.getElementById('workspaceLaptopOs');
+  const laptopDock = document.getElementById('laptopOsDock');
+  const laptopBody = document.getElementById('laptopOsBody');
+  const laptopExitBtn = document.getElementById('laptopOsExitBtn');
 
   if (!stage || !canvas || !hotspotsWrap) return null;
 
@@ -50,6 +54,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
 
   let lampOn = getTimeMode() !== 'pagi';
   let aiBusy = false;
+  let laptopOpen = false;
+  let laptopCloseTimer = null;
+  let laptopProjectId = 'presensi-online';
+  let laptopScreenTab = 'utama';
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
   let currentPointer = { x: 0, y: 0 };
@@ -200,6 +208,131 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     }
   }
 
+  function getLaptopIcon(device) {
+    if (device === 'mobile') {
+      return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>';
+    }
+    return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>';
+  }
+
+  function renderLaptopOs() {
+    if (!laptopDock || !laptopBody) return;
+    const projects = getPortfolioData().projects;
+    const activeProj = projects.find((p) => p.id === laptopProjectId) || projects[0];
+    laptopProjectId = activeProj.id;
+    const mockup = activeProj.uiMockup;
+    const isSecondary = laptopScreenTab === 'data';
+
+    laptopDock.innerHTML = projects
+      .map(
+        (proj) => `
+      <button
+        type="button"
+        class="laptop-app-tab${proj.id === laptopProjectId ? ' is-active' : ''}"
+        role="tab"
+        aria-selected="${proj.id === laptopProjectId}"
+        data-laptop-project="${proj.id}"
+      >
+        ${getLaptopIcon(proj.uiMockup?.device)}
+        <span>${proj.shortTitle}</span>
+      </button>
+    `
+      )
+      .join('');
+
+    laptopBody.innerHTML = `
+      <div class="laptop-screen-head">
+        <div>
+          <p class="laptop-screen-title">${activeProj.title}</p>
+          <p class="laptop-screen-sub">${activeProj.org} · ${activeProj.period} · ${activeProj.stackText}</p>
+        </div>
+        <div class="laptop-screen-tabs" role="tablist">
+          <button type="button" class="laptop-screen-tab${!isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${!isSecondary}" data-laptop-screen="utama">
+            ${t('laptopScreenMain')}
+          </button>
+          <button type="button" class="laptop-screen-tab${isSecondary ? ' is-active' : ''}" role="tab" aria-selected="${isSecondary}" data-laptop-screen="data">
+            ${t('laptopScreenData')}
+          </button>
+        </div>
+      </div>
+      ${
+        !isSecondary && mockup
+          ? `
+        <div class="laptop-kpi-grid">
+          ${mockup.primaryStats
+            .map(
+              (st) => `
+            <div class="laptop-kpi-card">
+              <span class="laptop-kpi-label">${st.k}</span>
+              <span class="laptop-kpi-val tabular-nums">${st.v}</span>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+          : `
+        <ul class="laptop-data-list">
+          ${(mockup?.secondaryRows || [])
+            .map(
+              (row) =>
+                `<li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#18d2b6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>${row}</span></li>`
+            )
+            .join('')}
+        </ul>
+      `
+      }
+      <div class="laptop-os-footer">
+        <div class="laptop-impact-row">
+          ${(activeProj.impactMetrics || [])
+            .map((m) => `<span class="laptop-impact-chip">${m.value}</span>`)
+            .join('')}
+        </div>
+        <div class="laptop-footer-actions">
+          <button type="button" class="btn-primary" id="laptopJumpProjectBtn" data-laptop-jump="true">
+            ${t('laptopOpenSimBtn')}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  function openLaptopView(projectId) {
+    window.clearTimeout(laptopCloseTimer);
+    if (projectId) {
+      laptopProjectId = projectId;
+    }
+    laptopOpen = true;
+    updateHud('laptop-projects');
+    if (bgLayer) bgLayer.style.transform = '';
+    if (charCanvas) charCanvas.style.transform = '';
+    if (laptopOs) {
+      laptopOs.hidden = false;
+      renderLaptopOs();
+      void stage.offsetWidth;
+    }
+    stage.classList.add('is-laptop-open');
+    soundEngine.playChime();
+    onActionToast?.(t('laptopOpenedToast'));
+  }
+
+  function closeLaptopView() {
+    if (!laptopOpen) return;
+    laptopOpen = false;
+    stage.classList.remove('is-laptop-open');
+    window.clearTimeout(laptopCloseTimer);
+    if (laptopOs) {
+      laptopCloseTimer = window.setTimeout(
+        () => {
+          if (!laptopOpen) laptopOs.hidden = true;
+        },
+        prefersReducedMotion ? 0 : 320
+      );
+    }
+    soundEngine.playClick();
+    onActionToast?.(t('laptopClosedToast'));
+  }
+
   function selectHotspot(hotspotId, { announce = true } = {}) {
     const hotspots = getPortfolioData().workspaceHotspots;
     const hotspot = hotspots.find((item) => item.id === hotspotId);
@@ -208,6 +341,11 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     updateHud(hotspot.id);
     if (hotspot.actionType === 'toggle-lamp') {
       toggleLamp();
+      return;
+    }
+
+    if (hotspot.id === 'laptop-projects' || hotspot.actionType === 'laptop-zoom') {
+      openLaptopView();
       return;
     }
 
@@ -223,9 +361,46 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     selectHotspot(btn.dataset.hotspotId);
   });
 
+  laptopExitBtn?.addEventListener('click', closeLaptopView);
+
+  laptopDock?.addEventListener('click', (event) => {
+    const tab = event.target.closest('[data-laptop-project]');
+    if (!tab) return;
+    soundEngine.playClick();
+    laptopProjectId = tab.dataset.laptopProject;
+    laptopScreenTab = 'utama';
+    renderLaptopOs();
+  });
+
+  laptopBody?.addEventListener('click', (event) => {
+    const screenTab = event.target.closest('[data-laptop-screen]');
+    if (screenTab) {
+      soundEngine.playClick();
+      laptopScreenTab = screenTab.dataset.laptopScreen;
+      renderLaptopOs();
+      return;
+    }
+    if (event.target.closest('[data-laptop-jump]')) {
+      soundEngine.playClick();
+      const targetProj = laptopProjectId;
+      closeLaptopView();
+      onRequestSection?.('#projects', targetProj);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && laptopOpen) {
+      closeLaptopView();
+    }
+  });
+
   if (hudActionBtn) {
     hudActionBtn.addEventListener('click', () => {
       soundEngine.playClick();
+      if (activeHotspotId === 'laptop-projects' && !laptopOpen) {
+        openLaptopView();
+        return;
+      }
       const target = hudActionBtn.dataset.target || '#ai-studio';
       onRequestSection?.(target);
     });
@@ -673,11 +848,15 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       currentPointer.y += (targetPointer.y - currentPointer.y) * 0.08;
 
       if (bgLayer) {
-        bgLayer.style.transform = `translate3d(${(-currentPointer.x * 10).toFixed(2)}px, ${(-currentPointer.y * 6).toFixed(2)}px, 0) scale(1.03)`;
+        bgLayer.style.transform = laptopOpen
+          ? ''
+          : `translate3d(${(-currentPointer.x * 10).toFixed(2)}px, ${(-currentPointer.y * 6).toFixed(2)}px, 0) scale(1.03)`;
       }
       if (charCanvas) {
         const breathScale = 1 + Math.sin(timeMs * 0.0022) * 0.006;
-        charCanvas.style.transform = `translate3d(${(currentPointer.x * 18).toFixed(2)}px, ${(currentPointer.y * 7).toFixed(2)}px, 0) scaleY(${breathScale.toFixed(4)})`;
+        charCanvas.style.transform = laptopOpen
+          ? ''
+          : `translate3d(${(currentPointer.x * 18).toFixed(2)}px, ${(currentPointer.y * 7).toFixed(2)}px, 0) scaleY(${breathScale.toFixed(4)})`;
       }
     }
 
@@ -690,6 +869,9 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     renderHotspots();
     updateHud(activeHotspotId);
     syncLampButtonText();
+    if (laptopOpen) {
+      renderLaptopOs();
+    }
     if (speechBubble?.classList.contains('is-visible')) {
       showSpeech(t('welcomeSpeech'));
     }
@@ -714,6 +896,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     toggleLamp,
     triggerGreeting,
     selectHotspot,
+    openLaptopView,
+    closeLaptopView,
     setAiBusy(busy) {
       aiBusy = Boolean(busy);
     },

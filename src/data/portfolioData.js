@@ -522,13 +522,13 @@ export const portfolioData = {
     {
       id: 'laptop-projects',
       title: 'Monitor Proyek BCS & doklinc',
-      actionType: 'inspect',
+      actionType: 'laptop-zoom',
       x: 68,
       y: 51,
       speech: 'Lima aplikasi institusi dan publik sudah berjalan, mulai dari Presensi Online hingga doklinc.',
       summary:
         'Menangani rancang bangun Aplikasi Presensi Online Android & iOS di PT. BCS Logistics serta layanan kesehatan doklinc.',
-      ctaLabel: 'Simulasi 5 proyek',
+      ctaLabel: 'Buka layar laptop',
       targetSection: '#projects',
     },
     {

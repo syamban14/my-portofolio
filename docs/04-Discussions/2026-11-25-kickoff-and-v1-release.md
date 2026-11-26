@@ -73,3 +73,7 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 ## 12. Redesain Visual-First Atmospheric Glass & Bento Studio (2026-11-26)
 - Menambahkan lapisan visual dot-grid halus, pendar cahaya ambient adaptif sesuai waktu (`Pagi`, `Senja`, `Malam`) di `tokens.css`, panel glassmorphism (`backdrop-filter: blur(14px)`), bayangan bertingkat, ikon SVG per domain, serta scroll-reveal `IntersectionObserver`.
 - Memangkas kepadatan teks ~60% menjadi *Visual-First*: menambahkan Bento strip 4 metrik bergambar di Hero, mengubah daftar 15 tombol skill menjadi 4 ubin ringkas per kategori, menjadikan `Pratinjau UI` (*device mockup*) mode bawaan proyek, mengubah daftar riwayat menjadi kartu berikon + chip tag, dan menyederhanakan panel kontak menjadi grid 2×2 interaktif.
+
+## 13. Zoom-In Kamera ke Layar Laptop OS pada Hotspot #3 (2026-11-26)
+- Mengubah interaksi titik Hotspot #3 (`laptop-projects` / Monitor Proyek BCS & doklinc) agar melakukan animasi zoom-in kamera (`scale(2.85)`) menuju area meja laptop dan membuka antarmuka **`SyamsulOS · Monitor Proyek`** (`#workspaceLaptopOs`) langsung di panggung utama.
+- Pengunjung dapat mengganti kelima aplikasi di dock laptop (`Presensi Online`, `Kesehatan doklinc`, `Ujian Online`, `Test Online Masuk`, `Aplikasi Surat`), berpindah antara `Layar Utama` dan `Data & Log`, lompat ke simulasi penuh (`#projects`), atau keluar kembali ke ruangan lewat tombol `Keluar dari Laptop` maupun tombol keyboard `ESC`.

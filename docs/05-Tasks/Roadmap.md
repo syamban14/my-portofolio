@@ -70,3 +70,6 @@ tags:
 ### Redesain Visual-First Atmospheric Glass & Bento Studio (Selesai)
 - [x] Terapkan tema *Atmospheric Glass & Bento Studio* (dot-grid, ambient aura Pagi/Senja/Malam, kartu glassmorphism, ikon SVG, & animasi scroll-reveal)
 - [x] Terapkan penyajian *Visual-First* (~60% lebih ringkas): 4 metrik Bento di Hero, 4 ubin kategori di Konstelasi, `Pratinjau UI` default di Proyek, kartu milestone berikon + chip tag, dan grid kontak 2×2
+
+### Interaksi Zoom-In Layar Laptop OS Hotspot #3 (Selesai)
+- [x] Klik titik #3 (`laptop-projects`) men-zoom kamera ke laptop meja dan menampilkan OS interaktif `SyamsulOS` (5 app tabs, Layar Utama / Data & Log, pintasan `ESC`, & tombol `Keluar dari Laptop`)

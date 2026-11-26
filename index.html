@@ -167,6 +167,30 @@
             title="Klik Syamsul untuk menyapa"
           ></canvas>
           <div class="workspace-hotspots" id="workspaceHotspots"></div>
+          <div
+            class="workspace-laptop-os"
+            id="workspaceLaptopOs"
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="laptopOsTitle"
+            hidden
+          >
+            <div class="laptop-os-window">
+              <div class="laptop-os-topbar">
+                <div class="laptop-os-brand">
+                  <span class="mockup-dots" aria-hidden="true">
+                    <i class="mockup-dot"></i><i class="mockup-dot"></i><i class="mockup-dot"></i>
+                  </span>
+                  <span class="laptop-os-title" id="laptopOsTitle" data-i18n="laptopOsTitle">SyamsulOS · Monitor Proyek</span>
+                </div>
+                <button type="button" class="laptop-exit-btn" id="laptopOsExitBtn" data-i18n="laptopExitBtn">
+                  Keluar dari Laptop
+                </button>
+              </div>
+              <div class="laptop-os-dock" id="laptopOsDock" role="tablist" aria-label="Pilih aplikasi di layar laptop"></div>
+              <div class="laptop-os-body" id="laptopOsBody"></div>
+            </div>
+          </div>
         </div>
 
         <div class="char-speech is-visible" id="charSpeechBubble" role="status" aria-live="polite">

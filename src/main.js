@@ -228,7 +228,7 @@ function initStudioApp() {
 
   workspaceApi = initLivingWorkspace({
     getTimeMode: () => currentMode,
-    onRequestSection: (target) => scrollToTarget(target),
+    onRequestSection: (target, projectId) => scrollToTarget(target, projectId),
     onActionToast: showToast,
   });
 
