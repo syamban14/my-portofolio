@@ -14,6 +14,185 @@ const CHAR_QUOTES = {
   ],
 };
 
+const INFRA_ROOM_DATA = {
+  id: {
+    activeHeadline: 'Arsitektur Ruangan Server & Infrastruktur',
+    activeSub: 'Orkestrasi Docker, RESTful API, Database Cluster, & Jaringan Kampus LP3I',
+    blades: [
+      {
+        id: 'bcs-docker',
+        unit: 'U01',
+        host: 'BCS-APP-DOCKER',
+        badge: 'Docker',
+        sub: 'Container Gateway · Go & Python RESTful API',
+        pingResult: '1.4 ms · 0% loss · Container Healthy',
+        metrics: [
+          { k: 'Status Node', v: 'ONLINE · 99.9%' },
+          { k: 'Endpoint API', v: 'REST :8080 / TLS' },
+          { k: 'Stack Aktif', v: 'Docker · Go · Python' },
+        ],
+        details: [
+          'Menjalankan layanan Presensi Mobile (Android/iOS) dan klinik doklinc dalam kontainer terisolasi.',
+          'Validasi token RESTful API & payload JSON berlatensi rendah untuk antrean multi-shift real-time.',
+        ],
+      },
+      {
+        id: 'db-cluster',
+        unit: 'U02',
+        host: 'DB-PROD-CLUSTER',
+        badge: 'Database',
+        sub: 'PostgreSQL · MySQL · SQLite Cache Lokal',
+        pingResult: '1.9 ms · ACID Commit Ready',
+        metrics: [
+          { k: 'Replikasi', v: 'WAL Sync Active' },
+          { k: 'Mesin DB', v: 'PostgreSQL · MySQL' },
+          { k: 'Cache Perangkat', v: 'SQLite Embedded' },
+        ],
+        details: [
+          'Penyimpanan data transaksional absensi karyawan, shift kerja, dan jadwal doklinc di PostgreSQL & MySQL.',
+          'SQLite menjaga antrean offline tetap aman saat koneksi cabang terputus sementara.',
+        ],
+      },
+      {
+        id: 'lp3i-campus',
+        unit: 'U03',
+        host: 'LP3I-CAMPUS-SRV',
+        badge: '2017-2024',
+        sub: 'Server Sistem Kampus & Ujian Lab Terjadwal',
+        pingResult: '0.8 ms · Gigabit LAN Ready',
+        metrics: [
+          { k: 'Kapasitas Lab', v: '30+ PC Sinkron' },
+          { k: 'Aplikasi Inti', v: 'Ujian & Persuratan' },
+          { k: 'Masa Operasi', v: '8+ Tahun Produksi' },
+        ],
+        details: [
+          'Mengelola server PHP & database internal untuk ujian praktik serentak mahasiswa LP3I College Cilegon.',
+          'Automasi distribusi paket soal, timer sinkron, dan ekspor arsip administrasi akademik.',
+        ],
+      },
+      {
+        id: 'net-switch',
+        unit: 'U04',
+        host: 'NET-CORE-SWITCH',
+        badge: 'Network',
+        sub: 'Topologi LAN, Segmentasi VLAN, & Keamanan Hardware',
+        pingResult: '0.5 ms · Full-Duplex VLAN 10',
+        metrics: [
+          { k: 'Segmentasi', v: 'VLAN Lab & Server' },
+          { k: 'Keandalan', v: 'Zero-Drop Routing' },
+          { k: 'Lingkup Ops', v: 'IT Support & Infra' },
+        ],
+        details: [
+          'Perancangan jalur kabel terstruktur, pemisahan subnet staf & lab ujian, serta troubleshooting hardware harian.',
+          'Monitoring konektivitas antarrak agar layanan ujian lokal dan sistem web kampus berjalan stabil.',
+        ],
+      },
+    ],
+    topology: [
+      {
+        title: '1. Klien & Akses Edge',
+        nodes: ['Presensi Android & iOS', '30+ PC Lab Ujian LAN', 'Portal Web Klinik & Admin'],
+      },
+      {
+        title: '2. Gateway & Kontainer',
+        nodes: ['Docker Compose Engine', 'RESTful API (Go & PHP)', 'Orkestrator Python AI'],
+      },
+      {
+        title: '3. Data & Penyimpanan',
+        nodes: ['PostgreSQL Cluster', 'MySQL Akademik & App', 'SQLite Offline Cache'],
+      },
+    ],
+  },
+  en: {
+    activeHeadline: 'Server Room & Infrastructure Architecture',
+    activeSub: 'Orchestrating Docker, RESTful APIs, Database Clusters, & LP3I Campus Networking',
+    blades: [
+      {
+        id: 'bcs-docker',
+        unit: 'U01',
+        host: 'BCS-APP-DOCKER',
+        badge: 'Docker',
+        sub: 'Container Gateway · Go & Python RESTful API',
+        pingResult: '1.4 ms · 0% loss · Container Healthy',
+        metrics: [
+          { k: 'Node Status', v: 'ONLINE · 99.9%' },
+          { k: 'API Gateway', v: 'REST :8080 / TLS' },
+          { k: 'Runtime Stack', v: 'Docker · Go · Python' },
+        ],
+        details: [
+          'Runs Mobile Attendance (Android/iOS) and doklinc clinic services inside isolated Docker containers.',
+          'Low-latency RESTful JSON payload validation across multi-shift workforce operations.',
+        ],
+      },
+      {
+        id: 'db-cluster',
+        unit: 'U02',
+        host: 'DB-PROD-CLUSTER',
+        badge: 'Database',
+        sub: 'PostgreSQL · MySQL · Embedded SQLite Cache',
+        pingResult: '1.9 ms · ACID Commit Ready',
+        metrics: [
+          { k: 'Replication', v: 'WAL Sync Active' },
+          { k: 'Primary Engines', v: 'PostgreSQL · MySQL' },
+          { k: 'Edge Cache', v: 'SQLite Embedded' },
+        ],
+        details: [
+          'Transactional storage for employee logs, shift schedules, and clinic queues using PostgreSQL & MySQL.',
+          'Embedded SQLite preserves local records safely during intermittent branch network drops.',
+        ],
+      },
+      {
+        id: 'lp3i-campus',
+        unit: 'U03',
+        host: 'LP3I-CAMPUS-SRV',
+        badge: '2017-2024',
+        sub: 'Campus Exam Server & Internal Operations Host',
+        pingResult: '0.8 ms · Gigabit LAN Ready',
+        metrics: [
+          { k: 'Lab Capacity', v: '30+ Sync Clients' },
+          { k: 'Core Apps', v: 'Exam & Letter Suite' },
+          { k: 'Track Record', v: '8+ Years Uptime' },
+        ],
+        details: [
+          'Managed local PHP web servers and databases powering simultaneous student exams at LP3I College Cilegon.',
+          'Automated exam distribution, countdown locking, and archival document workflows.',
+        ],
+      },
+      {
+        id: 'net-switch',
+        unit: 'U04',
+        host: 'NET-CORE-SWITCH',
+        badge: 'Network',
+        sub: 'LAN Topology, VLAN Segmentation, & Hardware Ops',
+        pingResult: '0.5 ms · Full-Duplex VLAN 10',
+        metrics: [
+          { k: 'Segmentation', v: 'Exam & Staff VLAN' },
+          { k: 'Reliability', v: 'Zero-Drop Routing' },
+          { k: 'Operations', v: 'IT Support & Infra' },
+        ],
+        details: [
+          'Structured LAN cabling, isolated exam vs staff subnets, and rapid endpoint hardware maintenance.',
+          'Proactive link monitoring keeping local lab exams and campus web apps uninterrupted.',
+        ],
+      },
+    ],
+    topology: [
+      {
+        title: '1. Client & Edge Tier',
+        nodes: ['Android & iOS Attendance', '30+ Exam Lab LAN PCs', 'Clinic & Admin Web UI'],
+      },
+      {
+        title: '2. Gateway & Containers',
+        nodes: ['Docker Compose Engine', 'RESTful API (Go & PHP)', 'Python AI Orchestrator'],
+      },
+      {
+        title: '3. Data & Persistence',
+        nodes: ['PostgreSQL Cluster', 'MySQL Campus & Apps', 'SQLite Offline Cache'],
+      },
+    ],
+  },
+};
+
 // Measured normalized pixel coordinates on character_anime_clean.png (576 x 1024)
 const CHAR_RIG = {
   skinTone: '#ffeed9',
@@ -42,6 +221,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   const lampSwitchBtn = document.getElementById('workspaceLampBtn');
   const greetBtn = document.getElementById('workspaceGreetBtn');
   const laptopOs = document.getElementById('workspaceLaptopOs');
+  const laptopOsTitle = document.getElementById('laptopOsTitle');
   const laptopDock = document.getElementById('laptopOsDock');
   const laptopBody = document.getElementById('laptopOsBody');
   const laptopExitBtn = document.getElementById('laptopOsExitBtn');
@@ -55,9 +235,13 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   let lampOn = getTimeMode() !== 'pagi';
   let aiBusy = false;
   let laptopOpen = false;
+  let stageOverlayMode = null;
   let laptopCloseTimer = null;
   let laptopProjectId = 'presensi-online';
   let laptopScreenTab = 'utama';
+  let infraBladeId = 'bcs-docker';
+  let infraScreenTab = 'rack';
+  let infraPingStatus = '';
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
   let currentPointer = { x: 0, y: 0 };
@@ -215,6 +399,135 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>';
   }
 
+  function syncStageChrome(mode) {
+    if (laptopOsTitle) {
+      const titleKey = mode === 'infra' ? 'infraOsTitle' : 'laptopOsTitle';
+      laptopOsTitle.dataset.i18n = titleKey;
+      laptopOsTitle.textContent = t(titleKey);
+    }
+    if (laptopExitBtn) {
+      const exitKey = mode === 'infra' ? 'infraExitBtn' : 'laptopExitBtn';
+      laptopExitBtn.dataset.i18n = exitKey;
+      laptopExitBtn.textContent = t(exitKey);
+    }
+  }
+
+  function renderInfraOs() {
+    if (!laptopDock || !laptopBody) return;
+    const langData = INFRA_ROOM_DATA[getLang()] || INFRA_ROOM_DATA.id;
+    const activeBlade = langData.blades.find((b) => b.id === infraBladeId) || langData.blades[0];
+    infraBladeId = activeBlade.id;
+    const isTopology = infraScreenTab === 'topology';
+
+    laptopDock.innerHTML = langData.blades
+      .map(
+        (blade) => `
+      <button
+        type="button"
+        class="laptop-app-tab${blade.id === infraBladeId ? ' is-active' : ''}"
+        role="tab"
+        aria-selected="${blade.id === infraBladeId}"
+        data-infra-blade="${blade.id}"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></svg>
+        <span>${blade.unit} · ${blade.badge}</span>
+      </button>
+    `
+      )
+      .join('');
+
+    laptopBody.innerHTML = `
+      <div class="laptop-screen-head">
+        <div>
+          <p class="laptop-screen-title">${isTopology ? langData.activeHeadline : `${activeBlade.unit} · ${activeBlade.host}`}</p>
+          <p class="laptop-screen-sub">${isTopology ? langData.activeSub : activeBlade.sub}</p>
+        </div>
+        <div class="laptop-screen-tabs" role="tablist">
+          <button type="button" class="laptop-screen-tab${!isTopology ? ' is-active' : ''}" role="tab" aria-selected="${!isTopology}" data-infra-screen="rack">
+            ${t('infraTabRack')}
+          </button>
+          <button type="button" class="laptop-screen-tab${isTopology ? ' is-active' : ''}" role="tab" aria-selected="${isTopology}" data-infra-screen="topology">
+            ${t('infraTabTopology')}
+          </button>
+        </div>
+      </div>
+      ${
+        !isTopology
+          ? `
+        <div class="infra-rack-grid">
+          ${langData.blades
+            .map(
+              (blade) => `
+            <button type="button" class="infra-blade-card${blade.id === activeBlade.id ? ' is-active' : ''}" data-infra-blade="${blade.id}">
+              <span class="infra-blade-main">
+                <span class="infra-led-dot" aria-hidden="true"></span>
+                <span class="infra-blade-name">${blade.unit} · ${blade.host}</span>
+              </span>
+              <span class="infra-slot-badge">${blade.badge}</span>
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+        <div class="laptop-kpi-grid">
+          ${activeBlade.metrics
+            .map(
+              (m) => `
+            <div class="laptop-kpi-card">
+              <span class="laptop-kpi-label">${m.k}</span>
+              <span class="laptop-kpi-val tabular-nums">${m.v}</span>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+        <ul class="laptop-data-list">
+          ${activeBlade.details
+            .map(
+              (row) =>
+                `<li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#18d2b6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>${row}</span></li>`
+            )
+            .join('')}
+        </ul>
+      `
+          : `
+        <div class="infra-topo-grid">
+          ${langData.topology
+            .map(
+              (tier, idx) => `
+            ${idx > 0 ? '<div class="infra-topo-arrow" aria-hidden="true">→</div>' : ''}
+            <div class="infra-topo-zone">
+              <p class="infra-topo-title">${tier.title}</p>
+              <div class="infra-topo-nodes">
+                ${tier.nodes.map((node) => `<div class="infra-topo-node">${node}</div>`).join('')}
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+      }
+      <div class="laptop-os-footer">
+        <div class="laptop-impact-row">
+          ${
+            infraPingStatus
+              ? `<span class="infra-ping-status" id="infraPingReadout">${infraPingStatus}</span>`
+              : `<span class="laptop-impact-chip">PostgreSQL · MySQL · SQLite</span><span class="laptop-impact-chip">Docker · RESTful API · Go</span>`
+          }
+        </div>
+        <div class="laptop-footer-actions">
+          <button type="button" class="laptop-exit-btn" id="infraPingBtn" data-infra-ping="true">
+            ${t('infraPingBtn')}
+          </button>
+          <button type="button" class="btn-primary" id="infraJumpExpBtn" data-infra-jump="#experience">
+            ${t('infraJumpExpBtn')}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
   function renderLaptopOs() {
     if (!laptopDock || !laptopBody) return;
     const projects = getPortfolioData().projects;
@@ -302,7 +615,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     if (projectId) {
       laptopProjectId = projectId;
     }
+    stageOverlayMode = 'laptop';
+    stage.dataset.zoomMode = 'laptop';
     laptopOpen = true;
+    syncStageChrome('laptop');
     updateHud('laptop-projects');
     if (bgLayer) bgLayer.style.transform = '';
     if (charCanvas) charCanvas.style.transform = '';
@@ -316,21 +632,47 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     onActionToast?.(t('laptopOpenedToast'));
   }
 
+  function openInfraView() {
+    window.clearTimeout(laptopCloseTimer);
+    stageOverlayMode = 'infra';
+    stage.dataset.zoomMode = 'infra';
+    infraPingStatus = '';
+    laptopOpen = true;
+    syncStageChrome('infra');
+    updateHud('infra-lp3i');
+    if (bgLayer) bgLayer.style.transform = '';
+    if (charCanvas) charCanvas.style.transform = '';
+    if (laptopOs) {
+      laptopOs.hidden = false;
+      renderInfraOs();
+      void stage.offsetWidth;
+    }
+    stage.classList.add('is-laptop-open');
+    soundEngine.playChime();
+    onActionToast?.(t('infraOpenedToast'));
+  }
+
   function closeLaptopView() {
     if (!laptopOpen) return;
+    const wasInfra = stageOverlayMode === 'infra';
     laptopOpen = false;
+    stageOverlayMode = null;
     stage.classList.remove('is-laptop-open');
     window.clearTimeout(laptopCloseTimer);
     if (laptopOs) {
       laptopCloseTimer = window.setTimeout(
         () => {
-          if (!laptopOpen) laptopOs.hidden = true;
+          if (!laptopOpen) {
+            laptopOs.hidden = true;
+            stage.dataset.zoomMode = '';
+            syncStageChrome('laptop');
+          }
         },
         prefersReducedMotion ? 0 : 320
       );
     }
     soundEngine.playClick();
-    onActionToast?.(t('laptopClosedToast'));
+    onActionToast?.(t(wasInfra ? 'infraClosedToast' : 'laptopClosedToast'));
   }
 
   function selectHotspot(hotspotId, { announce = true } = {}) {
@@ -349,6 +691,11 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       return;
     }
 
+    if (hotspot.id === 'infra-lp3i' || hotspot.actionType === 'infra-zoom') {
+      openInfraView();
+      return;
+    }
+
     soundEngine.playChime();
     if (announce) {
       showSpeech(hotspot.speech);
@@ -364,6 +711,14 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   laptopExitBtn?.addEventListener('click', closeLaptopView);
 
   laptopDock?.addEventListener('click', (event) => {
+    const infraTabBtn = event.target.closest('[data-infra-blade]');
+    if (infraTabBtn) {
+      soundEngine.playClick();
+      infraBladeId = infraTabBtn.dataset.infraBlade;
+      infraPingStatus = '';
+      renderInfraOs();
+      return;
+    }
     const tab = event.target.closest('[data-laptop-project]');
     if (!tab) return;
     soundEngine.playClick();
@@ -373,6 +728,37 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   });
 
   laptopBody?.addEventListener('click', (event) => {
+    const bladeCard = event.target.closest('[data-infra-blade]');
+    if (bladeCard) {
+      soundEngine.playClick();
+      infraBladeId = bladeCard.dataset.infraBlade;
+      infraPingStatus = '';
+      renderInfraOs();
+      return;
+    }
+    const infraScreenBtn = event.target.closest('[data-infra-screen]');
+    if (infraScreenBtn) {
+      soundEngine.playClick();
+      infraScreenTab = infraScreenBtn.dataset.infraScreen;
+      renderInfraOs();
+      return;
+    }
+    if (event.target.closest('[data-infra-ping]')) {
+      const langData = INFRA_ROOM_DATA[getLang()] || INFRA_ROOM_DATA.id;
+      const activeBlade = langData.blades.find((b) => b.id === infraBladeId) || langData.blades[0];
+      soundEngine.playChime();
+      infraPingStatus = `PING ${activeBlade.host}: ${activeBlade.pingResult}`;
+      renderInfraOs();
+      return;
+    }
+    const infraJumpBtn = event.target.closest('[data-infra-jump]');
+    if (infraJumpBtn) {
+      soundEngine.playClick();
+      const targetSection = infraJumpBtn.dataset.infraJump || '#experience';
+      closeLaptopView();
+      onRequestSection?.(targetSection);
+      return;
+    }
     const screenTab = event.target.closest('[data-laptop-screen]');
     if (screenTab) {
       soundEngine.playClick();
@@ -399,6 +785,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       soundEngine.playClick();
       if (activeHotspotId === 'laptop-projects' && !laptopOpen) {
         openLaptopView();
+        return;
+      }
+      if (activeHotspotId === 'infra-lp3i' && !laptopOpen) {
+        openInfraView();
         return;
       }
       const target = hudActionBtn.dataset.target || '#ai-studio';
@@ -870,7 +1260,12 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     updateHud(activeHotspotId);
     syncLampButtonText();
     if (laptopOpen) {
-      renderLaptopOs();
+      syncStageChrome(stageOverlayMode || 'laptop');
+      if (stageOverlayMode === 'infra') {
+        renderInfraOs();
+      } else {
+        renderLaptopOs();
+      }
     }
     if (speechBubble?.classList.contains('is-visible')) {
       showSpeech(t('welcomeSpeech'));

@@ -73,3 +73,6 @@ tags:
 
 ### Interaksi Zoom-In Layar Laptop OS Hotspot #3 (Selesai)
 - [x] Klik titik #3 (`laptop-projects`) men-zoom kamera ke laptop meja dan menampilkan OS interaktif `SyamsulOS` (5 app tabs, Layar Utama / Data & Log, pintasan `ESC`, & tombol `Keluar dari Laptop`)
+
+### Interaksi Zoom-In Ruangan Server & Rancangan Infrastruktur Hotspot #4 (Selesai)
+- [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera menuju posisi server `75% 66%` (`data-zoom-mode="infra"`) dan membuka antarmuka Ruangan Server (`U01`-`U04` blades, mode Rak Server & Rancangan Topologi 3-lapis, uji ping interaktif, pintasan `ESC` & tombol keluar)

@@ -534,13 +534,13 @@ export const portfolioData = {
     {
       id: 'infra-lp3i',
       title: 'Server & Infrastruktur LP3I',
-      actionType: 'inspect',
+      actionType: 'infra-zoom',
       x: 75,
       y: 66,
       speech: 'Selama 2017 hingga 2024 di LP3I College, saya mengelola jaringan, hardware, dan sistem kampus.',
       summary:
         'Delapan tahun lebih memadukan peran IT Support, Networking, Docker, serta pengembangan sistem berbasis PHP, PostgreSQL, & MySQL.',
-      ctaLabel: 'Telusuri jejak karir',
+      ctaLabel: 'Buka ruangan server',
       targetSection: '#experience',
     },
     {

@@ -77,3 +77,7 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 ## 13. Zoom-In Kamera ke Layar Laptop OS pada Hotspot #3 (2026-11-26)
 - Mengubah interaksi titik Hotspot #3 (`laptop-projects` / Monitor Proyek BCS & doklinc) agar melakukan animasi zoom-in kamera (`scale(2.85)`) menuju area meja laptop dan membuka antarmuka **`SyamsulOS · Monitor Proyek`** (`#workspaceLaptopOs`) langsung di panggung utama.
 - Pengunjung dapat mengganti kelima aplikasi di dock laptop (`Presensi Online`, `Kesehatan doklinc`, `Ujian Online`, `Test Online Masuk`, `Aplikasi Surat`), berpindah antara `Layar Utama` dan `Data & Log`, lompat ke simulasi penuh (`#projects`), atau keluar kembali ke ruangan lewat tombol `Keluar dari Laptop` maupun tombol keyboard `ESC`.
+
+## 14. Zoom-In Kamera ke Rancangan Infrastruktur & Ruangan Server pada Hotspot #4 (2026-11-26)
+- Mengubah interaksi titik Hotspot #4 (`infra-lp3i` / Server & Infrastruktur LP3I pada `75% 66%`) agar mengarahkan zoom-in kamera (`data-zoom-mode="infra"`, `transform-origin: 75% 66%`, `scale(2.85)`) menuju area rak server & jaringan.
+- Menambahkan antarmuka **Ruangan Server & Rancangan Infrastruktur** langsung pada panggung utama dengan dua mode tab (`Rak & Ruangan Server` dan `Rancangan Topologi`), 4 unit blade interaktif (`U01 · BCS-APP-DOCKER`, `U02 · DB-PROD-CLUSTER`, `U03 · LP3I-CAMPUS-SRV`, `U04 · NET-CORE-SWITCH`), simulasi **`Uji Ping Server`** langsung, pintasan menuju `#experience`, serta tombol `Keluar dari Ruangan Server` / `ESC`.
