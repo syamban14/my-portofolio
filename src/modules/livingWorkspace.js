@@ -14,10 +14,104 @@ const CHAR_QUOTES = {
   ],
 };
 
+const INFRA_TOUR_ORDER = ['overview', 'screen', 'computers', 'rack', 'network'];
+
 const INFRA_ROOM_DATA = {
   id: {
-    activeHeadline: 'Arsitektur Ruangan Server & Infrastruktur',
-    activeSub: 'Orkestrasi Docker, RESTful API, Database Cluster, & Jaringan Kampus LP3I',
+    ambientTag: 'Ruang Server AC · 21.4°C · NOC Aktif',
+    stations: {
+      overview: {
+        tab: 'Ruangan Penuh',
+        title: 'Tur Panorama Ruangan Server & Infrastruktur',
+        sub: 'Klik zona bernomor 1–4, klik monitor PC di meja, atau tekan Berikutnya →.',
+      },
+      screen: {
+        tab: '1. Layar NOC',
+        title: '1 · Layar Utama Rancangan Infrastruktur (NOC Wall)',
+        sub: 'Menampilkan alur paket data langsung dari klien hingga klaster basis data.',
+      },
+      computers: {
+        tab: '2. 4 Komputer',
+        title: '2 · Konsol Deretan Komputer Workstation',
+        sub: 'Empat terminal aktif untuk ujian lab LP3I, presensi GPS, klinik doklinc, & Docker AI.',
+      },
+      rack: {
+        tab: '3. Rak Server',
+        title: '3 · Kabinet Rak Server Produksi (U01–U04)',
+        sub: 'Pilih blade U01–U04 dan jalankan uji ping untuk mengecek latensi & uptime.',
+      },
+      network: {
+        tab: '4. Switch',
+        title: '4 · Kabinet Core Switch 24-Port & Segmentasi VLAN',
+        sub: 'Memisahkan subnet 30+ PC Lab Ujian, Rak Server, dan Staf tanpa bottleneck.',
+      },
+    },
+    flows: [
+      { id: 'all', label: 'Semua Alur', litNodes: ['edge-0', 'edge-1', 'edge-2', 'gw-0', 'gw-1', 'gw-2', 'db-0', 'db-1', 'db-2'] },
+      { id: 'bcs', label: 'Presensi & Klinik', litNodes: ['edge-0', 'edge-2', 'gw-0', 'gw-1', 'db-0', 'db-2'] },
+      { id: 'lp3i', label: 'Lab Ujian LP3I', litNodes: ['edge-1', 'gw-1', 'db-1'] },
+    ],
+    computers: [
+      {
+        id: 'pc-lab',
+        label: 'PC-01 · Lab LP3I',
+        screenLine: '30+ PC Ujian · LAN',
+        title: 'PC-01 · Konsol Pengawas Ujian Lokal LP3I',
+        sub: 'Mengendalikan paket soal PHP, timer serentak, & validasi nilai 30+ komputer lab.',
+        metrics: [
+          { k: 'Koneksi Lab', v: '30+ PC Gigabit' },
+          { k: 'Engine Ujian', v: 'PHP · MySQL LAN' },
+          { k: 'Status', v: 'Sinkron Aktif' },
+        ],
+      },
+      {
+        id: 'pc-bcs',
+        label: 'PC-02 · Presensi BCS',
+        screenLine: 'GPS · REST :8080',
+        title: 'PC-02 · Monitor Gateway Presensi Android & iOS',
+        sub: 'Memantau check-in GPS geofencing, jadwal shift, dan log RESTful API PT. BCS Logistics.',
+        metrics: [
+          { k: 'Perangkat', v: 'Android & iOS' },
+          { k: 'API Service', v: 'Go & PHP REST' },
+          { k: 'Database', v: 'PostgreSQL + SQLite' },
+        ],
+      },
+      {
+        id: 'pc-doklinc',
+        label: 'PC-03 · Klinik doklinc',
+        screenLine: 'Antrean · Telemedis',
+        title: 'PC-03 · Dashboard Manajemen Layanan Klinik doklinc',
+        sub: 'Mengelola pendaftaran pasien, dokter jaga, & sinkronisasi jadwal klinik secara real-time.',
+        metrics: [
+          { k: 'Modul', v: 'Jadwal & Antrean' },
+          { k: 'Kontainer', v: 'Docker Isolated' },
+          { k: 'Integritas DB', v: 'ACID PostgreSQL' },
+        ],
+      },
+      {
+        id: 'pc-ai',
+        label: 'PC-04 · Terminal AI',
+        screenLine: 'Docker · Agent OS',
+        title: 'PC-04 · Workstation Docker & AI Agent Orchestrator',
+        sub: 'Menjalankan kontainer layanan, orkestrasi Python AI Agent, dan automasi skrip operasional.',
+        metrics: [
+          { k: 'Kontainer', v: 'Docker Compose' },
+          { k: 'Bahasa', v: 'Python · Go · JS' },
+          { k: 'Audit Log', v: 'Real-Time Stream' },
+        ],
+      },
+    ],
+    vlans: [
+      'VLAN 10 · Lab Ujian (30+ PC)',
+      'VLAN 20 · Klaster Server & DB',
+      'VLAN 30 · Staf & Klinik Web',
+      'WAN Fiber · REST Gateway',
+    ],
+    networkMetrics: [
+      { k: 'Topologi Port', v: '24-Port Managed' },
+      { k: 'Isolasi Subnet', v: 'VLAN 10 / 20 / 30' },
+      { k: 'Uptime Jaringan', v: '2017–2024 Stabil' },
+    ],
     blades: [
       {
         id: 'bcs-docker',
@@ -30,10 +124,6 @@ const INFRA_ROOM_DATA = {
           { k: 'Status Node', v: 'ONLINE · 99.9%' },
           { k: 'Endpoint API', v: 'REST :8080 / TLS' },
           { k: 'Stack Aktif', v: 'Docker · Go · Python' },
-        ],
-        details: [
-          'Menjalankan layanan Presensi Mobile (Android/iOS) dan klinik doklinc dalam kontainer terisolasi.',
-          'Validasi token RESTful API & payload JSON berlatensi rendah untuk antrean multi-shift real-time.',
         ],
       },
       {
@@ -48,10 +138,6 @@ const INFRA_ROOM_DATA = {
           { k: 'Mesin DB', v: 'PostgreSQL · MySQL' },
           { k: 'Cache Perangkat', v: 'SQLite Embedded' },
         ],
-        details: [
-          'Penyimpanan data transaksional absensi karyawan, shift kerja, dan jadwal doklinc di PostgreSQL & MySQL.',
-          'SQLite menjaga antrean offline tetap aman saat koneksi cabang terputus sementara.',
-        ],
       },
       {
         id: 'lp3i-campus',
@@ -65,47 +151,134 @@ const INFRA_ROOM_DATA = {
           { k: 'Aplikasi Inti', v: 'Ujian & Persuratan' },
           { k: 'Masa Operasi', v: '8+ Tahun Produksi' },
         ],
-        details: [
-          'Mengelola server PHP & database internal untuk ujian praktik serentak mahasiswa LP3I College Cilegon.',
-          'Automasi distribusi paket soal, timer sinkron, dan ekspor arsip administrasi akademik.',
-        ],
       },
       {
         id: 'net-switch',
         unit: 'U04',
         host: 'NET-CORE-SWITCH',
         badge: 'Network',
-        sub: 'Topologi LAN, Segmentasi VLAN, & Keamanan Hardware',
+        sub: 'Topologi LAN, Segmentasi VLAN, & Hardware Ops',
         pingResult: '0.5 ms · Full-Duplex VLAN 10',
         metrics: [
           { k: 'Segmentasi', v: 'VLAN Lab & Server' },
           { k: 'Keandalan', v: 'Zero-Drop Routing' },
           { k: 'Lingkup Ops', v: 'IT Support & Infra' },
         ],
-        details: [
-          'Perancangan jalur kabel terstruktur, pemisahan subnet staf & lab ujian, serta troubleshooting hardware harian.',
-          'Monitoring konektivitas antarrak agar layanan ujian lokal dan sistem web kampus berjalan stabil.',
-        ],
       },
     ],
     topology: [
       {
-        title: '1. Klien & Akses Edge',
-        nodes: ['Presensi Android & iOS', '30+ PC Lab Ujian LAN', 'Portal Web Klinik & Admin'],
+        key: 'edge',
+        title: 'Klien Edge',
+        nodes: ['App Mobile', '30+ PC LAN', 'Web Klinik'],
       },
       {
-        title: '2. Gateway & Kontainer',
-        nodes: ['Docker Compose Engine', 'RESTful API (Go & PHP)', 'Orkestrator Python AI'],
+        key: 'gw',
+        title: 'Gateway API',
+        nodes: ['Docker', 'REST Go/PHP', 'Python AI'],
       },
       {
-        title: '3. Data & Penyimpanan',
-        nodes: ['PostgreSQL Cluster', 'MySQL Akademik & App', 'SQLite Offline Cache'],
+        key: 'db',
+        title: 'Basis Data',
+        nodes: ['Postgres DB', 'MySQL App', 'SQLite Cache'],
       },
     ],
   },
   en: {
-    activeHeadline: 'Server Room & Infrastructure Architecture',
-    activeSub: 'Orchestrating Docker, RESTful APIs, Database Clusters, & LP3I Campus Networking',
+    ambientTag: 'Chilled Server Room · 21.4°C · NOC Active',
+    stations: {
+      overview: {
+        tab: 'Full Room',
+        title: 'Server Room & Infrastructure Panorama Tour',
+        sub: 'Click numbered zones 1–4 inside the room, pick any desktop computer, or press Next → to walk around.',
+      },
+      screen: {
+        tab: '1. Infra Screen',
+        title: '1 · NOC Wall Infrastructure Blueprint Screen',
+        sub: 'Live packet paths flowing from client devices through Docker APIs to database clusters.',
+      },
+      computers: {
+        tab: '2. 4 Computers',
+        title: '2 · Workstation Console Row (4 Active PCs)',
+        sub: 'Inspect the four computers monitoring LP3I Lab Exams, GPS Attendance, doklinc Clinic, & Docker AI.',
+      },
+      rack: {
+        tab: '3. Server Rack',
+        title: '3 · Production Server Rack Cabinet (U01–U04)',
+        sub: 'Select U01–U04 server blades and run live ping diagnostics across each host.',
+      },
+      network: {
+        tab: '4. Core Switch',
+        title: '4 · 24-Port Managed Switch & VLAN Segmentation',
+        sub: 'Isolates 30+ Exam Lab PCs, Server Rack, and Staff subnets for zero-drop throughput.',
+      },
+    },
+    flows: [
+      { id: 'all', label: 'All Flows', litNodes: ['edge-0', 'edge-1', 'edge-2', 'gw-0', 'gw-1', 'gw-2', 'db-0', 'db-1', 'db-2'] },
+      { id: 'bcs', label: 'GPS & Clinic', litNodes: ['edge-0', 'edge-2', 'gw-0', 'gw-1', 'db-0', 'db-2'] },
+      { id: 'lp3i', label: 'LP3I Exam Lab', litNodes: ['edge-1', 'gw-1', 'db-1'] },
+    ],
+    computers: [
+      {
+        id: 'pc-lab',
+        label: 'PC-01 · LP3I Lab',
+        screenLine: '30+ Exam PCs · LAN',
+        title: 'PC-01 · Local Exam Supervisor Console (LP3I)',
+        sub: 'Controls synchronized PHP exam sessions, countdown timers, & grading across 30+ lab PCs.',
+        metrics: [
+          { k: 'Lab Fleet', v: '30+ Gigabit PCs' },
+          { k: 'Exam Engine', v: 'PHP · MySQL LAN' },
+          { k: 'Status', v: 'Sync Ready' },
+        ],
+      },
+      {
+        id: 'pc-bcs',
+        label: 'PC-02 · BCS GPS',
+        screenLine: 'GPS · REST :8080',
+        title: 'PC-02 · Android & iOS Attendance Gateway Monitor',
+        sub: 'Tracks geofenced employee check-ins, shifts, and RESTful API traffic at PT. BCS Logistics.',
+        metrics: [
+          { k: 'Clients', v: 'Android & iOS' },
+          { k: 'API Tier', v: 'Go & PHP REST' },
+          { k: 'Storage', v: 'PostgreSQL + SQLite' },
+        ],
+      },
+      {
+        id: 'pc-doklinc',
+        label: 'PC-03 · doklinc',
+        screenLine: 'Queues · Clinic UI',
+        title: 'PC-03 · doklinc Healthcare Portal Terminal',
+        sub: 'Monitors patient intake, doctor schedules, and real-time clinical queue updates.',
+        metrics: [
+          { k: 'Module', v: 'Schedule & Queue' },
+          { k: 'Container', v: 'Docker Isolated' },
+          { k: 'Integrity', v: 'ACID PostgreSQL' },
+        ],
+      },
+      {
+        id: 'pc-ai',
+        label: 'PC-04 · AI Shell',
+        screenLine: 'Docker · Agent OS',
+        title: 'PC-04 · Docker & AI Agent Operations Terminal',
+        sub: 'Runs service containers, Python AI agent pipelines, and infrastructure automation scripts.',
+        metrics: [
+          { k: 'Containers', v: 'Docker Compose' },
+          { k: 'Languages', v: 'Python · Go · JS' },
+          { k: 'Telemetry', v: 'Live Container Logs' },
+        ],
+      },
+    ],
+    vlans: [
+      'VLAN 10 · Exam Lab (30+ PCs)',
+      'VLAN 20 · Server & DB Cluster',
+      'VLAN 30 · Staff & Clinic Web',
+      'WAN Fiber · REST Gateway',
+    ],
+    networkMetrics: [
+      { k: 'Switch Matrix', v: '24-Port Managed' },
+      { k: 'Subnet Plan', v: 'VLAN 10 / 20 / 30' },
+      { k: 'Reliability', v: '2017–2024 Uptime' },
+    ],
     blades: [
       {
         id: 'bcs-docker',
@@ -118,10 +291,6 @@ const INFRA_ROOM_DATA = {
           { k: 'Node Status', v: 'ONLINE · 99.9%' },
           { k: 'API Gateway', v: 'REST :8080 / TLS' },
           { k: 'Runtime Stack', v: 'Docker · Go · Python' },
-        ],
-        details: [
-          'Runs Mobile Attendance (Android/iOS) and doklinc clinic services inside isolated Docker containers.',
-          'Low-latency RESTful JSON payload validation across multi-shift workforce operations.',
         ],
       },
       {
@@ -136,10 +305,6 @@ const INFRA_ROOM_DATA = {
           { k: 'Primary Engines', v: 'PostgreSQL · MySQL' },
           { k: 'Edge Cache', v: 'SQLite Embedded' },
         ],
-        details: [
-          'Transactional storage for employee logs, shift schedules, and clinic queues using PostgreSQL & MySQL.',
-          'Embedded SQLite preserves local records safely during intermittent branch network drops.',
-        ],
       },
       {
         id: 'lp3i-campus',
@@ -152,10 +317,6 @@ const INFRA_ROOM_DATA = {
           { k: 'Lab Capacity', v: '30+ Sync Clients' },
           { k: 'Core Apps', v: 'Exam & Letter Suite' },
           { k: 'Track Record', v: '8+ Years Uptime' },
-        ],
-        details: [
-          'Managed local PHP web servers and databases powering simultaneous student exams at LP3I College Cilegon.',
-          'Automated exam distribution, countdown locking, and archival document workflows.',
         ],
       },
       {
@@ -170,24 +331,23 @@ const INFRA_ROOM_DATA = {
           { k: 'Reliability', v: 'Zero-Drop Routing' },
           { k: 'Operations', v: 'IT Support & Infra' },
         ],
-        details: [
-          'Structured LAN cabling, isolated exam vs staff subnets, and rapid endpoint hardware maintenance.',
-          'Proactive link monitoring keeping local lab exams and campus web apps uninterrupted.',
-        ],
       },
     ],
     topology: [
       {
-        title: '1. Client & Edge Tier',
-        nodes: ['Android & iOS Attendance', '30+ Exam Lab LAN PCs', 'Clinic & Admin Web UI'],
+        key: 'edge',
+        title: 'Client Edge',
+        nodes: ['Mobile App', '30+ Lab PCs', 'Clinic Web'],
       },
       {
-        title: '2. Gateway & Containers',
-        nodes: ['Docker Compose Engine', 'RESTful API (Go & PHP)', 'Python AI Orchestrator'],
+        key: 'gw',
+        title: 'API Gateway',
+        nodes: ['Docker', 'REST Go/PHP', 'Python AI'],
       },
       {
-        title: '3. Data & Persistence',
-        nodes: ['PostgreSQL Cluster', 'MySQL Campus & Apps', 'SQLite Offline Cache'],
+        key: 'db',
+        title: 'Databases',
+        nodes: ['Postgres DB', 'MySQL Apps', 'SQLite Cache'],
       },
     ],
   },
@@ -240,7 +400,9 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   let laptopProjectId = 'presensi-online';
   let laptopScreenTab = 'utama';
   let infraBladeId = 'bcs-docker';
-  let infraScreenTab = 'rack';
+  let infraStationId = 'overview';
+  let infraComputerId = 'pc-lab';
+  let infraFlowId = 'all';
   let infraPingStatus = '';
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
@@ -412,119 +574,304 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     }
   }
 
-  function renderInfraOs() {
+  function syncInfraSceneStates(stageEl, langData, activeBlade, activePc, activeFlow) {
+    stageEl.dataset.tourStation = infraStationId;
+    stageEl.querySelectorAll('[data-tour-goto]').forEach((el) => {
+      if (el.classList.contains('server-zone-box')) {
+        el.classList.toggle('is-focus', el.dataset.tourGoto === infraStationId);
+      }
+    });
+    stageEl.querySelectorAll('.server-rack-u').forEach((el) => {
+      el.classList.toggle('is-active', el.dataset.bladeId === activeBlade.id);
+    });
+    stageEl.querySelectorAll('[data-infra-pc]').forEach((el) => {
+      el.classList.toggle('is-selected', el.dataset.infraPc === activePc.id);
+    });
+    stageEl.querySelectorAll('.noc-node-pill').forEach((el) => {
+      el.classList.toggle('is-lit', activeFlow.litNodes.includes(el.dataset.nodeKey));
+    });
+    const flowLabel = stageEl.querySelector('#infraScreenFlowTag');
+    if (flowLabel) flowLabel.textContent = activeFlow.label;
+    const pcTag = stageEl.querySelector('#infraDeskPcTag');
+    if (pcTag) pcTag.textContent = activePc.label;
+  }
+
+  function renderInfraOs({ forceSceneRebuild = false } = {}) {
     if (!laptopDock || !laptopBody) return;
-    const langData = INFRA_ROOM_DATA[getLang()] || INFRA_ROOM_DATA.id;
+    const lang = getLang();
+    const langData = INFRA_ROOM_DATA[lang] || INFRA_ROOM_DATA.id;
+    const stationMeta = langData.stations[infraStationId] || langData.stations.overview;
     const activeBlade = langData.blades.find((b) => b.id === infraBladeId) || langData.blades[0];
+    const activePc = langData.computers.find((c) => c.id === infraComputerId) || langData.computers[0];
+    const activeFlow = langData.flows.find((f) => f.id === infraFlowId) || langData.flows[0];
     infraBladeId = activeBlade.id;
-    const isTopology = infraScreenTab === 'topology';
+    infraComputerId = activePc.id;
+    infraFlowId = activeFlow.id;
 
-    laptopDock.innerHTML = langData.blades
-      .map(
-        (blade) => `
-      <button
-        type="button"
-        class="laptop-app-tab${blade.id === infraBladeId ? ' is-active' : ''}"
-        role="tab"
-        aria-selected="${blade.id === infraBladeId}"
-        data-infra-blade="${blade.id}"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></svg>
-        <span>${blade.unit} · ${blade.badge}</span>
-      </button>
-    `
-      )
-      .join('');
-
-    laptopBody.innerHTML = `
-      <div class="laptop-screen-head">
-        <div>
-          <p class="laptop-screen-title">${isTopology ? langData.activeHeadline : `${activeBlade.unit} · ${activeBlade.host}`}</p>
-          <p class="laptop-screen-sub">${isTopology ? langData.activeSub : activeBlade.sub}</p>
-        </div>
-        <div class="laptop-screen-tabs" role="tablist">
-          <button type="button" class="laptop-screen-tab${!isTopology ? ' is-active' : ''}" role="tab" aria-selected="${!isTopology}" data-infra-screen="rack">
-            ${t('infraTabRack')}
-          </button>
-          <button type="button" class="laptop-screen-tab${isTopology ? ' is-active' : ''}" role="tab" aria-selected="${isTopology}" data-infra-screen="topology">
-            ${t('infraTabTopology')}
-          </button>
-        </div>
-      </div>
-      ${
-        !isTopology
-          ? `
-        <div class="infra-rack-grid">
-          ${langData.blades
-            .map(
-              (blade) => `
-            <button type="button" class="infra-blade-card${blade.id === activeBlade.id ? ' is-active' : ''}" data-infra-blade="${blade.id}">
-              <span class="infra-blade-main">
-                <span class="infra-led-dot" aria-hidden="true"></span>
-                <span class="infra-blade-name">${blade.unit} · ${blade.host}</span>
-              </span>
-              <span class="infra-slot-badge">${blade.badge}</span>
+    laptopDock.innerHTML = `
+      <div class="infra-dock-row">
+        <div class="infra-dock-tabs">
+          ${INFRA_TOUR_ORDER.map(
+            (stId) => `
+            <button
+              type="button"
+              class="laptop-app-tab${infraStationId === stId ? ' is-active' : ''}"
+              role="tab"
+              aria-selected="${infraStationId === stId}"
+              data-tour-goto="${stId}"
+            >
+              <span>${langData.stations[stId].tab}</span>
             </button>
           `
-            )
-            .join('')}
+          ).join('')}
         </div>
-        <div class="laptop-kpi-grid">
-          ${activeBlade.metrics
-            .map(
-              (m) => `
-            <div class="laptop-kpi-card">
-              <span class="laptop-kpi-label">${m.k}</span>
-              <span class="laptop-kpi-val tabular-nums">${m.v}</span>
-            </div>
-          `
-            )
-            .join('')}
-        </div>
-        <ul class="laptop-data-list">
-          ${activeBlade.details
-            .map(
-              (row) =>
-                `<li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#18d2b6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>${row}</span></li>`
-            )
-            .join('')}
-        </ul>
-      `
-          : `
-        <div class="infra-topo-grid">
-          ${langData.topology
-            .map(
-              (tier, idx) => `
-            ${idx > 0 ? '<div class="infra-topo-arrow" aria-hidden="true">→</div>' : ''}
-            <div class="infra-topo-zone">
-              <p class="infra-topo-title">${tier.title}</p>
-              <div class="infra-topo-nodes">
-                ${tier.nodes.map((node) => `<div class="infra-topo-node">${node}</div>`).join('')}
-              </div>
-            </div>
-          `
-            )
-            .join('')}
-        </div>
-      `
-      }
-      <div class="laptop-os-footer">
-        <div class="laptop-impact-row">
-          ${
-            infraPingStatus
-              ? `<span class="infra-ping-status" id="infraPingReadout">${infraPingStatus}</span>`
-              : `<span class="laptop-impact-chip">PostgreSQL · MySQL · SQLite</span><span class="laptop-impact-chip">Docker · RESTful API · Go</span>`
-          }
-        </div>
-        <div class="laptop-footer-actions">
-          <button type="button" class="laptop-exit-btn" id="infraPingBtn" data-infra-ping="true">
-            ${t('infraPingBtn')}
-          </button>
-          <button type="button" class="btn-primary" id="infraJumpExpBtn" data-infra-jump="#experience">
-            ${t('infraJumpExpBtn')}
-          </button>
+        <div class="infra-dock-nav">
+          <button type="button" class="laptop-screen-tab" data-tour-step="prev" aria-label="${t('infraTourPrev')}" title="${t('infraTourPrev')}">←</button>
+          <button type="button" class="laptop-screen-tab is-active" data-tour-step="next" aria-label="${t('infraTourNext')}" title="${t('infraTourNext')}">→</button>
         </div>
       </div>
+    `;
+
+    const switchPorts = Array.from({ length: 12 }, (_, idx) => `<span class="switch-port-led${idx % 5 !== 4 ? ' is-live' : ''}"></span>`).join('');
+    const labels =
+      lang === 'en'
+        ? {
+            rack: 'Server Rack',
+            screen: 'Infrastructure Wall Screen',
+            network: 'VLAN Switch',
+            computers: '4 Workstation Computers',
+            overviewMetrics: [
+              { k: 'NOC Screen', v: '3-Tier Topology Live' },
+              { k: 'Workstations', v: '4 Active PC Monitors' },
+              { k: 'Rack & Network', v: 'U01–U04 · 3 VLANs' },
+            ],
+            screenMetrics: [
+              { k: 'Active Flow', v: activeFlow.label },
+              { k: 'Gateway Tier', v: 'Docker · RESTful API' },
+              { k: 'Persistence', v: 'PostgreSQL · MySQL · SQLite' },
+            ],
+          }
+        : {
+            rack: 'Rak Server',
+            screen: 'Layar Rancangan Infrastruktur',
+            network: 'Switch VLAN',
+            computers: 'Deretan 4 Komputer Workstation',
+            overviewMetrics: [
+              { k: 'Layar NOC', v: '3-Tier Topology Live' },
+              { k: 'Workstation', v: '4 PC Monitor Aktif' },
+              { k: 'Rak & Jaringan', v: 'U01–U04 · 3 VLAN' },
+            ],
+            screenMetrics: [
+              { k: 'Skenario Aktif', v: activeFlow.label },
+              { k: 'Lapisan Gateway', v: 'Docker · RESTful API' },
+              { k: 'Persistensi', v: 'PostgreSQL · MySQL · SQLite' },
+            ],
+          };
+
+    let stationHeadline = stationMeta.title;
+    let stationSub = stationMeta.sub;
+    let inspectorControls = '';
+    let inspectorMetrics = activeBlade.metrics;
+
+    if (infraStationId === 'overview') {
+      inspectorControls = '';
+      inspectorMetrics = labels.overviewMetrics;
+    } else if (infraStationId === 'screen') {
+      inspectorControls = `
+        <div class="server-tour-chips">
+          ${langData.flows
+            .map(
+              (fl) =>
+                `<button type="button" class="laptop-screen-tab${fl.id === activeFlow.id ? ' is-active' : ''}" data-infra-flow="${fl.id}">${fl.label}</button>`
+            )
+            .join('')}
+        </div>
+      `;
+      inspectorMetrics = labels.screenMetrics;
+    } else if (infraStationId === 'computers') {
+      stationHeadline = activePc.title;
+      stationSub = activePc.sub;
+      inspectorControls = `
+        <div class="server-tour-chips">
+          ${langData.computers
+            .map(
+              (pc) =>
+                `<button type="button" class="laptop-screen-tab${pc.id === activePc.id ? ' is-active' : ''}" data-infra-pc="${pc.id}">${pc.label}</button>`
+            )
+            .join('')}
+        </div>
+      `;
+      inspectorMetrics = activePc.metrics;
+    } else if (infraStationId === 'rack') {
+      stationHeadline = `${activeBlade.unit} · ${activeBlade.host}`;
+      stationSub = activeBlade.sub;
+      inspectorControls = `
+        <div class="server-tour-chips">
+          ${langData.blades
+            .map(
+              (b) =>
+                `<button type="button" class="laptop-screen-tab${b.id === activeBlade.id ? ' is-active' : ''}" data-infra-blade="${b.id}">${b.unit} · ${b.badge}</button>`
+            )
+            .join('')}
+        </div>
+      `;
+      inspectorMetrics = activeBlade.metrics;
+    } else if (infraStationId === 'network') {
+      inspectorControls = `
+        <div class="server-tour-chips">
+          ${langData.vlans.map((v) => `<span class="laptop-impact-chip">${v}</span>`).join('')}
+        </div>
+      `;
+      inspectorMetrics = langData.networkMetrics;
+    }
+
+    const inspectorHtml = `
+      <div class="server-tour-subbar">
+        <div>
+          <p class="laptop-screen-title">${stationHeadline}</p>
+          <p class="laptop-screen-sub">${stationSub}</p>
+        </div>
+        ${inspectorControls}
+      </div>
+      <div class="laptop-kpi-grid">
+        ${inspectorMetrics
+          .map(
+            (m) => `
+          <div class="laptop-kpi-card">
+            <span class="laptop-kpi-label">${m.k}</span>
+            <span class="laptop-kpi-val tabular-nums">${m.v}</span>
+          </div>
+        `
+          )
+          .join('')}
+      </div>
+    `;
+
+    const footerHtml = `
+      <div class="laptop-impact-row">
+        ${
+          infraPingStatus
+            ? `<span class="infra-ping-status" id="infraPingReadout">${infraPingStatus}</span>`
+            : `<span class="laptop-impact-chip">PostgreSQL · MySQL · SQLite</span><span class="laptop-impact-chip">Docker · RESTful API · Go</span>`
+        }
+      </div>
+      <div class="laptop-footer-actions">
+        <button type="button" class="laptop-exit-btn" id="infraPingBtn" data-infra-ping="true">
+          ${t('infraPingBtn')}
+        </button>
+        <button type="button" class="btn-primary" id="infraJumpExpBtn" data-infra-jump="#experience">
+          ${t('infraJumpExpBtn')}
+        </button>
+      </div>
+    `;
+
+    const existingStage = !forceSceneRebuild ? laptopBody.querySelector('.server-tour-stage') : null;
+    if (existingStage) {
+      syncInfraSceneStates(existingStage, langData, activeBlade, activePc, activeFlow);
+      const inspectorEl = laptopBody.querySelector('.server-tour-inspector');
+      const footerEl = laptopBody.querySelector('.laptop-os-footer');
+      if (inspectorEl) inspectorEl.innerHTML = inspectorHtml;
+      if (footerEl) footerEl.innerHTML = footerHtml;
+      return;
+    }
+
+    laptopBody.innerHTML = `
+      <div class="server-tour-stage" data-tour-station="${infraStationId}">
+        <div class="server-room-canvas">
+          <div class="server-room-ceiling">
+            <span class="server-ceiling-light" aria-hidden="true"></span>
+            <span class="server-room-ambient-tag">${langData.ambientTag}</span>
+            <span class="server-ceiling-light" aria-hidden="true"></span>
+          </div>
+
+          <div class="server-room-backwall">
+            <button type="button" class="server-zone-box${infraStationId === 'rack' ? ' is-focus' : ''}" data-tour-goto="rack">
+              <div class="server-zone-head">
+                <span class="server-zone-pin"><span class="server-pin-num">3</span> ${labels.rack}</span>
+                <span class="server-zone-temp">U01–U04</span>
+              </div>
+              <div class="server-rack-slots">
+                ${langData.blades
+                  .map(
+                    (b) => `
+                  <div class="server-rack-u${b.id === activeBlade.id ? ' is-active' : ''}" data-blade-id="${b.id}">
+                    <span class="server-rack-u-left"><span class="infra-led-dot" aria-hidden="true"></span><span>${b.unit} · ${b.badge}</span></span>
+                    <span>99.9%</span>
+                  </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            </button>
+
+            <button type="button" class="server-zone-box${infraStationId === 'screen' ? ' is-focus' : ''}" data-tour-goto="screen">
+              <div class="server-zone-head">
+                <span class="server-zone-pin"><span class="server-pin-num">1</span> ${labels.screen}</span>
+                <span class="server-zone-temp" id="infraScreenFlowTag">${activeFlow.label}</span>
+              </div>
+              <div class="server-noc-screen">
+                <div class="noc-diagram-row">
+                  ${langData.topology
+                    .map(
+                      (tier, tierIdx) => `
+                    ${tierIdx > 0 ? '<div class="noc-pipe" aria-hidden="true"><span class="noc-packet-dot"></span></div>' : ''}
+                    <div class="noc-tier-box">
+                      <span class="noc-tier-label">${tier.title}</span>
+                      ${tier.nodes
+                        .map((nodeLabel, nIdx) => {
+                          const nodeKey = `${tier.key}-${nIdx}`;
+                          const isLit = activeFlow.litNodes.includes(nodeKey);
+                          return `<span class="noc-node-pill${isLit ? ' is-lit' : ''}" data-node-key="${nodeKey}">${nodeLabel}</span>`;
+                        })
+                        .join('')}
+                    </div>
+                  `
+                    )
+                    .join('')}
+                </div>
+              </div>
+            </button>
+
+            <button type="button" class="server-zone-box${infraStationId === 'network' ? ' is-focus' : ''}" data-tour-goto="network">
+              <div class="server-zone-head">
+                <span class="server-zone-pin"><span class="server-pin-num">4</span> ${labels.network}</span>
+                <span class="server-zone-temp">24-Port</span>
+              </div>
+              <div class="switch-port-matrix" aria-hidden="true">${switchPorts}</div>
+              <div class="switch-vlan-list">
+                ${langData.vlans
+                  .slice(0, 3)
+                  .map((v) => `<div class="switch-vlan-row">${v}</div>`)
+                  .join('')}
+              </div>
+            </button>
+          </div>
+
+          <div class="server-desk-console">
+            <div class="server-zone-head">
+              <button type="button" class="server-zone-pin" data-tour-goto="computers"><span class="server-pin-num">2</span> ${labels.computers}</button>
+              <span class="server-zone-temp" id="infraDeskPcTag">${activePc.label}</span>
+            </div>
+            <div class="server-pc-row">
+              ${langData.computers
+                .map(
+                  (pc) => `
+                <button type="button" class="server-pc-unit${pc.id === activePc.id ? ' is-selected' : ''}" data-infra-pc="${pc.id}">
+                  <span class="server-pc-monitor">
+                    <span class="server-pc-title">${pc.label}</span>
+                    <span class="server-pc-screen-line">${pc.screenLine}</span>
+                  </span>
+                  <span class="server-pc-stand" aria-hidden="true"></span>
+                </button>
+              `
+                )
+                .join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="server-tour-inspector">${inspectorHtml}</div>
+      <div class="laptop-os-footer">${footerHtml}</div>
     `;
   }
 
@@ -636,6 +983,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     window.clearTimeout(laptopCloseTimer);
     stageOverlayMode = 'infra';
     stage.dataset.zoomMode = 'infra';
+    infraStationId = 'overview';
     infraPingStatus = '';
     laptopOpen = true;
     syncStageChrome('infra');
@@ -644,7 +992,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     if (charCanvas) charCanvas.style.transform = '';
     if (laptopOs) {
       laptopOs.hidden = false;
-      renderInfraOs();
+      renderInfraOs({ forceSceneRebuild: true });
       void stage.offsetWidth;
     }
     stage.classList.add('is-laptop-open');
@@ -711,11 +1059,20 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   laptopExitBtn?.addEventListener('click', closeLaptopView);
 
   laptopDock?.addEventListener('click', (event) => {
-    const infraTabBtn = event.target.closest('[data-infra-blade]');
-    if (infraTabBtn) {
+    const gotoBtn = event.target.closest('[data-tour-goto]');
+    if (gotoBtn) {
       soundEngine.playClick();
-      infraBladeId = infraTabBtn.dataset.infraBlade;
-      infraPingStatus = '';
+      infraStationId = gotoBtn.dataset.tourGoto;
+      renderInfraOs();
+      return;
+    }
+    const stepBtn = event.target.closest('[data-tour-step]');
+    if (stepBtn) {
+      soundEngine.playClick();
+      const idx = INFRA_TOUR_ORDER.indexOf(infraStationId);
+      const delta = stepBtn.dataset.tourStep === 'prev' ? -1 : 1;
+      const nextIdx = (idx + delta + INFRA_TOUR_ORDER.length) % INFRA_TOUR_ORDER.length;
+      infraStationId = INFRA_TOUR_ORDER[nextIdx];
       renderInfraOs();
       return;
     }
@@ -728,18 +1085,35 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   });
 
   laptopBody?.addEventListener('click', (event) => {
+    const pcBtn = event.target.closest('[data-infra-pc]');
+    if (pcBtn) {
+      soundEngine.playClick();
+      infraComputerId = pcBtn.dataset.infraPc;
+      infraStationId = 'computers';
+      renderInfraOs();
+      return;
+    }
+    const flowBtn = event.target.closest('[data-infra-flow]');
+    if (flowBtn) {
+      soundEngine.playClick();
+      infraFlowId = flowBtn.dataset.infraFlow;
+      infraStationId = 'screen';
+      renderInfraOs();
+      return;
+    }
+    const gotoZone = event.target.closest('[data-tour-goto]');
+    if (gotoZone) {
+      soundEngine.playClick();
+      infraStationId = gotoZone.dataset.tourGoto;
+      renderInfraOs();
+      return;
+    }
     const bladeCard = event.target.closest('[data-infra-blade]');
     if (bladeCard) {
       soundEngine.playClick();
       infraBladeId = bladeCard.dataset.infraBlade;
+      infraStationId = 'rack';
       infraPingStatus = '';
-      renderInfraOs();
-      return;
-    }
-    const infraScreenBtn = event.target.closest('[data-infra-screen]');
-    if (infraScreenBtn) {
-      soundEngine.playClick();
-      infraScreenTab = infraScreenBtn.dataset.infraScreen;
       renderInfraOs();
       return;
     }
@@ -1262,7 +1636,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     if (laptopOpen) {
       syncStageChrome(stageOverlayMode || 'laptop');
       if (stageOverlayMode === 'infra') {
-        renderInfraOs();
+        renderInfraOs({ forceSceneRebuild: true });
       } else {
         renderLaptopOs();
       }

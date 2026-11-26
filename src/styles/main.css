@@ -380,7 +380,18 @@ html[data-studio-time='senja'] .workspace-bg-img {
 }
 
 .workspace-stage[data-zoom-mode='infra'].is-laptop-open {
-  min-height: 620px;
+  aspect-ratio: auto;
+  min-height: 815px;
+  scroll-margin-top: 84px;
+}
+
+.workspace-stage[data-zoom-mode='infra'].is-laptop-open .laptop-os-body {
+  padding: 10px 14px;
+  gap: 7px;
+}
+
+.workspace-stage[data-zoom-mode='infra'].is-laptop-open .laptop-kpi-card {
+  padding: 7px 10px;
 }
 
 .workspace-stage.is-laptop-open .workspace-bg-img,
@@ -659,54 +670,195 @@ html[data-studio-time='senja'] .workspace-bg-img {
   gap: 8px;
 }
 
-/* Server Room & Infrastructure Blueprint UI inside stage overlay */
-.infra-rack-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.infra-blade-card {
+/* Interactive 2.5D Server Room Tour inside stage overlay */
+.infra-dock-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 8px;
-  padding: 7px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(147, 176, 190, 0.22);
-  background: linear-gradient(135deg, rgba(16, 35, 48, 0.94), rgba(11, 24, 34, 0.96));
-  color: #eef6f9;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out), transform 160ms var(--ease-out);
+  width: 100%;
 }
 
-.infra-blade-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
-.infra-blade-card.is-active {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px rgba(24, 210, 182, 0.35);
-  background: linear-gradient(135deg, rgba(20, 48, 62, 0.96), rgba(12, 30, 42, 0.98));
-}
-
-.infra-blade-main {
+.infra-dock-tabs,
+.infra-dock-nav {
   display: flex;
   align-items: center;
-  gap: 9px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.server-tour-stage {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(24, 210, 182, 0.3);
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 8%, rgba(24, 210, 182, 0.16), transparent 65%),
+    linear-gradient(180deg, #07131c 0%, #091a26 62%, #050f16 100%);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.server-room-canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform-origin: 50% 45%;
+  transition: transform 480ms var(--ease-out);
+}
+
+.server-tour-stage[data-tour-station='screen'] .server-room-canvas {
+  transform-origin: 50% 24%;
+  transform: scale(1.28);
+}
+
+.server-tour-stage[data-tour-station='computers'] .server-room-canvas {
+  transform-origin: 50% 94%;
+  transform: scale(1.24);
+}
+
+.server-tour-stage[data-tour-station='rack'] .server-room-canvas {
+  transform-origin: 10% 30%;
+  transform: scale(1.3);
+}
+
+.server-tour-stage[data-tour-station='network'] .server-room-canvas {
+  transform-origin: 90% 30%;
+  transform: scale(1.3);
+}
+
+.server-room-ceiling {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+.server-ceiling-light {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(24, 210, 182, 0.85), transparent);
+  box-shadow: 0 0 12px rgba(24, 210, 182, 0.55);
+}
+
+.server-room-ambient-tag {
+  font-size: var(--text-sm);
+  color: #8fb4c4;
+  white-space: nowrap;
+}
+
+.server-room-backwall {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.82fr) minmax(300px, 2.15fr) minmax(140px, 0.82fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.server-zone-box {
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid rgba(147, 176, 190, 0.24);
+  background: rgba(11, 25, 36, 0.92);
+  padding: 8px 9px;
+  cursor: pointer;
+  text-align: left;
+  color: #eef6f9;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+
+.server-zone-box:hover,
+.server-zone-box.is-focus {
+  border-color: #18d2b6;
+  box-shadow: 0 0 0 1px rgba(24, 210, 182, 0.42), 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.server-zone-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.server-zone-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: #eef6f9;
+}
+
+.server-pin-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background-color: #18d2b6;
+  color: #06211e;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.server-zone-temp {
+  font-size: var(--text-sm);
+  color: #18d2b6;
+  font-weight: 600;
+}
+
+.server-rack-slots {
+  display: grid;
+  gap: 4px;
+}
+
+.server-rack-u {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background-color: rgba(18, 40, 54, 0.92);
+  border: 1px solid rgba(147, 176, 190, 0.16);
+  font-size: var(--text-sm);
+  color: #cfe2eb;
+}
+
+.server-rack-u.is-active {
+  border-color: #18d2b6;
+  background-color: rgba(24, 210, 182, 0.16);
+  color: #ffffff;
+}
+
+.server-rack-u-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   min-width: 0;
 }
 
 .infra-led-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
   background-color: #18d2b6;
-  box-shadow: 0 0 8px rgba(24, 210, 182, 0.85);
-  animation: infraLedPulse 2.2s ease-in-out infinite;
+  box-shadow: 0 0 7px rgba(24, 210, 182, 0.9);
+  animation: infraLedPulse 2s ease-in-out infinite;
 }
 
 @keyframes infraLedPulse {
@@ -716,81 +868,219 @@ html[data-studio-time='senja'] .workspace-bg-img {
     transform: scale(1);
   }
   50% {
-    opacity: 0.45;
-    transform: scale(0.84);
+    opacity: 0.4;
+    transform: scale(0.8);
   }
 }
 
-.infra-blade-name {
-  display: block;
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: #eef6f9;
+/* Center Wall NOC Infrastructure Screen */
+.server-noc-screen {
+  border-radius: 7px;
+  padding: 8px 9px;
+  background: linear-gradient(160deg, rgba(8, 28, 38, 0.98), rgba(6, 18, 28, 0.98));
+  border: 1px solid rgba(24, 210, 182, 0.34);
+  box-shadow: inset 0 0 18px rgba(24, 210, 182, 0.12);
 }
 
-.infra-blade-sub {
-  display: block;
-  font-size: var(--text-sm);
-  color: #93b0be;
-}
-
-.infra-slot-badge {
-  flex-shrink: 0;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: #18d2b6;
-  background-color: rgba(24, 210, 182, 0.14);
-  border: 1px solid rgba(24, 210, 182, 0.28);
-}
-
-.infra-topo-grid {
+.noc-diagram-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: stretch;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr) 12px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px;
 }
 
-.infra-topo-zone {
-  padding: 10px 11px;
-  border-radius: 8px;
-  background-color: rgba(15, 33, 46, 0.9);
+.noc-tier-box {
+  padding: 5px 6px;
+  border-radius: 6px;
+  background-color: rgba(17, 41, 56, 0.85);
   border: 1px solid rgba(147, 176, 190, 0.22);
-  border-top: 3px solid var(--accent);
+  border-top: 2px solid #18d2b6;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
-.infra-topo-title {
+.noc-tier-label {
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 700;
   color: #eef6f9;
 }
 
-.infra-topo-nodes {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.infra-topo-node {
-  padding: 6px 8px;
-  border-radius: 6px;
-  background-color: rgba(24, 48, 64, 0.72);
+.noc-node-pill {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: rgba(8, 20, 29, 0.85);
   border: 1px solid rgba(147, 176, 190, 0.16);
   font-size: var(--text-sm);
-  color: #d6e6ee;
+  color: #bfd7e3;
 }
 
-.infra-topo-arrow {
-  display: grid;
-  place-items: center;
+.noc-node-pill.is-lit {
+  border-color: #18d2b6;
   color: #18d2b6;
+  background-color: rgba(24, 210, 182, 0.12);
+}
+
+.noc-pipe {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background-color: rgba(24, 210, 182, 0.28);
+  overflow: hidden;
+}
+
+.noc-packet-dot {
+  position: absolute;
+  top: -2px;
+  left: -6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #18d2b6;
+  box-shadow: 0 0 8px #18d2b6;
+  animation: nocPacketMove 1.4s linear infinite;
+}
+
+@keyframes nocPacketMove {
+  0% {
+    transform: translateX(0);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(26px);
+    opacity: 0.2;
+  }
+}
+
+/* Right Switch & VLAN Panel */
+.switch-port-matrix {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(6, 14, 21, 0.9);
+  border: 1px solid rgba(147, 176, 190, 0.16);
+  margin-bottom: 5px;
+}
+
+.switch-port-led {
+  height: 7px;
+  border-radius: 2px;
+  background-color: rgba(147, 176, 190, 0.2);
+}
+
+.switch-port-led.is-live {
+  background-color: #18d2b6;
+  box-shadow: 0 0 5px rgba(24, 210, 182, 0.7);
+}
+
+.switch-vlan-list {
+  display: grid;
+  gap: 3px;
+}
+
+.switch-vlan-row {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: rgba(18, 40, 54, 0.85);
+  font-size: var(--text-sm);
+  color: #cfe2eb;
+}
+
+/* Front Desk Console with 4 Clickable Workstation Monitors */
+.server-desk-console {
+  position: relative;
+  border-radius: 9px;
+  padding: 8px 10px 7px;
+  background: linear-gradient(180deg, rgba(16, 36, 49, 0.95), rgba(8, 20, 29, 0.98));
+  border: 1px solid rgba(147, 176, 190, 0.24);
+  border-top: 2px solid rgba(24, 210, 182, 0.35);
+}
+
+.server-pc-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.server-pc-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: #eef6f9;
+  transition: transform 160ms var(--ease-out);
+}
+
+.server-pc-unit:hover {
+  transform: translateY(-2px);
+}
+
+.server-pc-monitor {
+  width: 100%;
+  padding: 6px 7px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(147, 176, 190, 0.32);
+  background: linear-gradient(160deg, #0b2432, #071620);
+  box-shadow: inset 0 0 12px rgba(24, 210, 182, 0.08);
+  text-align: left;
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+
+.server-pc-unit.is-selected .server-pc-monitor {
+  border-color: #18d2b6;
+  box-shadow: 0 0 0 1px rgba(24, 210, 182, 0.45), inset 0 0 14px rgba(24, 210, 182, 0.2);
+}
+
+.server-pc-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
   font-weight: 700;
+  color: #eef6f9;
+}
+
+.server-pc-screen-line {
+  display: block;
+  font-size: var(--text-sm);
+  color: #18d2b6;
+}
+
+.server-pc-stand {
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: rgba(147, 176, 190, 0.4);
+}
+
+.server-tour-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.server-tour-subbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.server-tour-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .infra-ping-status {
@@ -2477,13 +2767,23 @@ html.reveal-ready .section-block.is-visible {
   }
 
   .laptop-kpi-grid,
-  .infra-rack-grid,
-  .infra-topo-grid {
+  .server-room-backwall,
+  .noc-diagram-row {
     grid-template-columns: 1fr;
   }
 
-  .infra-topo-arrow {
-    transform: rotate(90deg);
+  .server-pc-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .noc-pipe {
+    width: 3px;
+    height: 16px;
+    margin-inline: auto;
+  }
+
+  .server-tour-stage[data-tour-station] .server-room-canvas {
+    transform: none;
   }
 
   .composer-fields-row,

@@ -74,5 +74,5 @@ tags:
 ### Interaksi Zoom-In Layar Laptop OS Hotspot #3 (Selesai)
 - [x] Klik titik #3 (`laptop-projects`) men-zoom kamera ke laptop meja dan menampilkan OS interaktif `SyamsulOS` (5 app tabs, Layar Utama / Data & Log, pintasan `ESC`, & tombol `Keluar dari Laptop`)
 
-### Interaksi Zoom-In Ruangan Server & Rancangan Infrastruktur Hotspot #4 (Selesai)
-- [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera menuju posisi server `75% 66%` (`data-zoom-mode="infra"`) dan membuka antarmuka Ruangan Server (`U01`-`U04` blades, mode Rak Server & Rancangan Topologi 3-lapis, uji ping interaktif, pintasan `ESC` & tombol keluar)
+### Interaksi Zoom-In Tur Ruangan Server & Layar Infrastruktur Hotspot #4 (Selesai)
+- [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera menuju `75% 66%` (`data-zoom-mode="infra"`) dan masuk ke Tur Visual 2.5D Ruangan Server: Panorama penuh + zoom kamera ke **1. Layar Rancangan Infrastruktur**, **2. Deretan 4 Komputer Workstation (`PC-01`..`PC-04`)**, **3. Rak Server `U01`–`U04`** (`Uji Ping Server`), dan **4. Switch VLAN 24-Port** (`← Sebelumnya` / `Berikutnya →`, dwibahasa ID/EN, pintasan `ESC`).
