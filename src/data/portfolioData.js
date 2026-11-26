@@ -546,13 +546,13 @@ export const portfolioData = {
     {
       id: 'shelf-awards',
       title: 'Rak Sertifikasi & Trofi',
-      actionType: 'inspect',
+      actionType: 'awards-zoom',
       x: 89,
       y: 35,
-      speech: 'Belajar tidak pernah berhenti, dari Juara 1 Instruktur Komputer hingga pelatihan Hacktiv8 2025.',
+      speech: 'Masuk ke lorong penghargaan untuk melihat piagam sertifikasi dan plakat prestasi secara langsung.',
       summary:
         'Sertifikasi AI Productivity & AI API Integration (Hacktiv8, Agustus 2025), Juara 1 PTK PNFI Cilegon, dan Juara 3 Provinsi Banten.',
-      ctaLabel: 'Lihat riwayat lengkap',
+      ctaLabel: 'Masuk ke lorong penghargaan',
       targetSection: '#experience',
     },
   ],

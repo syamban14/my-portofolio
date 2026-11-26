@@ -372,22 +372,30 @@ html[data-studio-time='senja'] .workspace-bg-img {
   transition: opacity 240ms var(--ease-out);
 }
 
-/* Camera Zoom-In & Stage OS View (Laptop & Server Room) */
+/* Camera Zoom-In & Stage OS View (Laptop, Server Room, & Awards Hallway) */
 .workspace-stage[data-zoom-mode='infra'] .workspace-bg-img,
 .workspace-stage[data-zoom-mode='infra'] .workspace-canvas,
 .workspace-stage[data-zoom-mode='infra'] .workspace-laptop-os {
   transform-origin: 75% 66%;
 }
 
-.workspace-stage[data-zoom-mode='infra'].is-laptop-open {
+.workspace-stage[data-zoom-mode='awards'] .workspace-bg-img,
+.workspace-stage[data-zoom-mode='awards'] .workspace-canvas,
+.workspace-stage[data-zoom-mode='awards'] .workspace-laptop-os {
+  transform-origin: 89% 35%;
+}
+
+.workspace-stage[data-zoom-mode='infra'].is-laptop-open,
+.workspace-stage[data-zoom-mode='awards'].is-laptop-open {
   aspect-ratio: auto;
   min-height: 815px;
   scroll-margin-top: 84px;
 }
 
-.workspace-stage[data-zoom-mode='infra'].is-laptop-open .laptop-os-body {
+.workspace-stage[data-zoom-mode='infra'].is-laptop-open .laptop-os-body,
+.workspace-stage[data-zoom-mode='awards'].is-laptop-open .laptop-os-body {
   padding: 10px 14px;
-  gap: 7px;
+  gap: 8px;
 }
 
 .workspace-stage[data-zoom-mode='infra'].is-laptop-open .laptop-kpi-card {
@@ -1094,6 +1102,239 @@ html[data-studio-time='senja'] .workspace-bg-img {
   color: #18d2b6;
   font-size: var(--text-sm);
   font-weight: 600;
+}
+
+/* 3D Perspective Awards & Certificate Hallway (Hotspot #5) */
+.awards-hall-stage {
+  position: relative;
+  flex-shrink: 0;
+  height: 360px;
+  border-radius: 10px;
+  border: 1px solid rgba(235, 196, 109, 0.36);
+  background:
+    radial-gradient(ellipse 64% 48% at 50% 42%, rgba(244, 198, 108, 0.2), transparent 68%),
+    linear-gradient(180deg, #101622 0%, #09131c 68%, #070d14 100%);
+  overflow: hidden;
+}
+
+.awards-hall-corridor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 820px;
+  transform-origin: 50% 48%;
+  transition: transform 520ms var(--ease-out);
+}
+
+.awards-hall-stage[data-hall-view='left'] .awards-hall-corridor {
+  transform-origin: 4% 50%;
+  transform: scale(1.18);
+}
+
+.awards-hall-stage[data-hall-view='right'] .awards-hall-corridor {
+  transform-origin: 96% 50%;
+  transform: scale(1.18);
+}
+
+.awards-hall-stage[data-hall-view='deep'] .awards-hall-corridor {
+  transform-origin: 50% 46%;
+  transform: scale(1.28);
+}
+
+.awards-hall-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+  filter: saturate(1.06) brightness(0.92);
+  pointer-events: none;
+}
+
+.awards-hall-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6, 12, 19, 0.56) 0%, transparent 32%, transparent 68%, rgba(6, 12, 19, 0.56) 100%),
+    linear-gradient(180deg, rgba(6, 12, 19, 0.34) 0%, transparent 35%, rgba(6, 12, 19, 0.42) 100%);
+  pointer-events: none;
+}
+
+.awards-hall-walls {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(88px, 0.58fr) minmax(0, 1.08fr);
+  align-items: center;
+  padding: 14px 16px;
+  gap: 8px;
+}
+
+.awards-wall-left,
+.awards-wall-right {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 8px;
+}
+
+.awards-wall-left {
+  transform: rotateY(28deg);
+  transform-origin: left center;
+}
+
+.awards-wall-right {
+  transform: rotateY(-28deg);
+  transform-origin: right center;
+}
+
+.hall-wall-tag {
+  position: absolute;
+  top: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: rgba(8, 17, 26, 0.78);
+  border: 1px solid rgba(235, 196, 109, 0.35);
+  color: #f4d98c;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.hall-wall-tag.is-left {
+  left: 14px;
+}
+
+.hall-wall-tag.is-right {
+  right: 14px;
+}
+
+.hall-plaque-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(235, 196, 109, 0.45);
+  background: linear-gradient(180deg, rgba(20, 30, 42, 0.88), rgba(10, 17, 25, 0.94));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.52);
+  cursor: pointer;
+  color: #eef6f9;
+  transition: transform 220ms var(--ease-out), border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+
+.hall-plaque-frame::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 66%;
+  height: 10px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(246, 206, 114, 0.6), transparent 72%);
+  pointer-events: none;
+}
+
+.hall-plaque-frame[data-depth='near'] {
+  transform: scale(1);
+}
+
+.hall-plaque-frame[data-depth='mid'] {
+  transform: scale(0.9) translateY(2px);
+}
+
+.hall-plaque-frame[data-depth='far'] {
+  transform: scale(0.8) translateY(4px);
+}
+
+.hall-plaque-frame:hover {
+  border-color: #f6ce72;
+  transform: scale(1.03) translateY(-3px);
+}
+
+.hall-plaque-frame.is-selected {
+  border-color: #18d2b6;
+  box-shadow: 0 0 0 2px rgba(24, 210, 182, 0.45), 0 16px 30px rgba(0, 0, 0, 0.62);
+}
+
+.hall-plaque-svg-wrap {
+  width: 100%;
+  display: block;
+}
+
+.hall-plaque-svg-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.hall-plaque-caption {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #f4e6be;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.awards-closeup-panel {
+  display: grid;
+  grid-template-columns: minmax(195px, 240px) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1px solid rgba(235, 196, 109, 0.3);
+  background: linear-gradient(135deg, rgba(16, 29, 41, 0.92), rgba(9, 19, 28, 0.96));
+}
+
+.awards-closeup-art {
+  width: 100%;
+  border-radius: 8px;
+  padding: 6px;
+  background: rgba(6, 12, 18, 0.72);
+  border: 1px solid rgba(235, 196, 109, 0.36);
+}
+
+.awards-closeup-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.awards-closeup-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.awards-closeup-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.awards-gold-badge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background-color: rgba(246, 206, 114, 0.16);
+  border: 1px solid rgba(246, 206, 114, 0.38);
+  color: #f6ce72;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.awards-closeup-desc {
+  font-size: var(--text-sm);
+  color: #c5dbe6;
+  line-height: 1.45;
 }
 
 .hotspot-pin {
@@ -2768,8 +3009,38 @@ html.reveal-ready .section-block.is-visible {
 
   .laptop-kpi-grid,
   .server-room-backwall,
-  .noc-diagram-row {
+  .noc-diagram-row,
+  .awards-closeup-panel {
     grid-template-columns: 1fr;
+  }
+
+  .awards-hall-stage {
+    height: auto;
+    min-height: 330px;
+  }
+
+  .awards-hall-walls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 34px 10px 12px;
+    gap: 10px;
+  }
+
+  .awards-wall-center-spacer {
+    display: none;
+  }
+
+  .awards-wall-left,
+  .awards-wall-right {
+    grid-template-columns: 1fr;
+    transform: none;
+  }
+
+  .hall-plaque-frame[data-depth] {
+    transform: none;
+  }
+
+  .awards-hall-stage[data-hall-view] .awards-hall-corridor {
+    transform: none;
   }
 
   .server-pc-row {

@@ -85,3 +85,11 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
   2. **Deretan 4 Komputer Workstation (`PC-01` s/d `PC-04`)**: Monitor `Lab LP3I`, `Presensi BCS`, `Klinik doklinc`, dan `Terminal AI Docker` yang dapat diklik langsung.
   3. **Kabinet Rak Server (`U01`–`U04`)**: Blade server dengan LED aktif dan tombol **`Uji Ping Server`** langsung.
   4. **Kabinet Core Switch 24-Port & Segmentasi VLAN**: Matriks LED port RJ45 dan pembagian `VLAN 10`, `VLAN 20`, `VLAN 30`, serta `WAN Fiber`.
+
+## 15. Lorong Penghargaan 3D Perspektif dengan Gambar Piagam & Plakat pada Hotspot #5 (2026-11-26)
+- Mengubah interaksi titik Hotspot #5 (`shelf-awards` / Rak Sertifikasi & Trofi pada `89% 35%`) agar melakukan zoom-in kamera (`data-zoom-mode="awards"`, `transform-origin: 89% 35%`, `scale(2.85)`) menuju galeri lorong penghargaan **`Lorong Penghargaan & Piagam Sertifikasi`**.
+- Menghasilkan ilustrasi lorong galeri bergaya anime modern (`public/assets/hallway_awards_bg.jpg`) dengan dinding kiri dan kanan berprespektif titik hilang tengah dan lantai reflektif menuju trofi puncak.
+- Memasang **6 gambar fisik piagam sertifikat berbingkai emas & plakat perisai medali** (ikonografi SVG berlapis tanpa sekadar teks polos) menempel pada dinding perspektif kiri dan kanan:
+  - **Dinding Kiri (Sertifikasi & Akademik):** Piagam Hacktiv8 AI (`Agu 2025`), Piagam S1 STMIK Bina Sarana Global (`2016`), Piagam D3 Politeknik LP3I Bandung (`2014`).
+  - **Dinding Kanan (Plakat Kejuaraan):** Plakat Emas Juara 1 PTK PNFI Kota Cilegon (`2017`), Plakat Kehormatan Juara 3 PTK PNFI Provinsi Banten (`2018`), Plakat Mahasiswa Berprestasi LP3I (`2011`).
+- Pengunjung dapat mengklik bingkai di dinding, memilih fokus `Lorong Penuh` / `Dinding Kiri` / `Dinding Kanan`, melangkah `← Mundur` / `Maju →`, meninjau gambar close-up piagam di panel bawah, serta mengganti bahasa **ID/EN** secara real-time.

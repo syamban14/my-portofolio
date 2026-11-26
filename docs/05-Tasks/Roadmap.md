@@ -76,3 +76,6 @@ tags:
 
 ### Interaksi Zoom-In Tur Ruangan Server & Layar Infrastruktur Hotspot #4 (Selesai)
 - [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera menuju `75% 66%` (`data-zoom-mode="infra"`) dan masuk ke Tur Visual 2.5D Ruangan Server: Panorama penuh + zoom kamera ke **1. Layar Rancangan Infrastruktur**, **2. Deretan 4 Komputer Workstation (`PC-01`..`PC-04`)**, **3. Rak Server `U01`–`U04`** (`Uji Ping Server`), dan **4. Switch VLAN 24-Port** (`← Sebelumnya` / `Berikutnya →`, dwibahasa ID/EN, pintasan `ESC`).
+
+### Interaksi Zoom-In Lorong Penghargaan & Gambar Plakat/Piagam Hotspot #5 (Selesai)
+- [x] Klik titik #5 (`shelf-awards`) men-zoom kamera ke `89% 35%` (`data-zoom-mode="awards"`) masuk ke lorong galeri `hallway_awards_bg.jpg` dengan **6 gambar visual piagam & plakat medali** yang menempel pada perspektif dinding kiri-kanan, fokus dinding kiri/kanan, close-up artwork besar, & dwibahasa ID/EN.

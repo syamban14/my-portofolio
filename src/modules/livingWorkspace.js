@@ -353,6 +353,252 @@ const INFRA_ROOM_DATA = {
   },
 };
 
+const AWARDS_HALL_ITEMS = {
+  id: [
+    {
+      id: 'cert-hacktiv8',
+      wall: 'left',
+      depth: 'near',
+      kind: 'certificate',
+      palette: 'navy-gold',
+      year: 'Agu 2025',
+      shortLabel: 'Hacktiv8 · AI API',
+      title: 'Sertifikasi AI Productivity & AI API Integration',
+      issuer: 'Hacktiv8 Indonesia · Program Spesialis AI Developer',
+      detail: 'Pelatihan intensif orkestrasi LLM, rekayasa prompt terstruktur, dan integrasi AI API untuk workflow produksi.',
+      ribbonText: 'AI SPECIALIST',
+      sealCode: 'H8',
+    },
+    {
+      id: 'cert-global',
+      wall: 'left',
+      depth: 'mid',
+      kind: 'certificate',
+      palette: 'cream-gold',
+      year: '2016',
+      shortLabel: 'S1 · IPK 3.32',
+      title: 'Ijazah & Piagam S1 Sistem Informasi',
+      issuer: 'STMIK Bina Sarana Global · Tangerang, Banten',
+      detail: 'Menyelesaikan studi sarjana Sistem Informasi (2014–2016) dengan IPK 3.32 serta fokus rekayasa perangkat lunak.',
+      ribbonText: 'IPK 3.32',
+      sealCode: 'S1',
+    },
+    {
+      id: 'cert-lp3i',
+      wall: 'left',
+      depth: 'far',
+      kind: 'certificate',
+      palette: 'teal-gold',
+      year: '2014',
+      shortLabel: 'D3 · IPK 2.92',
+      title: 'Piagam Vokasi D3 Manajemen Informatika',
+      issuer: 'Politeknik LP3I Bandung · Bandung, Jawa Barat',
+      detail: 'Fondasi pemrograman terstruktur, administrasi basis data, dan jaringan komputer terapan (2011–2014).',
+      ribbonText: 'D3 TI',
+      sealCode: 'D3',
+    },
+    {
+      id: 'award-ptk-2017',
+      wall: 'right',
+      depth: 'near',
+      kind: 'plaque',
+      palette: 'walnut-gold',
+      year: '2017',
+      shortLabel: 'Juara 1 · Cilegon',
+      title: 'Plakat Emas Juara 1 Lomba PTK PNFI',
+      issuer: 'Instruktur Komputer Tingkat Kota Cilegon',
+      detail: 'Meraih peringkat pertama kategori Pendidik & Tenaga Kependidikan Nonformal bidang Instruktur Komputer 2017.',
+      ribbonText: 'JUARA 1',
+      sealCode: '#1',
+    },
+    {
+      id: 'award-ptk-2018',
+      wall: 'right',
+      depth: 'mid',
+      kind: 'plaque',
+      palette: 'bronze-gold',
+      year: '2018',
+      shortLabel: 'Juara 3 · Banten',
+      title: 'Plakat Kehormatan Juara 3 PTK PNFI Banten',
+      issuer: 'Instruktur Komputer Tingkat Provinsi Banten',
+      detail: 'Mewakili Kota Cilegon dan meraih Juara 3 Instruktur Komputer PTK PNFI pada ajang tingkat Provinsi Banten.',
+      ribbonText: 'JUARA 3',
+      sealCode: '#3',
+    },
+    {
+      id: 'award-futsal-2011',
+      wall: 'right',
+      depth: 'far',
+      kind: 'plaque',
+      palette: 'slate-gold',
+      year: '2011',
+      shortLabel: 'Prestasi · LP3I',
+      title: 'Plakat Penghargaan Mahasiswa Berprestasi',
+      issuer: 'LP3I Business College · Bidang Olahraga Futsal',
+      detail: 'Penghargaan kontribusi dan sportivitas tim futsal pada kegiatan kemahasiswaan LP3I College tahun 2011.',
+      ribbonText: 'PRESTASI',
+      sealCode: '★',
+    },
+  ],
+  en: [
+    {
+      id: 'cert-hacktiv8',
+      wall: 'left',
+      depth: 'near',
+      kind: 'certificate',
+      palette: 'navy-gold',
+      year: 'Aug 2025',
+      shortLabel: 'Hacktiv8 · AI API',
+      title: 'AI Productivity & AI API Integration Certificate',
+      issuer: 'Hacktiv8 Indonesia · Developer Track',
+      detail: 'Completed specialized certification in LLM agent workflows, structured prompt engineering, and production AI APIs.',
+      ribbonText: 'AI CERTIFIED',
+      sealCode: 'H8',
+    },
+    {
+      id: 'cert-global',
+      wall: 'left',
+      depth: 'mid',
+      kind: 'certificate',
+      palette: 'cream-gold',
+      year: '2016',
+      shortLabel: 'B.S. · GPA 3.32',
+      title: 'Bachelor of Information Systems Diploma Plaque',
+      issuer: 'STMIK Bina Sarana Global · Tangerang, Banten',
+      detail: 'Graduated in Information Systems (2014–2016) with a 3.32 GPA focusing on enterprise software architecture.',
+      ribbonText: 'GPA 3.32',
+      sealCode: 'B.S.',
+    },
+    {
+      id: 'cert-lp3i',
+      wall: 'left',
+      depth: 'far',
+      kind: 'certificate',
+      palette: 'teal-gold',
+      year: '2014',
+      shortLabel: 'D3 · GPA 2.92',
+      title: 'Informatics Management Vocational Certificate',
+      issuer: 'Politeknik LP3I Bandung · Bandung, West Java',
+      detail: 'Hands-on foundation in structured programming, database design, and applied networking systems (2011–2014).',
+      ribbonText: 'D3 TECH',
+      sealCode: 'D3',
+    },
+    {
+      id: 'award-ptk-2017',
+      wall: 'right',
+      depth: 'near',
+      kind: 'plaque',
+      palette: 'walnut-gold',
+      year: '2017',
+      shortLabel: '1st · Cilegon City',
+      title: '1st Place Gold Plaque · PTK PNFI Competition',
+      issuer: 'Computer Instructor Category · Cilegon City',
+      detail: 'Awarded 1st Place for Computer Instructor excellence in Cilegon City Vocational Educator Competition (2017).',
+      ribbonText: '1ST PLACE',
+      sealCode: '#1',
+    },
+    {
+      id: 'award-ptk-2018',
+      wall: 'right',
+      depth: 'mid',
+      kind: 'plaque',
+      palette: 'bronze-gold',
+      year: '2018',
+      shortLabel: '3rd · Banten Prov',
+      title: '3rd Place Honor Plaque · PTK PNFI Banten',
+      issuer: 'Computer Instructor · Banten Province Level',
+      detail: 'Represented Cilegon City at the provincial level and earned 3rd Place among Banten Computer Instructors.',
+      ribbonText: '3RD PLACE',
+      sealCode: '#3',
+    },
+    {
+      id: 'award-futsal-2011',
+      wall: 'right',
+      depth: 'far',
+      kind: 'plaque',
+      palette: 'slate-gold',
+      year: '2011',
+      shortLabel: 'Award · LP3I',
+      title: 'Outstanding Student Achievement Plaque',
+      issuer: 'LP3I Business College · Futsal Athletics',
+      detail: 'Recognized for collegiate athletic achievement and team sportsmanship in Futsal at LP3I College (2011).',
+      ribbonText: 'HONOR',
+      sealCode: '★',
+    },
+  ],
+};
+
+function buildPlaqueArtworkSvg(item, { large = false } = {}) {
+  const uid = `${item.id}-${large ? 'lg' : 'sm'}`;
+  const isCert = item.kind === 'certificate';
+  if (isCert) {
+    const bgMap = {
+      'navy-gold': { paper: '#0f2334', inner: '#153046', sealBg: '#153046', text: '#f6ecd2', sub: '#9ec4d6', accent: '#f3cb6a' },
+      'cream-gold': { paper: '#fbf4df', inner: '#f3e5c0', sealBg: '#3b2810', text: '#2b2010', sub: '#6b5332', accent: '#b7811f' },
+      'teal-gold': { paper: '#0f2d2c', inner: '#133b38', sealBg: '#133b38', text: '#eef7f4', sub: '#98d6cd', accent: '#f3cb6a' },
+    };
+    const p = bgMap[item.palette] || bgMap['navy-gold'];
+    return `
+      <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${item.title}">
+        <defs>
+          <linearGradient id="gold-${uid}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fbe6a2"/>
+            <stop offset="50%" stop-color="#d49b35"/>
+            <stop offset="100%" stop-color="#8c5f14"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="216" height="146" rx="10" fill="url(#gold-${uid})"/>
+        <rect x="8" y="8" width="204" height="134" rx="6" fill="${p.paper}"/>
+        <rect x="13" y="13" width="194" height="124" rx="4" fill="none" stroke="${p.accent}" stroke-width="1.4" stroke-dasharray="4 2"/>
+        <path d="M18 24 L26 24 L26 18 M194 18 L194 24 L202 24 M18 126 L26 126 L26 132 M194 132 L194 126 L202 126" stroke="${p.accent}" stroke-width="1.6" fill="none"/>
+        <rect x="28" y="24" width="112" height="14" rx="3" fill="${p.inner}"/>
+        <text x="84" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="${p.accent}">${item.ribbonText}</text>
+        <text x="30" y="57" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="700" fill="${p.text}">${item.shortLabel}</text>
+        <line x1="30" y1="66" x2="132" y2="66" stroke="${p.sub}" stroke-width="1.8" opacity="0.72"/>
+        <line x1="30" y1="74" x2="120" y2="74" stroke="${p.sub}" stroke-width="1.4" opacity="0.5"/>
+        <line x1="30" y1="82" x2="108" y2="82" stroke="${p.sub}" stroke-width="1.4" opacity="0.38"/>
+        <path d="M32 114 Q46 102 60 112 T90 110" stroke="${p.accent}" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <text x="30" y="126" font-family="Plus Jakarta Sans, sans-serif" font-size="8.5" font-weight="600" fill="${p.sub}">M. SYAMSUL · ${item.year}</text>
+        <path d="M168 88 L158 124 L169 116 L174 126 Z" fill="#18d2b6" opacity="0.9"/>
+        <path d="M178 88 L174 126 L181 116 L192 124 Z" fill="#c98a22" opacity="0.95"/>
+        <circle cx="174" cy="70" r="24" fill="url(#gold-${uid})" stroke="${p.paper}" stroke-width="2"/>
+        <circle cx="174" cy="70" r="18" fill="${p.sealBg}" stroke="#fbe6a2" stroke-width="1.2"/>
+        <text x="174" y="75" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="700" fill="#fbe6a2">${item.sealCode}</text>
+      </svg>
+    `;
+  }
+
+  const woodMap = {
+    'walnut-gold': { board: '#2d1c12', inner: '#1f130c', metal: '#fbe6a2', plate: '#3e2618' },
+    'bronze-gold': { board: '#27202b', inner: '#1a151d', metal: '#f4ce90', plate: '#372c3d' },
+    'slate-gold': { board: '#162836', inner: '#0f1c26', metal: '#79efe0', plate: '#1e3648' },
+  };
+  const w = woodMap[item.palette] || woodMap['walnut-gold'];
+  return `
+    <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${item.title}">
+      <defs>
+        <linearGradient id="shield-${uid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fcebaf"/>
+          <stop offset="52%" stop-color="#d49a33"/>
+          <stop offset="100%" stop-color="#875811"/>
+        </linearGradient>
+      </defs>
+      <path d="M36 8 H184 L196 22 V104 C196 126 110 144 110 144 C110 144 24 126 24 104 V22 Z" fill="url(#shield-${uid})"/>
+      <path d="M41 14 H179 L188 25 V101 C188 119 110 135 110 135 C110 135 32 119 32 101 V25 Z" fill="${w.board}"/>
+      <path d="M47 20 H173 L180 28 V98 C180 113 110 127 110 127 C110 127 40 113 40 98 V28 Z" fill="${w.inner}" stroke="url(#shield-${uid})" stroke-width="1.2"/>
+      <circle cx="54" cy="30" r="2.2" fill="#fcebaf"/>
+      <circle cx="166" cy="30" r="2.2" fill="#fcebaf"/>
+      <path d="M74 68 C62 56 64 38 78 30 M146 68 C158 56 156 38 142 30" stroke="url(#shield-${uid})" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <circle cx="110" cy="54" r="22" fill="url(#shield-${uid})"/>
+      <circle cx="110" cy="54" r="16" fill="${w.plate}" stroke="#fcebaf" stroke-width="1.2"/>
+      <text x="110" y="60" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="700" fill="${w.metal}">${item.sealCode}</text>
+      <rect x="58" y="84" width="104" height="24" rx="4" fill="url(#shield-${uid})"/>
+      <text x="110" y="96" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" fill="#1a1206">${item.ribbonText} · ${item.year}</text>
+      <text x="110" y="105" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="7.5" font-weight="700" fill="#2e1e08">${item.shortLabel}</text>
+    </svg>
+  `;
+}
+
 // Measured normalized pixel coordinates on character_anime_clean.png (576 x 1024)
 const CHAR_RIG = {
   skinTone: '#ffeed9',
@@ -404,6 +650,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   let infraComputerId = 'pc-lab';
   let infraFlowId = 'all';
   let infraPingStatus = '';
+  let awardsViewMode = 'full';
+  let activeAwardId = 'award-ptk-2017';
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
   let currentPointer = { x: 0, y: 0 };
@@ -563,12 +811,14 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
 
   function syncStageChrome(mode) {
     if (laptopOsTitle) {
-      const titleKey = mode === 'infra' ? 'infraOsTitle' : 'laptopOsTitle';
+      const titleKey =
+        mode === 'infra' ? 'infraOsTitle' : mode === 'awards' ? 'awardsOsTitle' : 'laptopOsTitle';
       laptopOsTitle.dataset.i18n = titleKey;
       laptopOsTitle.textContent = t(titleKey);
     }
     if (laptopExitBtn) {
-      const exitKey = mode === 'infra' ? 'infraExitBtn' : 'laptopExitBtn';
+      const exitKey =
+        mode === 'infra' ? 'infraExitBtn' : mode === 'awards' ? 'awardsExitBtn' : 'laptopExitBtn';
       laptopExitBtn.dataset.i18n = exitKey;
       laptopExitBtn.textContent = t(exitKey);
     }
@@ -875,6 +1125,113 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     `;
   }
 
+  function renderAwardsOs({ forceSceneRebuild = false } = {}) {
+    if (!laptopDock || !laptopBody) return;
+    const lang = getLang();
+    const items = AWARDS_HALL_ITEMS[lang] || AWARDS_HALL_ITEMS.id;
+    const activeItem = items.find((item) => item.id === activeAwardId) || items[0];
+    activeAwardId = activeItem.id;
+
+    const leftWallItems = items.filter((i) => i.wall === 'left');
+    const rightWallItems = items.filter((i) => i.wall === 'right');
+
+    const wallTags =
+      lang === 'en'
+        ? { left: 'Left Wall · Certificates', right: 'Right Wall · Trophy Plaques' }
+        : { left: 'Dinding Kiri · Piagam', right: 'Dinding Kanan · Plakat' };
+
+    laptopDock.innerHTML = `
+      <div class="infra-dock-row">
+        <div class="infra-dock-tabs">
+          <button type="button" class="laptop-app-tab${awardsViewMode === 'full' ? ' is-active' : ''}" role="tab" aria-selected="${awardsViewMode === 'full'}" data-hall-view="full">
+            <span>${t('awardsHallFull')}</span>
+          </button>
+          <button type="button" class="laptop-app-tab${awardsViewMode === 'left' ? ' is-active' : ''}" role="tab" aria-selected="${awardsViewMode === 'left'}" data-hall-view="left">
+            <span>${t('awardsLeftWall')}</span>
+          </button>
+          <button type="button" class="laptop-app-tab${awardsViewMode === 'right' ? ' is-active' : ''}" role="tab" aria-selected="${awardsViewMode === 'right'}" data-hall-view="right">
+            <span>${t('awardsRightWall')}</span>
+          </button>
+        </div>
+        <div class="infra-dock-nav">
+          <button type="button" class="laptop-screen-tab" data-award-step="prev" aria-label="${t('awardsStepPrev')}" title="${t('awardsStepPrev')}">←</button>
+          <button type="button" class="laptop-screen-tab is-active" data-award-step="next" aria-label="${t('awardsStepNext')}" title="${t('awardsStepNext')}">→</button>
+        </div>
+      </div>
+    `;
+
+    const renderWallCard = (item) => `
+      <button
+        type="button"
+        class="hall-plaque-frame${item.id === activeItem.id ? ' is-selected' : ''}"
+        data-depth="${item.depth}"
+        data-award-id="${item.id}"
+        aria-label="${item.title}"
+      >
+        <span class="hall-plaque-svg-wrap">${buildPlaqueArtworkSvg(item)}</span>
+        <span class="hall-plaque-caption">${item.shortLabel}</span>
+      </button>
+    `;
+
+    const closeupHtml = `
+      <div class="awards-closeup-art">${buildPlaqueArtworkSvg(activeItem, { large: true })}</div>
+      <div class="awards-closeup-meta">
+        <div class="awards-closeup-badges">
+          <span class="awards-gold-badge">${activeItem.ribbonText}</span>
+          <span class="laptop-impact-chip">${activeItem.year}</span>
+        </div>
+        <p class="laptop-screen-title">${activeItem.title}</p>
+        <p class="laptop-screen-sub">${activeItem.issuer}</p>
+        <p class="awards-closeup-desc">${activeItem.detail}</p>
+      </div>
+    `;
+
+    const footerHtml = `
+      <div class="laptop-impact-row">
+        <span class="laptop-impact-chip">${lang === 'en' ? '3 Certificates · 3 Plaques Mounted' : '3 Piagam · 3 Plakat Terpasang'}</span>
+      </div>
+      <div class="laptop-footer-actions">
+        <button type="button" class="laptop-exit-btn" data-award-step="next">
+          ${t('awardsStepNext')}
+        </button>
+        <button type="button" class="btn-primary" id="awardsJumpBtn" data-awards-jump="#experience">
+          ${t('awardsJumpBtn')}
+        </button>
+      </div>
+    `;
+
+    const existingStage = !forceSceneRebuild ? laptopBody.querySelector('.awards-hall-stage') : null;
+    if (existingStage) {
+      existingStage.dataset.hallView = awardsViewMode;
+      existingStage.querySelectorAll('[data-award-id]').forEach((el) => {
+        el.classList.toggle('is-selected', el.dataset.awardId === activeItem.id);
+      });
+      const closeupEl = laptopBody.querySelector('.awards-closeup-panel');
+      const footerEl = laptopBody.querySelector('.laptop-os-footer');
+      if (closeupEl) closeupEl.innerHTML = closeupHtml;
+      if (footerEl) footerEl.innerHTML = footerHtml;
+      return;
+    }
+
+    laptopBody.innerHTML = `
+      <div class="awards-hall-stage" data-hall-view="${awardsViewMode}">
+        <div class="awards-hall-corridor">
+          <img class="awards-hall-bg" src="assets/hallway_awards_bg.jpg" alt="" aria-hidden="true" />
+          <div class="awards-hall-vignette" aria-hidden="true"></div>
+          <span class="hall-wall-tag is-left">${wallTags.left}</span>
+          <span class="hall-wall-tag is-right">${wallTags.right}</span>
+          <div class="awards-hall-walls">
+            <div class="awards-wall-left">${leftWallItems.map(renderWallCard).join('')}</div>
+            <div class="awards-wall-center-spacer" aria-hidden="true"></div>
+            <div class="awards-wall-right">${[...rightWallItems].reverse().map(renderWallCard).join('')}</div>
+          </div>
+        </div>
+      </div>
+      <div class="awards-closeup-panel">${closeupHtml}</div>
+      <div class="laptop-os-footer">${footerHtml}</div>
+    `;
+  }
+
   function renderLaptopOs() {
     if (!laptopDock || !laptopBody) return;
     const projects = getPortfolioData().projects;
@@ -1000,9 +1357,30 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     onActionToast?.(t('infraOpenedToast'));
   }
 
+  function openAwardsView() {
+    window.clearTimeout(laptopCloseTimer);
+    stageOverlayMode = 'awards';
+    stage.dataset.zoomMode = 'awards';
+    awardsViewMode = 'full';
+    activeAwardId = 'award-ptk-2017';
+    laptopOpen = true;
+    syncStageChrome('awards');
+    updateHud('shelf-awards');
+    if (bgLayer) bgLayer.style.transform = '';
+    if (charCanvas) charCanvas.style.transform = '';
+    if (laptopOs) {
+      laptopOs.hidden = false;
+      renderAwardsOs({ forceSceneRebuild: true });
+      void stage.offsetWidth;
+    }
+    stage.classList.add('is-laptop-open');
+    soundEngine.playChime();
+    onActionToast?.(t('awardsOpenedToast'));
+  }
+
   function closeLaptopView() {
     if (!laptopOpen) return;
-    const wasInfra = stageOverlayMode === 'infra';
+    const prevMode = stageOverlayMode;
     laptopOpen = false;
     stageOverlayMode = null;
     stage.classList.remove('is-laptop-open');
@@ -1020,7 +1398,9 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       );
     }
     soundEngine.playClick();
-    onActionToast?.(t(wasInfra ? 'infraClosedToast' : 'laptopClosedToast'));
+    const closeToastKey =
+      prevMode === 'infra' ? 'infraClosedToast' : prevMode === 'awards' ? 'awardsClosedToast' : 'laptopClosedToast';
+    onActionToast?.(t(closeToastKey));
   }
 
   function selectHotspot(hotspotId, { announce = true } = {}) {
@@ -1044,6 +1424,11 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       return;
     }
 
+    if (hotspot.id === 'shelf-awards' || hotspot.actionType === 'awards-zoom') {
+      openAwardsView();
+      return;
+    }
+
     soundEngine.playChime();
     if (announce) {
       showSpeech(hotspot.speech);
@@ -1059,6 +1444,25 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   laptopExitBtn?.addEventListener('click', closeLaptopView);
 
   laptopDock?.addEventListener('click', (event) => {
+    const hallViewBtn = event.target.closest('[data-hall-view]');
+    if (hallViewBtn) {
+      soundEngine.playClick();
+      awardsViewMode = hallViewBtn.dataset.hallView;
+      renderAwardsOs();
+      return;
+    }
+    const awardStepBtn = event.target.closest('[data-award-step]');
+    if (awardStepBtn) {
+      soundEngine.playClick();
+      const items = AWARDS_HALL_ITEMS[getLang()] || AWARDS_HALL_ITEMS.id;
+      const idx = items.findIndex((i) => i.id === activeAwardId);
+      const delta = awardStepBtn.dataset.awardStep === 'prev' ? -1 : 1;
+      const nextItem = items[(idx + delta + items.length) % items.length];
+      activeAwardId = nextItem.id;
+      awardsViewMode = nextItem.wall;
+      renderAwardsOs();
+      return;
+    }
     const gotoBtn = event.target.closest('[data-tour-goto]');
     if (gotoBtn) {
       soundEngine.playClick();
@@ -1085,6 +1489,35 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   });
 
   laptopBody?.addEventListener('click', (event) => {
+    const plaqueBtn = event.target.closest('[data-award-id]');
+    if (plaqueBtn) {
+      soundEngine.playClick();
+      activeAwardId = plaqueBtn.dataset.awardId;
+      const items = AWARDS_HALL_ITEMS[getLang()] || AWARDS_HALL_ITEMS.id;
+      const chosen = items.find((i) => i.id === activeAwardId);
+      if (chosen) awardsViewMode = chosen.wall;
+      renderAwardsOs();
+      return;
+    }
+    const bodyAwardStep = event.target.closest('[data-award-step]');
+    if (bodyAwardStep) {
+      soundEngine.playClick();
+      const items = AWARDS_HALL_ITEMS[getLang()] || AWARDS_HALL_ITEMS.id;
+      const idx = items.findIndex((i) => i.id === activeAwardId);
+      const nextItem = items[(idx + 1) % items.length];
+      activeAwardId = nextItem.id;
+      awardsViewMode = nextItem.wall;
+      renderAwardsOs();
+      return;
+    }
+    const awardsJumpBtn = event.target.closest('[data-awards-jump]');
+    if (awardsJumpBtn) {
+      soundEngine.playClick();
+      const targetSection = awardsJumpBtn.dataset.awardsJump || '#experience';
+      closeLaptopView();
+      onRequestSection?.(targetSection);
+      return;
+    }
     const pcBtn = event.target.closest('[data-infra-pc]');
     if (pcBtn) {
       soundEngine.playClick();
@@ -1163,6 +1596,10 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       }
       if (activeHotspotId === 'infra-lp3i' && !laptopOpen) {
         openInfraView();
+        return;
+      }
+      if (activeHotspotId === 'shelf-awards' && !laptopOpen) {
+        openAwardsView();
         return;
       }
       const target = hudActionBtn.dataset.target || '#ai-studio';
@@ -1637,6 +2074,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       syncStageChrome(stageOverlayMode || 'laptop');
       if (stageOverlayMode === 'infra') {
         renderInfraOs({ forceSceneRebuild: true });
+      } else if (stageOverlayMode === 'awards') {
+        renderAwardsOs({ forceSceneRebuild: true });
       } else {
         renderLaptopOs();
       }
