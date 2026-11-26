@@ -53,3 +53,9 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Membuat gambar preview sosial `public/og-preview.png` (`1200x630`) dari tampilan diorama `Malam`.
 - Menambahkan meta `canonical`, Open Graph, Twitter Card (`summary_large_image`), serta structured data JSON-LD `@graph` (`ProfilePage` & `Person`) ke `index.html`.
 - Menambahkan `public/robots.txt`, `public/sitemap.xml`, dan `README.md` pada repositori `syamban14/my-portofolio`.
+
+## 9. Penyempurnaan Header & Jam Studio Otomatis (2026-11-26)
+- Memindahkan toggle bahasa (`ID | EN` / `#langSwitch`) ke posisi paling kanan pada `.header-controls` (desktop maupun mobile).
+- Menghapus tombol `Menu cepat` (`#commandTriggerBtn`) dari header untuk menjaga bar navigasi tetap ringkas; pintasan keyboard `Cmd/Ctrl + K` tetap tersedia sebagai akses sekunder.
+- Mengubah mode waktu studio (`Pagi | Senja | Malam`) agar secara default mengikuti jam lokal pengunjung (`05:00-15:59` Pagi, `16:00-18:29` Senja, `18:30-04:59` Malam) dengan sinkronisasi berkala setiap 60 detik, namun tetap dapat diganti secara manual lewat tombol atau perintah slash AI (`/pagi`, `/senja`, `/malam`, `/day`, `/dusk`, `/night`).
+- Status Poin 2 (Live LLM API Proxy) tetap ditunda sesuai arahan pengguna.

@@ -59,10 +59,17 @@ function initStudioApp() {
   const timeSwitch = document.getElementById('timeModeSwitch');
   const soundToggleBtn = document.getElementById('soundToggleBtn');
 
-  let currentMode = localStorage.getItem('studio-time-mode') || 'malam';
-  if (!['pagi', 'senja', 'malam'].includes(currentMode)) {
-    currentMode = 'malam';
+  function getClockTimeMode(date = new Date()) {
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    if (hour >= 5 && hour < 16) return 'pagi';
+    if (hour >= 16 && (hour < 18 || (hour === 18 && minute < 30))) return 'senja';
+    return 'malam';
   }
+
+  localStorage.removeItem('studio-time-mode');
+  let isManualTime = false;
+  let currentMode = getClockTimeMode();
 
   let workspaceApi = null;
   let projectsApi = null;
@@ -96,10 +103,13 @@ function initStudioApp() {
     renderPrintCvSheet(lang);
   }
 
-  function applyTimeMode(mode, { silent = false } = {}) {
+  function applyTimeMode(mode, { silent = false, manual = false } = {}) {
+    if (!['pagi', 'senja', 'malam'].includes(mode)) return;
+    if (manual) {
+      isManualTime = true;
+    }
     currentMode = mode;
     document.documentElement.dataset.studioTime = mode;
-    localStorage.setItem('studio-time-mode', mode);
 
     if (timeSwitch) {
       timeSwitch.querySelectorAll('[data-time-mode]').forEach((btn) => {
@@ -112,6 +122,10 @@ function initStudioApp() {
     if (!silent) {
       workspaceApi?.refreshMode();
     }
+  }
+
+  function setManualTimeMode(mode) {
+    applyTimeMode(mode, { manual: true });
   }
 
   function applyLanguage(nextLang, { silent = false } = {}) {
@@ -191,8 +205,16 @@ function initStudioApp() {
     const btn = event.target.closest('[data-time-mode]');
     if (!btn) return;
     soundEngine.playClick();
-    applyTimeMode(btn.dataset.timeMode);
+    setManualTimeMode(btn.dataset.timeMode);
   });
+
+  window.setInterval(() => {
+    if (isManualTime) return;
+    const nextClockMode = getClockTimeMode();
+    if (nextClockMode !== currentMode) {
+      applyTimeMode(nextClockMode);
+    }
+  }, 60000);
 
   soundToggleBtn?.addEventListener('click', () => {
     const active = soundEngine.toggle();
@@ -211,7 +233,7 @@ function initStudioApp() {
   });
 
   initAiAgent({
-    setTimeMode: (mode) => applyTimeMode(mode),
+    setTimeMode: (mode) => setManualTimeMode(mode),
     setLanguage: (lang) => applyLanguage(lang),
     toggleLamp: () => workspaceApi?.toggleLamp(),
     onRequestSection: (target, projectId) => scrollToTarget(target, projectId),
@@ -230,7 +252,7 @@ function initStudioApp() {
   });
 
   initCommandPalette({
-    setTimeMode: (mode) => applyTimeMode(mode),
+    setTimeMode: (mode) => setManualTimeMode(mode),
     setLanguage: (lang) => applyLanguage(lang),
     toggleLamp: () => workspaceApi?.toggleLamp(),
     onRequestSection: (target) => scrollToTarget(target),

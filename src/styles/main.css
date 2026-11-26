@@ -142,6 +142,11 @@ textarea {
   border-radius: var(--radius-sm);
 }
 
+.header-controls .segmented-control {
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
 .seg-btn {
   border: 0;
   background: transparent;
@@ -1722,6 +1727,34 @@ html[data-studio-time='senja'] .workspace-bg-img {
 
   .github-search-input {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding-block: 10px;
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .header-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .mobile-menu-btn {
+    margin-left: auto;
+  }
+
+  .main-nav {
+    top: 100px;
+  }
+
+  .hero-section {
+    padding-top: 118px;
   }
 }
 

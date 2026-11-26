@@ -56,3 +56,8 @@ tags:
 - [x] Buat aset kartu sosial `public/og-preview.png` (`1200x630`)
 - [x] Tambahkan meta tags `og:*`, `twitter:card`, `canonical`, `public/robots.txt`, `public/sitemap.xml`, dan JSON-LD `Person` / `ProfilePage` di `index.html`, serta `README.md`
 - [x] Validasi final dengan `npm run build`, verifikasi `HTTP 200` seluruh aset SEO/OG di GitHub Pages (`https://syamban14.github.io/my-portofolio/`)
+
+### Penyempurnaan Header & Jam Studio Otomatis (Selesai)
+- [x] Hapus tombol `Menu cepat` (`#commandTriggerBtn`) dari header; pindahkan toggle `ID | EN` (`#langSwitch`) ke sisi paling kanan `.header-controls`
+- [x] Atur mode waktu studio (`Pagi | Senja | Malam`) otomatis mengikuti jam lokal secara default + sinkronisasi berkala 60 detik, tetap dapat dipilih manual lewat tombol/perintah AI
+- [x] Catatan: Poin 2 (Live LLM API Proxy) tetap ditunda sesuai keputusan pengguna

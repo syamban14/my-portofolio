@@ -111,10 +111,6 @@
       </nav>
 
       <div class="header-controls">
-        <div class="segmented-control" id="langSwitch" role="radiogroup" aria-label="Bahasa portofolio">
-          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-lang="id">ID</button>
-          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-lang="en">EN</button>
-        </div>
         <div class="segmented-control" id="timeModeSwitch" role="radiogroup" aria-label="Mode waktu studio">
           <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="pagi" data-i18n="timePagi">Pagi</button>
           <button type="button" class="seg-btn" role="radio" aria-checked="false" data-time-mode="senja" data-i18n="timeSenja">Senja</button>
@@ -123,12 +119,13 @@
         <button type="button" class="icon-control-btn" id="soundToggleBtn" aria-pressed="false" data-i18n="soundOff">
           Suara: Mati
         </button>
-        <button type="button" class="icon-control-btn" id="commandTriggerBtn" data-i18n="quickMenu">
-          Menu cepat
-        </button>
         <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="mainNav" data-i18n="mobileMenu">
           Menu
         </button>
+        <div class="segmented-control" id="langSwitch" role="radiogroup" aria-label="Bahasa portofolio">
+          <button type="button" class="seg-btn is-active" role="radio" aria-checked="true" data-lang="id">ID</button>
+          <button type="button" class="seg-btn" role="radio" aria-checked="false" data-lang="en">EN</button>
+        </div>
       </div>
     </div>
   </header>

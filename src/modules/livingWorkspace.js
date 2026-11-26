@@ -48,7 +48,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
   const ctxChar = charCanvas ? charCanvas.getContext('2d') : null;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let lampOn = true;
+  let lampOn = getTimeMode() !== 'pagi';
   let aiBusy = false;
   let activeHotspotId = 'ai-terminal';
   let targetPointer = { x: 0, y: 0 };
@@ -695,6 +695,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     }
   });
 
+  stage.dataset.lamp = lampOn ? 'on' : 'off';
   renderHotspots();
   updateHud(activeHotspotId);
   syncLampButtonText();
