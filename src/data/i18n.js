@@ -33,10 +33,17 @@ export const uiStrings = {
     mobileMenu: 'Menu',
     heroTitle: 'M. Syamsul merancang agen AI dan aplikasi institusi',
     heroSubtitle:
-      'Programmer IT dan spesialis AI di Cilegon dengan delapan tahun pengalaman membangun solusi web, mobile, dan infrastruktur.',
+      'IT Programmer & AI Specialist di Cilegon · 8+ tahun pengalaman web, mobile, dan AI.',
     heroCta: 'Mulai eksplorasi interaktif',
+    statExpTitle: 'Pengalaman IT & AI',
+    statAppsVal: '5 Aplikasi',
+    statAppsTitle: 'Web, Android & iOS',
+    statTechVal: '15 Teknologi',
+    statTechTitle: 'AI, Go & Database',
+    statAwardVal: '3 Prestasi',
+    statAwardTitle: 'Instruktur & Kampus',
     welcomeSpeech:
-      'Selamat datang di ruang kerja saya. Klik titik bernomor di ruangan ini untuk menelusuri karya atau ubah suasana waktu di atas.',
+      'Klik titik bernomor di ruangan untuk menelusuri proyek, AI, atau ubah waktu studio.',
     lampOnBtn: 'Lampu meja: Nyala',
     lampOffBtn: 'Lampu meja: Mati',
     lampOnSpeech: 'Lampu meja dinyalakan. Fokus coding dan riset AI siap dijalankan.',
@@ -46,22 +53,19 @@ export const uiStrings = {
     modeSenjaToast: 'Suasana studio diubah ke Senja pelabuhan',
     modeMalamToast: 'Suasana studio diubah ke Malam fokus developer',
     aiTitle: 'Tanya AI Syamsul',
-    aiDesc:
-      'Uji kemampuan asisten portofolio untuk menelusuri pengalaman, arsitektur proyek, sertifikasi Hacktiv8, atau jalankan perintah studio.',
-    aiStatusIdle: 'Siap menjawab pertanyaan atau perintah (/pagi, /senja, /malam, /lampu, /en)',
-    aiPlaceholder: 'Tanya pengalaman BCS Logistics, proyek doklinc, atau ketik /pagi...',
+    aiDesc: 'Tanya pengalaman kerja, arsitektur sistem, atau jalankan perintah /pagi dan /en.',
+    aiStatusIdle: 'Siap menjawab (/pagi, /senja, /malam, /lampu, /en)',
+    aiPlaceholder: 'Tanya proyek doklinc, BCS Logistics, atau ketik /pagi...',
     aiSendBtn: 'Kirim',
     aiGreeting:
-      'Halo! Saya asisten portofolio interaktif M. Syamsul. Pilih topik di atas atau ketik pertanyaan maupun perintah seperti /pagi, /senja, /malam, /lampu, atau /en.',
+      'Halo! Pilih topik cepat di atas atau ketik pertanyaan maupun perintah (/pagi, /senja, /malam, /lampu, /en).',
     skillsTitle: 'Konstelasi keahlian interaktif',
-    skillsDesc:
-      'Seret atau klik simpul teknologi pada kanvas untuk melihat penerapan nyata dan proyek terkait.',
+    skillsDesc: 'Klik potret pusat, hub kategori, atau simpul skill untuk melihat konteks nyata.',
     skillsTabAll: 'Semua',
     skillsCategoryPrefix: 'Kategori',
     skillsRelatedProjects: 'Proyek terkait',
     projectsTitle: 'Simulasi proyek dan arsitektur',
-    projectsDesc:
-      'Coba langsung alur kerja kelima aplikasi yang telah dibangun untuk industri logistik, layanan kesehatan masyarakat, dan perguruan tinggi.',
+    projectsDesc: 'Lihat tampilan antarmuka, coba simulasi alur, dan bedah arsitektur 5 aplikasi utama.',
     modeSim: 'Simulasi Aplikasi',
     modeUi: 'Pratinjau UI',
     modeArch: 'Arsitektur Sistem',
@@ -85,10 +89,9 @@ export const uiStrings = {
     timelineFocusYear: 'Tahun fokus',
     timelineShowAll: 'Tampilkan semua',
     timelineEmpty:
-      'Tidak ada catatan kategori ini tepat pada tahun tersebut. Geser tahun lain atau pilih tampilkan semua.',
+      'Tidak ada catatan kategori ini pada tahun tersebut. Geser tahun lain atau pilih tampilkan semua.',
     contactTitle: 'Mari berkolaborasi',
-    contactDesc:
-      'Terbuka untuk peluang kerja remote, proyek freelance, riset agen AI, maupun pengembangan aplikasi kustom institusi.',
+    contactDesc: 'Terbuka untuk remote engineering, freelance, agen AI, dan aplikasi institusi.',
     contactScopeLabel: 'Fokus kebutuhan Anda',
     scopeAi: 'Agen AI & Otomasi',
     scopeWeb: 'Aplikasi Web & Mobile',
@@ -104,7 +107,7 @@ export const uiStrings = {
     channelWa: 'WhatsApp',
     channelEmail: 'Email',
     channelCopy: 'Salin Pesan',
-    contactDirectTitle: 'Informasi kontak langsung',
+    contactDirectTitle: 'Kanal kontak langsung',
     contactPhoneLabel: 'Telepon & WhatsApp',
     contactLocationLabel: 'Lokasi',
     contactLinksLabel: 'Tautan profesional',
@@ -137,10 +140,17 @@ export const uiStrings = {
     mobileMenu: 'Menu',
     heroTitle: 'M. Syamsul engineers AI agents and institutional apps',
     heroSubtitle:
-      'IT Programmer and AI Specialist in Cilegon with eight years of experience shipping web, mobile, and infrastructure solutions.',
+      'IT Programmer & AI Specialist in Cilegon · 8+ years shipping web, mobile, and AI systems.',
     heroCta: 'Start interactive tour',
+    statExpTitle: 'IT & AI Experience',
+    statAppsVal: '5 Shipped Apps',
+    statAppsTitle: 'Web, Android & iOS',
+    statTechVal: '15 Technologies',
+    statTechTitle: 'AI, Go & Databases',
+    statAwardVal: '3 Honors',
+    statAwardTitle: 'Instructor & Campus',
     welcomeSpeech:
-      'Welcome to my workspace. Click the numbered points around the room to explore my work or switch time lighting above.',
+      'Click any numbered point in the room to explore projects, AI stack, or change studio lighting.',
     lampOnBtn: 'Desk lamp: On',
     lampOffBtn: 'Desk lamp: Off',
     lampOnSpeech: 'Desk lamp turned on. Focused coding and AI agent research mode ready.',
@@ -150,22 +160,19 @@ export const uiStrings = {
     modeSenjaToast: 'Studio lighting switched to Harbor Dusk',
     modeMalamToast: 'Studio lighting switched to Developer Night Focus',
     aiTitle: 'Ask AI Syamsul',
-    aiDesc:
-      'Query the portfolio assistant to inspect work history, system architecture, Hacktiv8 certification, or run live studio commands.',
-    aiStatusIdle: 'Ready for questions or commands (/day, /dusk, /night, /lamp, /id)',
-    aiPlaceholder: 'Ask about BCS Logistics, doklinc health app, or type /day...',
+    aiDesc: 'Explore experience, system architecture, or run studio commands like /day and /id.',
+    aiStatusIdle: 'Ready for questions (/day, /dusk, /night, /lamp, /id)',
+    aiPlaceholder: 'Ask about BCS Logistics, doklinc, or type /day...',
     aiSendBtn: 'Send',
     aiGreeting:
-      'Hi! I am M. Syamsul interactive portfolio assistant. Pick a quick prompt above or type questions and commands such as /day, /dusk, /night, /lamp, or /id.',
+      'Hi! Pick a prompt above or ask questions and studio commands (/day, /dusk, /night, /lamp, /id).',
     skillsTitle: 'Interactive skill constellation',
-    skillsDesc:
-      'Drag or click technology nodes across the physics canvas to inspect real-world applications and related projects.',
+    skillsDesc: 'Click the center portrait, category hubs, or skill nodes to inspect usage context.',
     skillsTabAll: 'All',
     skillsCategoryPrefix: 'Category',
     skillsRelatedProjects: 'Related projects',
-    projectsTitle: 'Project simulations and architecture',
-    projectsDesc:
-      'Test live workflows from five production applications built for logistics operations, municipal healthcare, and higher education.',
+    projectsTitle: 'Project previews and architecture',
+    projectsDesc: 'Inspect visual UI screens, test live workflows, and view architecture across 5 apps.',
     modeSim: 'App Simulation',
     modeUi: 'UI Preview',
     modeArch: 'System Architecture',
@@ -191,8 +198,7 @@ export const uiStrings = {
     timelineEmpty:
       'No records for this category in the selected year. Scrub to another year or select show all.',
     contactTitle: 'Let us collaborate',
-    contactDesc:
-      'Available for remote engineering roles, freelance projects, AI agent workflows, and custom institutional software.',
+    contactDesc: 'Open for remote engineering, freelance, AI agents, and custom software.',
     contactScopeLabel: 'Your project focus',
     scopeAi: 'AI Agents & Automation',
     scopeWeb: 'Web & Mobile Apps',
@@ -230,7 +236,7 @@ export const portfolioDataEn = {
   heroHeadline: uiStrings.en.heroTitle,
   heroSubtitle: uiStrings.en.heroSubtitle,
   summary:
-    'Experienced IT Programmer and IT Specialist grounded in Information Systems and Informatics Management. Deeply focused on researching and building AI Agent workflows alongside full-stack web & mobile development, IT infrastructure management, and custom institutional software.',
+    'IT Programmer & AI Specialist with 8+ years shipping AI Agents, mobile apps, and institutional systems.',
   experience: [
     {
       id: 'exp-bcs',
@@ -240,11 +246,11 @@ export const portfolioDataEn = {
       startYear: 2024,
       endYear: 2026,
       location: 'Cilegon, Banten',
+      highlights: ['Android & iOS Attendance', 'doklinc Health App', 'Web & Database'],
       details: [
-        'Designed & built cross-platform Android & iOS Online Attendance App',
+        'Architected cross-platform Android & iOS Online Attendance App',
         'Developed the doklinc digital healthcare application',
-        'Maintained & expanded web applications',
-        'Debugging, feature engineering, and database management',
+        'Web maintenance, feature engineering, & DB ops',
       ],
     },
     {
@@ -255,89 +261,74 @@ export const portfolioDataEn = {
       startYear: 2017,
       endYear: 2024,
       location: 'Cilegon, Banten',
+      highlights: ['Online Exam & Screening', 'Letter Manager', 'Campus Network & Servers'],
       details: [
-        'Planned annual institutional IT work programs',
-        'Managed campus network, hardware, and software infrastructure',
-        'Delivered daily technical operations support',
-        'Engineered internal institutional web applications',
+        'Annual institutional IT plans & daily ops support',
+        'Campus LAN, hardware, & software infrastructure',
+        'Engineered internal web applications',
       ],
     },
   ],
   skills: [
     {
       ...portfolioData.skills[0],
-      usage:
-        'Architecting autonomous agent workflows, tool calling pipelines, and task assistants for SME & enterprise productivity.',
+      usage: 'Autonomous agents & tool-calling workflows for SMEs and institutions.',
     },
     {
       ...portfolioData.skills[1],
-      usage:
-        'Designing structured prompts, output guardrails, and LLM evaluation flows for reliable production outputs.',
+      usage: 'Structured prompts, guardrails, & LLM output verification in production.',
     },
     {
       ...portfolioData.skills[2],
-      usage:
-        'Integrating generative AI model APIs seamlessly into backend services and interactive web interfaces.',
+      usage: 'Integrating generative AI APIs into backend pipelines & web interfaces.',
     },
     {
       ...portfolioData.skills[3],
-      usage:
-        'Automation scripts, AI agent orchestration prototypes, data pipelines, and backend API services.',
+      usage: 'Automation scripts, AI agent orchestration, & data backend services.',
     },
     {
       ...portfolioData.skills[4],
-      usage:
-        'Building high-performance backend services, lightweight concurrency, and low-latency RESTful API microservices.',
+      usage: 'High-throughput backend services, concurrency, & RESTful API microservices.',
     },
     {
       ...portfolioData.skills[5],
-      usage:
-        'Responsive web interfaces, real-time browser interactivity, and cross-platform client integrations.',
+      usage: 'Responsive web interfaces, real-time UX, & cross-platform client integrations.',
     },
     {
       ...portfolioData.skills[6],
-      usage:
-        'Powering campus information systems, online examination engines, admissions portals, and official correspondence.',
+      usage: 'Powering campus info systems, online exams, admissions, & letter workflows.',
     },
     {
       ...portfolioData.skills[7],
-      usage:
-        'Enterprise relational database architecture, transactional consistency, and index optimization for production systems.',
+      usage: 'Production relational databases, transactional integrity, & query tuning.',
     },
     {
       ...portfolioData.skills[8],
-      usage:
-        'Relational schema design, query optimization, and data integrity for attendance, exams, and healthcare logs.',
+      usage: 'Relational schemas for attendance, online exams, & clinical logs.',
     },
     {
       ...portfolioData.skills[9],
-      usage:
-        'Embedded serverless storage for mobile client caching, rapid prototyping, and local AI agent state persistence.',
+      usage: 'Serverless embedded storage for mobile cache, prototypes, & local AI state.',
     },
     {
       ...portfolioData.skills[10],
-      usage:
-        'Designing standardized RESTful endpoints, token authentication, and JSON contracts across mobile, web, and AI services.',
+      usage: 'Standardized RESTful JSON APIs & token authentication across apps.',
     },
     {
       ...portfolioData.skills[11],
-      usage:
-        'Containerizing application services, isolating dev and production environments, and standardizing backend deployments.',
+      usage: 'Containerized services, isolated environments, & repeatable deployments.',
     },
     {
       ...portfolioData.skills[12],
-      usage:
-        'End-to-end engineering of web, Android, and iOS applications including deployment and iterative maintenance.',
+      usage: 'End-to-end engineering for Web, Android, & iOS production apps.',
     },
     {
       ...portfolioData.skills[13],
-      usage:
-        'Annual IT planning, hardware & software lifecycle management, and daily technical operations support.',
+      usage: 'Annual IT ops, hardware/software maintenance, & daily team support.',
     },
     {
       ...portfolioData.skills[14],
-      usage:
-        'Designing and stabilizing campus LAN infrastructure for synchronous computer-based examinations.',
+      usage: 'Campus LAN engineering & stable concurrent examination networks.',
     },
   ],
   certifications: [
@@ -351,8 +342,7 @@ export const portfolioDataEn = {
       ...portfolioData.projects[0],
       title: 'Online Attendance App (BCS Logistics)',
       shortTitle: 'Online Attendance',
-      summary:
-        'Cross-platform employee attendance management application built for daily logistics operations at PT. BCS Logistics.',
+      summary: 'Cross-platform Android, iOS & web employee check-in with GPS geofencing.',
       roleContribution:
         'Architected Android & iOS mobile clients, web monitoring dashboard, and relational attendance database.',
       impactMetrics: [
@@ -399,8 +389,7 @@ export const portfolioDataEn = {
       title: 'doklinc Healthcare App (Cilegon Community)',
       shortTitle: 'doklinc Health',
       org: 'Cilegon Community · PT. BCS Logistics',
-      summary:
-        'Digital healthcare platform streamlining clinic queues and medical service access for residents of Cilegon.',
+      summary: 'Digital clinic booking and live medical queue app for Cilegon residents.',
       roleContribution:
         'Developed patient service workflows, backend API integrations, debugging, and database maintenance.',
       impactMetrics: [
@@ -446,8 +435,7 @@ export const portfolioDataEn = {
       ...portfolioData.projects[2],
       title: 'Online Examination System (LP3I College)',
       shortTitle: 'Online Exam',
-      summary:
-        'Computer-based web examination platform built to evaluate student competencies across LP3I Business College.',
+      summary: 'Computer & web-based exam portal evaluating student competencies at LP3I.',
       roleContribution:
         'Built interactive test modules, automated grading engine, and maintained LAN readiness during exams.',
       impactMetrics: [
@@ -493,8 +481,7 @@ export const portfolioDataEn = {
       ...portfolioData.projects[3],
       title: 'Online Admissions Test (LP3I College)',
       shortTitle: 'Admissions Test',
-      summary:
-        'Online student admissions screening portal assessing academic readiness and study program alignment.',
+      summary: 'Online student admissions screening with automated study program matching.',
       roleContribution:
         'Engineered scoring algorithms, study program recommendation mapping, and admissions operations support.',
       impactMetrics: [
@@ -540,8 +527,7 @@ export const portfolioDataEn = {
       ...portfolioData.projects[4],
       title: 'Institutional Letter Manager (LP3I College)',
       shortTitle: 'Letter Manager',
-      summary:
-        'Internal document workflow platform handling incoming/outgoing correspondence, executive disposition, and official numbering.',
+      summary: 'Executive disposition workflow & automated document numbering system.',
       roleContribution:
         'Designed approval workflow logic, sequential document numbering, and searchable correspondence archive.',
       impactMetrics: [
@@ -659,63 +645,51 @@ export const portfolioDataEn = {
   githubCuratedRepos: [
     {
       ...portfolioData.githubCuratedRepos[0],
-      description:
-        'High-efficiency orchestrator and token-saver engine for Hermes Agent with tiered routing, git worktree isolation, and zero-token gate.',
+      description: 'High-efficiency Hermes Agent orchestrator & token saver with tiered routing.',
     },
     {
       ...portfolioData.githubCuratedRepos[1],
-      description:
-        'Reactive Svelte & Vite web frontend built for the Mixa intelligent application ecosystem.',
+      description: 'Reactive Svelte & Vite web client for the Mixa intelligent platform.',
     },
     {
       ...portfolioData.githubCuratedRepos[2],
-      description:
-        'Python backend service powering data processing, model integration, and API orchestration for Mixa.',
+      description: 'Python backend powering data pipelines, model links, & API orchestration.',
     },
     {
       ...portfolioData.githubCuratedRepos[3],
-      description:
-        'Interactive 3D spatial web experiment with live browser movement controls on GitHub Pages.',
+      description: 'Interactive 3D spatial web experiment running directly in the browser.',
     },
     {
       ...portfolioData.githubCuratedRepos[4],
-      description:
-        'Interactive 3D coastal visualization explorable directly in the browser via GitHub Pages.',
+      description: 'Explorable 3D coastal scene hosted live on GitHub Pages.',
     },
     {
       ...portfolioData.githubCuratedRepos[5],
-      description:
-        'Conversational chatbot implementation built around the Google Gemini API.',
+      description: 'Conversational AI chatbot built around the Google Gemini API.',
     },
     {
       ...portfolioData.githubCuratedRepos[6],
-      description:
-        'Fast inference and integration experiments using the Gemini Flash API.',
+      description: 'Fast inference experiments built with the Gemini Flash API.',
     },
     {
       ...portfolioData.githubCuratedRepos[7],
-      description:
-        'Laravel-based Quality, Health, Safety, and Environment (QHSE) management web application.',
+      description: 'Laravel web app for Quality, Health, Safety, & Environment ops.',
     },
     {
       ...portfolioData.githubCuratedRepos[8],
-      description:
-        'Fitness and health tracking web system built on PHP CodeIgniter 4.',
+      description: 'Fitness and employee wellness tracking built on CodeIgniter 4.',
     },
     {
       ...portfolioData.githubCuratedRepos[9],
-      description:
-        'Custom Python Odoo 17 ERP modules automating enterprise operational workflows.',
+      description: 'Custom Python Odoo 17 ERP modules automating enterprise workflows.',
     },
     {
       ...portfolioData.githubCuratedRepos[10],
-      description:
-        'Modern Next.js & TypeScript storefront catalog for children apparel.',
+      description: 'Modern Next.js & TypeScript storefront for children apparel.',
     },
     {
       ...portfolioData.githubCuratedRepos[11],
-      description:
-        'Community platform for Quran study programs and local tutor discovery.',
+      description: 'Community directory for Quran study programs and local tutors.',
     },
   ],
 };

@@ -194,6 +194,45 @@
             </button>
           </div>
         </div>
+
+        <div class="hero-stats-bento" aria-label="Ringkasan pencapaian">
+          <div class="hero-stat-card">
+            <span class="stat-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+            </span>
+            <div>
+              <p class="stat-value tabular-nums">8+ Tahun</p>
+              <p class="stat-label" data-i18n="statExpTitle">Pengalaman IT & AI</p>
+            </div>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+            </span>
+            <div>
+              <p class="stat-value tabular-nums" data-i18n="statAppsVal">5 Aplikasi</p>
+              <p class="stat-label" data-i18n="statAppsTitle">Web, Android & iOS</p>
+            </div>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </span>
+            <div>
+              <p class="stat-value tabular-nums" data-i18n="statTechVal">15 Teknologi</p>
+              <p class="stat-label" data-i18n="statTechTitle">AI, Go & Database</p>
+            </div>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-icon-box" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            </span>
+            <div>
+              <p class="stat-value tabular-nums" data-i18n="statAwardVal">3 Prestasi</p>
+              <p class="stat-label" data-i18n="statAwardTitle">Instruktur & Kampus</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -258,9 +297,12 @@
 
           <aside class="skill-inspector-pane">
             <div class="skill-inspector-head">
-              <div>
-                <h3 id="skillInspectorName">AI Agent Dev</h3>
-                <p class="inspector-meta" id="skillInspectorCat">Kategori: AI</p>
+              <div class="skill-inspector-title-row">
+                <span class="skill-spotlight-badge" id="skillInspectorBadge" aria-hidden="true">AI</span>
+                <div>
+                  <h3 id="skillInspectorName">AI Agent Dev</h3>
+                  <p class="inspector-meta" id="skillInspectorCat">Kategori: AI</p>
+                </div>
               </div>
               <span class="skill-score-readout" id="skillInspectorScore">2 proyek</span>
             </div>
@@ -269,19 +311,19 @@
               <p class="inspector-meta" data-i18n="skillsRelatedProjects">Proyek terkait</p>
               <div class="skill-related-links" id="skillInspectorProjects"></div>
             </div>
-            <div class="skill-list-compact" id="skillAccessibleList" aria-label="Daftar keahlian yang dapat dipilih"></div>
+            <div class="skill-cat-summary-grid" id="skillAccessibleList" aria-label="Ringkasan kategori keahlian"></div>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Interactive 5-Project Simulator, UI Mockups, Architecture & Live GitHub -->
+    <!-- Section 4: Interactive 5-Project Visual Showcase, Simulator, Architecture & Live GitHub -->
     <section id="projects" class="section-block section-tinted">
       <div class="container">
         <div class="section-head">
           <h2 data-i18n="projectsTitle">Simulasi proyek dan arsitektur</h2>
           <p class="section-desc" data-i18n="projectsDesc">
-            Coba langsung alur kerja kelima aplikasi yang telah dibangun untuk industri logistik, layanan kesehatan masyarakat, dan perguruan tinggi.
+            Lihat tampilan antarmuka, coba simulasi alur, dan bedah arsitektur 5 aplikasi utama.
           </p>
         </div>
 
@@ -295,15 +337,14 @@
                 <p class="inspector-meta" id="projectStageMeta">PT. BCS Logistics · 2024 - 2026 · Web · Android · iOS</p>
               </div>
               <div class="segmented-control" id="projectModeTabs" role="tablist" aria-label="Mode tampilan proyek">
-                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="simulasi" data-i18n="modeSim">Simulasi Aplikasi</button>
-                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="antarmuka" data-i18n="modeUi">Pratinjau UI</button>
+                <button type="button" class="seg-btn is-active" role="tab" aria-selected="true" data-project-mode="antarmuka" data-i18n="modeUi">Pratinjau UI</button>
+                <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="simulasi" data-i18n="modeSim">Simulasi Aplikasi</button>
                 <button type="button" class="seg-btn" role="tab" aria-selected="false" data-project-mode="arsitektur" data-i18n="modeArch">Arsitektur Sistem</button>
               </div>
             </div>
 
             <div class="impact-strip" id="projectImpactStrip" aria-label="Ringkasan dampak operasional"></div>
             <p class="project-summary-copy" id="projectStageSummary"></p>
-            <p class="project-role-copy" id="projectStageRole"></p>
 
             <div class="project-interactive-body" id="projectStageBody"></div>
           </div>
@@ -347,7 +388,6 @@
       <div class="container">
         <div class="section-head">
           <h2 data-i18n="expTitle">Jejak karir dan latar belakang</h2>
-          <p class="section-desc" id="aboutSummaryText"></p>
         </div>
 
         <div class="timeline-controls-bar">
@@ -375,7 +415,7 @@
         <div class="section-head">
           <h2 data-i18n="contactTitle">Mari berkolaborasi</h2>
           <p class="section-desc" data-i18n="contactDesc">
-            Terbuka untuk peluang kerja remote, proyek freelance, riset agen AI, maupun pengembangan aplikasi kustom institusi.
+            Terbuka untuk remote engineering, freelance, agen AI, dan aplikasi institusi.
           </p>
         </div>
 
@@ -404,10 +444,10 @@
 
             <div class="composer-field">
               <label for="contactBrief" data-i18n="contactBriefLabel">Ceritakan kebutuhan singkat</label>
-              <textarea id="contactBrief" rows="3" data-i18n-placeholder="contactBriefPlaceholder" placeholder="Jelaskan tantangan atau target aplikasi yang ingin dibangun..."></textarea>
+              <textarea id="contactBrief" rows="2" data-i18n-placeholder="contactBriefPlaceholder" placeholder="Jelaskan tantangan atau target aplikasi yang ingin dibangun..."></textarea>
             </div>
 
-            <div class="composer-preview-box">
+            <div class="composer-preview-box" hidden>
               <p class="inspector-meta" data-i18n="contactPreviewLabel">Pratinjau pesan otomatis</p>
               <p id="contactPreviewText"></p>
             </div>
@@ -423,39 +463,51 @@
           </div>
 
           <aside class="contact-directory" id="contactInfoList">
-            <h3 data-i18n="contactDirectTitle">Informasi kontak langsung</h3>
-            <div class="contact-dir-rows">
-              <div class="contact-dir-row">
-                <div>
-                  <p class="inspector-meta" data-i18n="contactPhoneLabel">Telepon & WhatsApp</p>
-                  <p class="contact-dir-val tabular-nums">+62 821-1157-9944</p>
+            <h3 data-i18n="contactDirectTitle">Kanal kontak langsung</h3>
+            <div class="contact-bento-grid">
+              <div class="contact-bento-tile">
+                <div class="contact-tile-top">
+                  <span class="contact-tile-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  </span>
+                  <button type="button" class="inline-jump-btn" data-copy-value="+62 821-1157-9944" data-i18n="copyBtn">Salin</button>
                 </div>
-                <button type="button" class="inline-jump-btn" data-copy-value="+62 821-1157-9944" data-i18n="copyBtn">Salin</button>
+                <p class="inspector-meta" data-i18n="contactPhoneLabel">Telepon & WhatsApp</p>
+                <p class="contact-dir-val tabular-nums">+62 821-1157-9944</p>
               </div>
-              <div class="contact-dir-row">
-                <div>
-                  <p class="inspector-meta">Email</p>
-                  <p class="contact-dir-val">Syamsuliki.48@gmail.com</p>
+              <div class="contact-bento-tile">
+                <div class="contact-tile-top">
+                  <span class="contact-tile-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  </span>
+                  <button type="button" class="inline-jump-btn" data-copy-value="Syamsuliki.48@gmail.com" data-i18n="copyBtn">Salin</button>
                 </div>
-                <button type="button" class="inline-jump-btn" data-copy-value="Syamsuliki.48@gmail.com" data-i18n="copyBtn">Salin</button>
+                <p class="inspector-meta">Email</p>
+                <p class="contact-dir-val contact-email-val">Syamsuliki.48@gmail.com</p>
               </div>
-              <div class="contact-dir-row">
-                <div>
-                  <p class="inspector-meta" data-i18n="contactLocationLabel">Lokasi</p>
-                  <p class="contact-dir-val">Cilegon, Banten, Indonesia</p>
+              <div class="contact-bento-tile">
+                <div class="contact-tile-top">
+                  <span class="contact-tile-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </span>
                 </div>
+                <p class="inspector-meta" data-i18n="contactLocationLabel">Lokasi</p>
+                <p class="contact-dir-val">Cilegon, Banten, ID</p>
               </div>
-              <div class="contact-dir-row">
-                <div>
-                  <p class="inspector-meta" data-i18n="contactLinksLabel">Tautan profesional</p>
-                  <p class="contact-dir-links">
-                    <a href="https://github.com/syamban14" target="_blank" rel="noopener">GitHub</a>
-                    <span aria-hidden="true">·</span>
-                    <a href="https://linkedin.com/in/m-syamsul" target="_blank" rel="noopener">LinkedIn</a>
-                    <span aria-hidden="true">·</span>
-                    <a href="https://Syamsul14.blogspot.com" target="_blank" rel="noopener">Blog</a>
-                  </p>
+              <div class="contact-bento-tile">
+                <div class="contact-tile-top">
+                  <span class="contact-tile-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  </span>
                 </div>
+                <p class="inspector-meta" data-i18n="contactLinksLabel">Tautan profesional</p>
+                <p class="contact-dir-links">
+                  <a href="https://github.com/syamban14" target="_blank" rel="noopener">GitHub</a>
+                  <span aria-hidden="true">·</span>
+                  <a href="https://linkedin.com/in/m-syamsul" target="_blank" rel="noopener">LinkedIn</a>
+                  <span aria-hidden="true">·</span>
+                  <a href="https://Syamsul14.blogspot.com" target="_blank" rel="noopener">Blog</a>
+                </p>
               </div>
             </div>
             <div class="contact-cv-row">
@@ -463,7 +515,7 @@
                 id="downloadCvLink"
                 href="./cv/M-Syamsul-CV-ATS-ID.pdf"
                 download="M-Syamsul-CV-ATS-ID.pdf"
-                class="btn-secondary"
+                class="btn-primary"
                 data-i18n="downloadCvBtn"
               >
                 Unduh CV ATS (PDF)

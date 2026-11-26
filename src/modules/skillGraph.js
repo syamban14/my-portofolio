@@ -88,6 +88,7 @@ export function initSkillGraph({ onSelectProject }) {
   const tabsWrap = document.getElementById('skillCategoryTabs');
   const listWrap = document.getElementById('skillAccessibleList');
   const inspectorName = document.getElementById('skillInspectorName');
+  const inspectorBadge = document.getElementById('skillInspectorBadge');
   const inspectorCat = document.getElementById('skillInspectorCat');
   const inspectorScore = document.getElementById('skillInspectorScore');
   const inspectorUsage = document.getElementById('skillInspectorUsage');
@@ -219,6 +220,13 @@ export function initSkillGraph({ onSelectProject }) {
     const data = getPortfolioData();
     const skill = data.skills.find((s) => s.id === skillId) || data.skills[0];
     selectedId = skill.id;
+    const catColor = CATEGORY_META[skill.category]?.color || '#18d2b6';
+
+    if (inspectorBadge) {
+      inspectorBadge.textContent = skill.code || skill.category.slice(0, 3).toUpperCase();
+      inspectorBadge.style.borderColor = catColor;
+      inspectorBadge.style.color = catColor;
+    }
 
     inspectorName.textContent = skill.name;
     inspectorCat.textContent = `${t('skillsCategoryPrefix')}: ${skill.category}`;
@@ -235,8 +243,8 @@ export function initSkillGraph({ onSelectProject }) {
       })
       .join('');
 
-    listWrap.querySelectorAll('.skill-list-btn').forEach((btn) => {
-      const isActive = btn.dataset.skillId === selectedId;
+    listWrap.querySelectorAll('.skill-cat-card').forEach((btn) => {
+      const isActive = btn.dataset.catPick === skill.category;
       btn.classList.toggle('is-active', isActive);
       btn.setAttribute('aria-pressed', String(isActive));
     });
@@ -244,24 +252,28 @@ export function initSkillGraph({ onSelectProject }) {
 
   function renderAccessibleList() {
     const skills = getPortfolioData().skills;
-    const visibleSkills =
-      activeCategory === 'all' ? skills : skills.filter((s) => s.category === activeCategory);
+    const activeSkill = skills.find((s) => s.id === selectedId) || skills[0];
+    const unitLabel = getLang() === 'en' ? 'skills' : 'keahlian';
 
-    listWrap.innerHTML = visibleSkills
-      .map(
-        (s) => `
-      <button
-        type="button"
-        class="skill-list-btn${s.id === selectedId ? ' is-active' : ''}"
-        data-skill-id="${s.id}"
-        aria-pressed="${s.id === selectedId}"
-      >
-        <span>${s.name}</span>
-        <span class="inspector-meta">${s.category}</span>
-      </button>
-    `
-      )
-      .join('');
+    listWrap.innerHTML = CATEGORY_ORDER.map((catKey) => {
+      const meta = CATEGORY_META[catKey];
+      const count = skills.filter((s) => s.category === catKey).length;
+      const isActive = activeSkill?.category === catKey;
+      return `
+        <button
+          type="button"
+          class="skill-cat-card${isActive ? ' is-active' : ''}"
+          data-cat-pick="${catKey}"
+          aria-pressed="${isActive}"
+        >
+          <span class="skill-cat-card-top">
+            <span class="skill-cat-dot" style="background-color: ${meta.color}"></span>
+            <span class="skill-cat-name">${meta.label}</span>
+          </span>
+          <span class="inspector-meta tabular-nums">${count} ${unitLabel}</span>
+        </button>
+      `;
+    }).join('');
   }
 
   function stepPhysics(timeMs) {
@@ -671,10 +683,19 @@ export function initSkillGraph({ onSelectProject }) {
   });
 
   listWrap.addEventListener('click', (event) => {
-    const btn = event.target.closest('[data-skill-id]');
+    const btn = event.target.closest('[data-cat-pick]');
     if (!btn) return;
     soundEngine.playClick();
-    renderInspector(btn.dataset.skillId);
+    const catKey = btn.dataset.catPick;
+    if (activeCategory !== 'all' && activeCategory !== catKey) {
+      tabsWrap.querySelector(`[data-category="${catKey}"]`)?.click();
+      return;
+    }
+    const leadSkill = getPortfolioData().skills.find((s) => s.category === catKey);
+    if (leadSkill) {
+      highlightAllUntil = performance.now() + 900;
+      renderInspector(leadSkill.id);
+    }
   });
 
   inspectorProjects.addEventListener('click', (event) => {

@@ -70,7 +70,7 @@ export function initProjectShowcase() {
   if (!listWrap || !stageBody || !modeWrap) return null;
 
   let activeProjectId = getPortfolioData().projects[0].id;
-  let activeMode = 'simulasi';
+  let activeMode = 'antarmuka';
   let activeArchIndex = 0;
   let activeMockScreen = 'utama';
 
@@ -90,6 +90,13 @@ export function initProjectShowcase() {
     letterCustomTitle: '',
   };
 
+  function getAppIcon(device) {
+    if (device === 'mobile') {
+      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>';
+    }
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>';
+  }
+
   function renderProjectList() {
     const projects = getPortfolioData().projects;
     listWrap.innerHTML = projects
@@ -101,8 +108,11 @@ export function initProjectShowcase() {
         data-project-id="${proj.id}"
         aria-pressed="${proj.id === activeProjectId}"
       >
-        <span class="project-select-title">${proj.shortTitle}</span>
-        <span class="project-select-meta">${proj.org} · ${proj.stackText}</span>
+        <span class="project-app-icon" aria-hidden="true">${getAppIcon(proj.uiMockup?.device)}</span>
+        <span class="project-select-text">
+          <span class="project-select-title">${proj.shortTitle}</span>
+          <span class="project-select-meta">${proj.org} · ${proj.stackText}</span>
+        </span>
       </button>
     `
       )
@@ -146,10 +156,10 @@ export function initProjectShowcase() {
       mockup.device === 'mobile'
         ? isEn
           ? 'Mobile application concept'
-          : 'Tampilan konsep aplikasi seluler'
+          : 'Konsep aplikasi seluler'
         : isEn
           ? 'Web portal concept'
-          : 'Tampilan konsep portal web';
+          : 'Konsep portal web';
 
     stageBody.innerHTML = `
       <div class="mockup-stage">
@@ -163,7 +173,12 @@ export function initProjectShowcase() {
 
         <div class="ui-mockup-frame ui-mockup-${mockup.device}">
           <div class="mockup-chrome">
-            <span class="mockup-chrome-title">${mockup.headerTitle}</span>
+            <div class="mockup-chrome-left">
+              <span class="mockup-dots" aria-hidden="true">
+                <i class="mockup-dot"></i><i class="mockup-dot"></i><i class="mockup-dot"></i>
+              </span>
+              <span class="mockup-chrome-title">${mockup.headerTitle}</span>
+            </div>
             <span class="mockup-chrome-meta">${project.stackText}</span>
           </div>
           <div class="mockup-screen-body">
@@ -187,7 +202,12 @@ export function initProjectShowcase() {
                 : `
               <p class="mockup-screen-heading">${mockup.secondaryTitle}</p>
               <ul class="mockup-list-rows">
-                ${mockup.secondaryRows.map((row) => `<li>${row}</li>`).join('')}
+                ${mockup.secondaryRows
+                  .map(
+                    (row) =>
+                      `<li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>${row}</span></li>`
+                  )
+                  .join('')}
               </ul>
             `
             }
@@ -399,7 +419,9 @@ export function initProjectShowcase() {
         .join('');
     }
     summaryEl.textContent = project.summary;
-    roleEl.textContent = project.roleContribution;
+    if (roleEl) {
+      roleEl.textContent = project.roleContribution;
+    }
 
     if (activeMode === 'arsitektur') {
       renderArchitecture(project);

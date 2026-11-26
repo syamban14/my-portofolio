@@ -10,7 +10,7 @@ export const portfolioData = {
   tagline: 'Membangun solusi digital yang memberdayakan UMKM dan institusi.',
   heroHeadline: 'M. Syamsul merancang agen AI dan aplikasi institusi',
   heroSubtitle:
-    'Programmer IT dan spesialis AI di Cilegon dengan delapan tahun pengalaman membangun solusi web, mobile, dan infrastruktur.',
+    'IT Programmer & AI Specialist di Cilegon, 8+ tahun membangun sistem web, mobile, dan infrastruktur.',
   contact: {
     phone: '+62 821-1157-9944',
     whatsappNumber: '6282111579944',
@@ -25,7 +25,7 @@ export const portfolioData = {
     location: 'Cilegon, Banten, Indonesia',
   },
   summary:
-    'Seorang IT Programmer dan IT Specialist berpengalaman dengan latar belakang pendidikan kuat di Sistem Informasi dan Manajemen Informatika. Memiliki ketertarikan besar dan keahlian mendalam dalam mempelajari, meriset, serta aktif mengembangkan teknologi AI Agent. Rekam jejak solid dalam pemeliharaan & pengembangan aplikasi web, manajemen infrastruktur IT, serta pembuatan perangkat lunak kustom untuk institusi.',
+    'IT Programmer & AI Specialist berpengalaman 8+ tahun mengembangkan AI Agent, aplikasi Android/iOS, serta sistem internal institusi.',
   stats: [
     { label: 'Pengalaman', value: '8+ Tahun' },
     { label: 'Proyek', value: '10+' },
@@ -41,11 +41,11 @@ export const portfolioData = {
       startYear: 2024,
       endYear: 2026,
       location: 'Cilegon, Banten',
+      highlights: ['Presensi Android & iOS', 'Aplikasi doklinc', 'Web & Database'],
       details: [
         'Rancang & bangun Aplikasi Presensi Online Android & iOS',
         'Kembangkan aplikasi kesehatan doklinc',
-        'Maintenance & pengembangan aplikasi web',
-        'Debugging, penambahan fitur, manajemen database',
+        'Maintenance web app, fitur baru, & database',
       ],
     },
     {
@@ -56,11 +56,11 @@ export const portfolioData = {
       startYear: 2017,
       endYear: 2024,
       location: 'Cilegon, Banten',
+      highlights: ['Ujian & Tes Online', 'Aplikasi Surat', 'Jaringan & Server Kampus'],
       details: [
-        'Rancang program kerja tahunan IT',
-        'Manajemen infrastruktur jaringan, hardware, software',
-        'Dukungan teknis harian',
-        'Pengembangan aplikasi internal institusi',
+        'Program kerja IT tahunan & dukungan operasional',
+        'Manajemen jaringan LAN, hardware, & software',
+        'Pengembangan aplikasi internal kampus',
       ],
     },
   ],
@@ -70,8 +70,7 @@ export const portfolioData = {
       name: 'AI Agent Dev',
       code: 'AI',
       category: 'AI',
-      usage:
-        'Merancang alur kerja agen otonom, tool calling, dan asisten tugas untuk otomasi produktivitas UMKM serta institusi.',
+      usage: 'Otomasi agen otonom & tool calling untuk alur kerja UMKM dan institusi.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -79,8 +78,7 @@ export const portfolioData = {
       name: 'Prompt Engineering',
       code: 'PE',
       category: 'AI',
-      usage:
-        'Menyusun instruksi terstruktur, guardrails, dan evaluasi output LLM agar akurat dan konsisten pada kasus bisnis.',
+      usage: 'Instruksi terstruktur, guardrails, dan evaluasi output LLM produksi.',
       relatedProjects: ['doklinc', 'ujian-online'],
     },
     {
@@ -88,8 +86,7 @@ export const portfolioData = {
       name: 'AI API Integration',
       code: 'API',
       category: 'AI',
-      usage:
-        'Mengintegrasikan API model bahasa dan kecerdasan buatan ke layanan backend serta aplikasi web modern.',
+      usage: 'Integrasi model bahasa AI ke layanan backend serta antarmuka web modern.',
       relatedProjects: ['doklinc', 'presensi-online'],
     },
     {
@@ -97,8 +94,7 @@ export const portfolioData = {
       name: 'Python',
       code: 'PY',
       category: 'Language',
-      usage:
-        'Pengembangan skrip otomasi, riset eksperimen agen AI, pemrosesan data, serta layanan API backend.',
+      usage: 'Skrip otomasi, orkestrator agen AI, pemrosesan data, & API backend.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -106,8 +102,7 @@ export const portfolioData = {
       name: 'Go',
       code: 'GO',
       category: 'Language',
-      usage:
-        'Membangun layanan backend berkinerja tinggi, konkurensi ringan, dan mikroservis RESTful API yang efisien.',
+      usage: 'Layanan backend cepat, konkurensi ringan, & mikroservis RESTful API.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -115,8 +110,7 @@ export const portfolioData = {
       name: 'JavaScript',
       code: 'JS',
       category: 'Language',
-      usage:
-        'Membangun antarmuka web responsif, interaksi real-time, dan integrasi klien-server lintas platform.',
+      usage: 'Antarmuka web responsif, interaksi real-time, & integrasi klien-server.',
       relatedProjects: ['presensi-online', 'ujian-online', 'test-masuk'],
     },
     {
@@ -124,8 +118,7 @@ export const portfolioData = {
       name: 'PHP',
       code: 'PHP',
       category: 'Language',
-      usage:
-        'Fondasi sistem informasi kampus, portal ujian daring, seleksi mahasiswa baru, dan persuratan institusi.',
+      usage: 'Sistem informasi kampus, ujian daring, PMB online, & persuratan institusi.',
       relatedProjects: ['aplikasi-surat', 'ujian-online', 'test-masuk'],
     },
     {
@@ -133,8 +126,7 @@ export const portfolioData = {
       name: 'PostgreSQL',
       code: 'PG',
       category: 'Database',
-      usage:
-        'Manajemen basis data relasional tingkat enterprise, konsistensi transaksi, dan optimasi indeks untuk sistem produksi.',
+      usage: 'Basis data relasional produksi, konsistensi transaksi, & optimasi indeks.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -142,8 +134,7 @@ export const portfolioData = {
       name: 'MySQL',
       code: 'SQL',
       category: 'Database',
-      usage:
-        'Perancangan skema relasional, optimasi kueri, pemeliharaan integritas data presensi, ujian, dan rekam layanan.',
+      usage: 'Skema relasional & kueri terstruktur untuk presensi, ujian, & layanan klinis.',
       relatedProjects: [
         'presensi-online',
         'doklinc',
@@ -157,8 +148,7 @@ export const portfolioData = {
       name: 'SQLite',
       code: 'LITE',
       category: 'Database',
-      usage:
-        'Penyimpanan lokal ringan tanpa server untuk cache aplikasi mobile, pembuatan prototipe cepat, dan persistensi agen AI lokal.',
+      usage: 'Penyimpanan lokal ringan untuk cache mobile, prototipe, & state agen AI.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -166,8 +156,7 @@ export const portfolioData = {
       name: 'REST / RESTful API',
       code: 'REST',
       category: 'Tech',
-      usage:
-        'Perancangan arsitektur endpoint standar, autentikasi token, dan integrasi data JSON antara aplikasi mobile, web, serta layanan AI.',
+      usage: 'Arsitektur endpoint JSON, autentikasi token, & sinkronisasi mobile-web.',
       relatedProjects: ['presensi-online', 'doklinc', 'ujian-online'],
     },
     {
@@ -175,8 +164,7 @@ export const portfolioData = {
       name: 'Docker',
       code: 'DKR',
       category: 'Tech',
-      usage:
-        'Kontainerisasi layanan aplikasi, isolasi lingkungan pengembangan dan produksi, serta standarisasi deployment backend.',
+      usage: 'Kontainerisasi layanan, isolasi environment, & deployment backend standar.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -184,8 +172,7 @@ export const portfolioData = {
       name: 'Web & Mobile Dev',
       code: 'APP',
       category: 'Tech',
-      usage:
-        'Pengembangan end-to-end aplikasi web, Android, dan iOS termasuk deployment serta pemeliharaan berkala.',
+      usage: 'Pengembangan aplikasi Web, Android, & iOS dari arsitektur hingga rilis.',
       relatedProjects: ['presensi-online', 'doklinc'],
     },
     {
@@ -193,8 +180,7 @@ export const portfolioData = {
       name: 'IT Support',
       code: 'OPS',
       category: 'Tech',
-      usage:
-        'Penyusunan program kerja tahunan IT, pemeliharaan perangkat keras dan lunak, serta dukungan operasional harian.',
+      usage: 'Program kerja IT tahunan, perawatan perangkat, & dukungan operasional.',
       relatedProjects: ['aplikasi-surat', 'ujian-online'],
     },
     {
@@ -202,8 +188,7 @@ export const portfolioData = {
       name: 'Networking',
       code: 'NET',
       category: 'Tech',
-      usage:
-        'Perencanaan dan pemeliharaan infrastruktur jaringan lokal kampus agar operasional akademik dan ujian berjalan stabil.',
+      usage: 'Manajemen jaringan LAN kampus untuk stabilitas sistem akademik & ujian.',
       relatedProjects: ['ujian-online', 'test-masuk'],
     },
   ],
@@ -225,8 +210,7 @@ export const portfolioData = {
       org: 'PT. BCS Logistics',
       period: '2024 - 2026',
       stackText: 'Web · Android · iOS',
-      summary:
-        'Aplikasi manajemen kehadiran karyawan lintas platform untuk kebutuhan operasional logistik di PT. BCS Logistics.',
+      summary: 'Presensi karyawan lintas platform Android, iOS, & web dengan validasi geofence GPS.',
       roleContribution:
         'Merancang arsitektur aplikasi Android, iOS, serta panel pemantauan web dan manajemen database presensi.',
       impactMetrics: [
@@ -275,8 +259,7 @@ export const portfolioData = {
       org: 'Masyarakat Cilegon · PT. BCS Logistics',
       period: '2024 - 2026',
       stackText: 'Web · Mobile · API',
-      summary:
-        'Platform kesehatan digital untuk memudahkan akses layanan medis dan antrean informasi kesehatan bagi masyarakat Cilegon.',
+      summary: 'Akses layanan klinis dan antrean medis digital untuk warga Cilegon.',
       roleContribution:
         'Mengembangkan fitur layanan aplikasi kesehatan, integrasi API, debugging, dan pemeliharaan basis data.',
       impactMetrics: [
@@ -325,8 +308,7 @@ export const portfolioData = {
       org: 'LP3I Business College',
       period: '2017 - 2024',
       stackText: 'Web · PHP · MySQL',
-      summary:
-        'Platform pelaksanaan ujian berbasis komputer dan web untuk mengevaluasi kompetensi mahasiswa di lingkungan LP3I College.',
+      summary: 'Portal ujian berbasis komputer & web untuk evaluasi kompetensi mahasiswa LP3I.',
       roleContribution:
         'Membangun modul soal interaktif, pencatatan skor otomatis, dan menjaga kesiapan jaringan ruang ujian.',
       impactMetrics: [
@@ -375,8 +357,7 @@ export const portfolioData = {
       org: 'LP3I Business College',
       period: '2017 - 2024',
       stackText: 'Web · PHP · MySQL',
-      summary:
-        'Sistem seleksi penerimaan calon mahasiswa baru secara daring untuk mengukur kesiapan akademik dan minat program studi.',
+      summary: 'Seleksi PMB daring untuk menilai kesiapan akademik & rekomendasi jurusan.',
       roleContribution:
         'Mengembangkan sistem penilaian seleksi, pemetaan rekomendasi kelulusan, dan dukungan operasional penerimaan.',
       impactMetrics: [
@@ -425,8 +406,7 @@ export const portfolioData = {
       org: 'LP3I Business College',
       period: '2017 - 2024',
       stackText: 'Web · PHP · MySQL',
-      summary:
-        'Sistem manajemen surat masuk, surat keluar, disposisi, dan penomoran dokumen resmi untuk tata usaha institusi.',
+      summary: 'Alur disposisi surat masuk-keluar & penomoran otomatis tata usaha kampus.',
       roleContribution:
         'Merancang alur persetujuan dokumen, penomoran otomatis, dan arsip pencarian surat internal.',
       impactMetrics: [
@@ -583,8 +563,7 @@ export const portfolioData = {
       category: 'ai',
       featured: true,
       updatedAt: '2026-08-28T18:52:10Z',
-      description:
-        'Orkestrator efisiensi tinggi dan penghemat token untuk Hermes Agent dengan tiered routing, isolasi git worktree, dan zero-token gate.',
+      description: 'Orkestrator & token-saver Hermes Agent dengan tiered routing.',
     },
     {
       name: 'mixa-frontend',
@@ -592,8 +571,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: true,
       updatedAt: '2026-11-11T09:08:29Z',
-      description:
-        'Antarmuka web reaktif berbasis Svelte dan Vite untuk ekosistem aplikasi cerdas Mixa.',
+      description: 'Antarmuka web Svelte & Vite untuk platform Mixa.',
     },
     {
       name: 'mixa-backend',
@@ -601,8 +579,7 @@ export const portfolioData = {
       category: 'ai',
       featured: false,
       updatedAt: '2026-07-20T02:14:18Z',
-      description:
-        'Layanan backend Python pendukung pemrosesan data, integrasi model, dan orkestrasi API platform Mixa.',
+      description: 'Backend Python untuk orkestrasi API & model platform Mixa.',
     },
     {
       name: 'step-100-3d',
@@ -611,8 +588,7 @@ export const portfolioData = {
       featured: true,
       demoUrl: 'https://syamban14.github.io/step-100-3d/',
       updatedAt: '2026-11-20T02:59:43Z',
-      description:
-        'Eksperimen interaktif ruang tiga dimensi berbasis web dengan kontrol pergerakan langsung di browser.',
+      description: 'Eksperimen ruang 3D interaktif langsung di browser.',
     },
     {
       name: 'beach-3d',
@@ -621,8 +597,7 @@ export const portfolioData = {
       featured: true,
       demoUrl: 'https://syamban14.github.io/beach-3d/',
       updatedAt: '2026-11-16T03:41:29Z',
-      description:
-        'Visualisasi pemandangan pantai 3D interaktif yang dapat dijelajahi langsung melalui GitHub Pages.',
+      description: 'Visualisasi pemandangan pantai 3D interaktif di web.',
     },
     {
       name: 'gemini-chatbot-api',
@@ -630,8 +605,7 @@ export const portfolioData = {
       category: 'ai',
       featured: false,
       updatedAt: '2025-08-19T03:22:12Z',
-      description:
-        'Implementasi chatbot percakapan menggunakan integrasi Google Gemini API.',
+      description: 'Implementasi chatbot berbasis integrasi Google Gemini API.',
     },
     {
       name: 'gemini-flash-api',
@@ -639,8 +613,7 @@ export const portfolioData = {
       category: 'ai',
       featured: false,
       updatedAt: '2025-08-15T07:30:31Z',
-      description:
-        'Eksperimen pemanggilan cepat dan integrasi layanan model Gemini Flash API.',
+      description: 'Eksperimen integrasi inferensi cepat Gemini Flash API.',
     },
     {
       name: 'qhse-app',
@@ -648,8 +621,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: true,
       updatedAt: '2025-12-08T04:31:01Z',
-      description:
-        'Aplikasi manajemen Quality, Health, Safety, and Environment (QHSE) berbasis Laravel.',
+      description: 'Aplikasi manajemen mutu & K3 (QHSE) berbasis Laravel.',
     },
     {
       name: 'bcs-fit',
@@ -657,8 +629,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: true,
       updatedAt: '2024-10-18T09:23:44Z',
-      description:
-        'Sistem pemantauan aktivitas kebugaran dan kesehatan berbasis framework PHP CodeIgniter 4.',
+      description: 'Portal kebugaran karyawan berbasis CodeIgniter 4.',
     },
     {
       name: 'odoo17-module-development',
@@ -666,8 +637,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: false,
       updatedAt: '2025-06-09T09:42:59Z',
-      description:
-        'Pengembangan modul kustom ERP Odoo 17 berbasis Python untuk otomasi proses bisnis.',
+      description: 'Modul ERP Odoo 17 berbasis Python untuk otomasi operasional.',
     },
     {
       name: 'irsyam_kidz_wear',
@@ -675,8 +645,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: false,
       updatedAt: '2026-03-22T14:59:38Z',
-      description:
-        'Katalog dan etalase web modern busana anak berbasis Next.js dan TypeScript.',
+      description: 'Etalase web busana anak dengan Next.js dan TypeScript.',
     },
     {
       name: 'ngaji_geh',
@@ -684,8 +653,7 @@ export const portfolioData = {
       category: 'fullstack',
       featured: false,
       updatedAt: '2024-09-27T08:15:04Z',
-      description:
-        'Aplikasi program mengaji dan direktori pencarian guru mengaji untuk masyarakat.',
+      description: 'Direktori belajar mengaji dan pencarian pengajar lokal.',
     },
   ],
 };

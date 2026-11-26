@@ -1,9 +1,18 @@
 import { getLang, getPortfolioData, onLangChange, t } from '../data/i18n.js';
 import { soundEngine } from './soundEngine.js';
 
+const KIND_ICONS = {
+  karir:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+  prestasi:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+  pendidikan:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+};
+
 /**
  * Interactive 2011 - 2026 Career, Education, Certification & Award Scrubber.
- * Updates dynamically whenever the active language switches between ID and EN.
+ * Renders concise visual milestone cards with SVG icons and tag chips.
  */
 export function initTimelineScrubber() {
   const filterWrap = document.getElementById('timelineFilterTabs');
@@ -11,7 +20,6 @@ export function initTimelineScrubber() {
   const yearLabel = document.getElementById('timelineSelectedYear');
   const resetBtn = document.getElementById('timelineShowAllBtn');
   const streamEl = document.getElementById('timelineStream');
-  const summaryEl = document.getElementById('aboutSummaryText');
 
   if (!filterWrap || !rangeInput || !streamEl) return null;
 
@@ -36,7 +44,7 @@ export function initTimelineScrubber() {
         subtitle: `${exp.period} · ${exp.location}`,
         startYear: exp.startYear,
         endYear: exp.endYear,
-        details: exp.details,
+        tags: exp.highlights || exp.details.slice(0, 3),
       })),
       ...data.certifications.map((cert) => ({
         id: cert.id,
@@ -46,7 +54,7 @@ export function initTimelineScrubber() {
         subtitle: cert.date,
         startYear: cert.year,
         endYear: cert.year,
-        details: [cert.desc],
+        tags: ['AI API', 'Hacktiv8'],
       })),
       ...data.awards.map((aw) => ({
         id: aw.id,
@@ -56,7 +64,7 @@ export function initTimelineScrubber() {
         subtitle: aw.detail,
         startYear: aw.year,
         endYear: aw.year,
-        details: [],
+        tags: [],
       })),
       ...data.education.map((edu) => ({
         id: edu.id,
@@ -66,18 +74,13 @@ export function initTimelineScrubber() {
         subtitle: `${edu.period} · ${edu.location} · ${gpaLabel} ${edu.gpa}`,
         startYear: edu.startYear,
         endYear: edu.endYear,
-        details: [],
+        tags: [],
       })),
     ].sort((a, b) => b.endYear - a.endYear || b.startYear - a.startYear);
   }
 
   function render() {
     const lang = getLang();
-    const data = getPortfolioData(lang);
-
-    if (summaryEl) {
-      summaryEl.textContent = data.summary;
-    }
 
     if (yearLabel) {
       yearLabel.textContent = yearFilterEnabled
@@ -111,7 +114,10 @@ export function initTimelineScrubber() {
         (item) => `
       <article class="milestone-item">
         <div class="milestone-top">
-          <span class="milestone-kind">${item.kindLabel}</span>
+          <div class="milestone-head-row">
+            <span class="milestone-icon-box" aria-hidden="true">${KIND_ICONS[item.kind] || KIND_ICONS.karir}</span>
+            <span>${item.kindLabel}</span>
+          </div>
           <span class="milestone-years tabular-nums">${
             item.startYear === item.endYear ? item.startYear : `${item.startYear} - ${item.endYear}`
           }</span>
@@ -119,8 +125,8 @@ export function initTimelineScrubber() {
         <h3 class="milestone-title">${item.title}</h3>
         <p class="milestone-sub">${item.subtitle}</p>
         ${
-          item.details.length
-            ? `<ul class="milestone-details">${item.details.map((d) => `<li>${d}</li>`).join('')}</ul>`
+          item.tags.length
+            ? `<div class="milestone-tags">${item.tags.map((tag) => `<span class="milestone-tag">${tag}</span>`).join('')}</div>`
             : ''
         }
       </article>

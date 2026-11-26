@@ -66,3 +66,7 @@ tags:
 - [x] Tambah 5 keahlian ke dataset (`public/data.json`, `portfolioData.js`, `i18n.js`): `PostgreSQL`, `SQLite`, `Go`, `Docker`, dan `REST / RESTful API`
 - [x] Hapus seluruh angka `%` & bar skor di `#skills`, `#ai-studio`, `#hudHotspotSummary`, cetak CV, dan regenerasi kedua file PDF ATS (`M-Syamsul-CV-ATS-ID.pdf` & `EN.pdf`)
 - [x] Rancang ulang graf konstelasi keahlian menjadi hierarki 3-tingkat berpusat pada potret medali karakter M. Syamsul (`M. Syamsul -> 4 Hub Kategori -> 15 Simpul`) tanpa latar ruangan & tanpa garis kusut antar-simpul
+
+### Redesain Visual-First Atmospheric Glass & Bento Studio (Selesai)
+- [x] Terapkan tema *Atmospheric Glass & Bento Studio* (dot-grid, ambient aura Pagi/Senja/Malam, kartu glassmorphism, ikon SVG, & animasi scroll-reveal)
+- [x] Terapkan penyajian *Visual-First* (~60% lebih ringkas): 4 metrik Bento di Hero, 4 ubin kategori di Konstelasi, `Pratinjau UI` default di Proyek, kartu milestone berikon + chip tag, dan grid kontak 2×2

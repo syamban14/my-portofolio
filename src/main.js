@@ -258,6 +258,36 @@ function initStudioApp() {
     onRequestSection: (target) => scrollToTarget(target),
     onPrintCv: () => window.print(),
   });
+
+  const revealSections = Array.from(document.querySelectorAll('.section-block'));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
+    revealSections.forEach((sec) => sec.classList.add('is-visible'));
+  } else {
+    document.documentElement.classList.add('reveal-ready');
+    const revealVisibleInViewport = () => {
+      const vh = window.innerHeight || 900;
+      revealSections.forEach((sec) => {
+        if (sec.getBoundingClientRect().top < vh * 0.96) {
+          sec.classList.add('is-visible');
+        }
+      });
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.04, rootMargin: '0px 0px -24px 0px' }
+    );
+    revealSections.forEach((sec) => observer.observe(sec));
+    window.addEventListener('scroll', revealVisibleInViewport, { passive: true });
+    revealVisibleInViewport();
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initStudioApp);

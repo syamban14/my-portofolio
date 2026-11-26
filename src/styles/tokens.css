@@ -25,9 +25,15 @@ html[data-studio-time='malam'] {
   --text-muted: #93b0be;
   --accent: #18d2b6;
   --accent-ink: #04221d;
+  --accent-soft: rgba(24, 210, 182, 0.14);
   --lamp-glow: #ffb454;
-  --border-subtle: rgba(147, 176, 190, 0.16);
-  --header-scrolled: rgba(7, 17, 24, 0.86);
+  --border-subtle: rgba(147, 176, 190, 0.18);
+  --header-scrolled: rgba(7, 17, 24, 0.84);
+  --grid-dot: rgba(147, 176, 190, 0.12);
+  --aura-1: rgba(24, 210, 182, 0.13);
+  --aura-2: rgba(104, 181, 255, 0.08);
+  --glass-bg: rgba(13, 28, 38, 0.78);
+  --card-shadow: 0 14px 34px -12px rgba(2, 8, 14, 0.45);
 }
 
 /* Senja (Harbor Dusk - Cilegon) */
@@ -39,9 +45,15 @@ html[data-studio-time='senja'] {
   --text-muted: #9fb0c7;
   --accent: #ff8a4c;
   --accent-ink: #230d02;
+  --accent-soft: rgba(255, 138, 76, 0.16);
   --lamp-glow: #ffd166;
-  --border-subtle: rgba(159, 176, 199, 0.18);
-  --header-scrolled: rgba(16, 24, 36, 0.88);
+  --border-subtle: rgba(159, 176, 199, 0.2);
+  --header-scrolled: rgba(16, 24, 36, 0.86);
+  --grid-dot: rgba(159, 176, 199, 0.12);
+  --aura-1: rgba(255, 138, 76, 0.15);
+  --aura-2: rgba(255, 209, 102, 0.09);
+  --glass-bg: rgba(24, 36, 54, 0.78);
+  --card-shadow: 0 14px 34px -12px rgba(4, 8, 16, 0.48);
 }
 
 /* Pagi (Crisp Architectural Gallery Daylight) */
@@ -53,7 +65,13 @@ html[data-studio-time='pagi'] {
   --text-muted: #466170;
   --accent: #007a6c;
   --accent-ink: #ffffff;
+  --accent-soft: rgba(0, 122, 108, 0.11);
   --lamp-glow: #f59e0b;
   --border-subtle: rgba(11, 25, 34, 0.12);
-  --header-scrolled: rgba(243, 247, 249, 0.9);
+  --header-scrolled: rgba(243, 247, 249, 0.88);
+  --grid-dot: rgba(11, 25, 34, 0.08);
+  --aura-1: rgba(0, 122, 108, 0.09);
+  --aura-2: rgba(245, 158, 11, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.86);
+  --card-shadow: 0 14px 32px -12px rgba(11, 25, 34, 0.09);
 }

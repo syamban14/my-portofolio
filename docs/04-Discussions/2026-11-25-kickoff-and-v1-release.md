@@ -69,3 +69,7 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Mengubah arsitektur graf `#skillCanvas` menjadi hierarki 3 tingkat: **Potret Medali Karakter (`character_anime_clean.png` crop setengah badan, tanpa latar ruangan)** di pusat → **4 Hub Kategori (`AI`, `Language`, `Database`, `Tech`)** → **15 Simpul Keahlian** di lapisan luar.
 - Menghapus garis *peer-to-peer* antarsimpul yang padat sehingga setiap simpul keahlian terhubung rapi hanya melalui hub kategorinya.
 - Klik pada medali karakter pusat memicu denyut koneksi lengkap dan berputar antar kategori; klik hub kategori memilih keahlian unggulan di kategori tersebut.
+
+## 12. Redesain Visual-First Atmospheric Glass & Bento Studio (2026-11-26)
+- Menambahkan lapisan visual dot-grid halus, pendar cahaya ambient adaptif sesuai waktu (`Pagi`, `Senja`, `Malam`) di `tokens.css`, panel glassmorphism (`backdrop-filter: blur(14px)`), bayangan bertingkat, ikon SVG per domain, serta scroll-reveal `IntersectionObserver`.
+- Memangkas kepadatan teks ~60% menjadi *Visual-First*: menambahkan Bento strip 4 metrik bergambar di Hero, mengubah daftar 15 tombol skill menjadi 4 ubin ringkas per kategori, menjadikan `Pratinjau UI` (*device mockup*) mode bawaan proyek, mengubah daftar riwayat menjadi kartu berikon + chip tag, dan menyederhanakan panel kontak menjadi grid 2×2 interaktif.

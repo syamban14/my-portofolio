@@ -191,13 +191,32 @@ export function initGithubShowcase() {
       return;
     }
 
+const LANGUAGE_DOT_COLORS = {
+  Python: '#18d2b6',
+  TypeScript: '#68b5ff',
+  JavaScript: '#ffb454',
+  Svelte: '#ff8a4c',
+  PHP: '#a78bfa',
+  'Laravel / Blade': '#f47a93',
+  HTML: '#f47a93',
+};
+
     gridEl.innerHTML = filtered
-      .map(
-        (repo) => `
+      .map((repo) => {
+        const dotColor = LANGUAGE_DOT_COLORS[repo.language] || '#18d2b6';
+        return `
       <article class="github-repo-item">
         <div class="github-repo-top">
-          <h3>${repo.name}</h3>
-          <span class="github-repo-meta tabular-nums">${repo.language} · ${repo.updatedLabel}</span>
+          <div class="github-repo-title-row">
+            <span class="github-repo-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </span>
+            <h3>${repo.name}</h3>
+          </div>
+          <span class="github-repo-meta tabular-nums">
+            <span class="github-lang-dot" style="background-color: ${dotColor}"></span>
+            ${repo.language} · ${repo.updatedLabel}
+          </span>
         </div>
         <p class="github-repo-desc">${repo.description}</p>
         <div class="github-repo-links">
@@ -209,8 +228,8 @@ export function initGithubShowcase() {
           }
         </div>
       </article>
-    `
-      )
+    `;
+      })
       .join('');
   }
 
