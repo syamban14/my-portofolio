@@ -65,3 +65,4 @@ tags:
 ### Ekspansi Keahlian & Fokus Bukti Proyek Tanpa Persentase (Selesai)
 - [x] Tambah 5 keahlian ke dataset (`public/data.json`, `portfolioData.js`, `i18n.js`): `PostgreSQL`, `SQLite`, `Go`, `Docker`, dan `REST / RESTful API`
 - [x] Hapus seluruh angka `%` & bar skor di `#skills`, `#ai-studio`, `#hudHotspotSummary`, cetak CV, dan regenerasi kedua file PDF ATS (`M-Syamsul-CV-ATS-ID.pdf` & `EN.pdf`)
+- [x] Rancang ulang graf konstelasi keahlian menjadi hierarki 3-tingkat berpusat pada potret medali karakter M. Syamsul (`M. Syamsul -> 4 Hub Kategori -> 15 Simpul`) tanpa latar ruangan & tanpa garis kusut antar-simpul

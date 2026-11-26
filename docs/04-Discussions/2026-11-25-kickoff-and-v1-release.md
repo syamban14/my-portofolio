@@ -64,3 +64,8 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Menambahkan 5 keahlian baru: **PostgreSQL**, **SQLite** (Database), **Go** (Language), **Docker**, dan **REST / RESTful API** (Tech), sehingga total menjadi 15 keahlian aktif dwibahasa (`ID | EN`).
 - Menghapus seluruh angka persentase (`%`) dan progress bar skor diri pada konstelasi keahlian, inspector AI, ringkasan hotspot, lembar cetak CV, serta file ATS CV PDF (`M-Syamsul-CV-ATS-ID.pdf` & `M-Syamsul-CV-ATS-EN.pdf`).
 - Mengganti visualisasi dengan kode monogram teknologi pada simpul graf serta fokus pada jumlah proyek terkait dan konteks penggunaan nyata di produksi.
+
+## 11. Konstelasi Keahlian 3-Tingkat Berpusat pada Karakter M. Syamsul (2026-11-26)
+- Mengubah arsitektur graf `#skillCanvas` menjadi hierarki 3 tingkat: **Potret Medali Karakter (`character_anime_clean.png` crop setengah badan, tanpa latar ruangan)** di pusat → **4 Hub Kategori (`AI`, `Language`, `Database`, `Tech`)** → **15 Simpul Keahlian** di lapisan luar.
+- Menghapus garis *peer-to-peer* antarsimpul yang padat sehingga setiap simpul keahlian terhubung rapi hanya melalui hub kategorinya.
+- Klik pada medali karakter pusat memicu denyut koneksi lengkap dan berputar antar kategori; klik hub kategori memilih keahlian unggulan di kategori tersebut.
