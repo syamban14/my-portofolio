@@ -75,7 +75,7 @@ tags:
 - [x] Klik titik #3 (`laptop-projects`) men-zoom kamera ke laptop meja dan menampilkan OS interaktif `SyamsulOS` (5 app tabs, Layar Utama / Data & Log, pintasan `ESC`, & tombol `Keluar dari Laptop`)
 
 ### Interaksi Zoom-In Tur Ruangan Server & Layar Infrastruktur Hotspot #4 (Selesai)
-- [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera menuju `75% 66%` (`data-zoom-mode="infra"`) dan masuk ke Tur Visual 2.5D Ruangan Server: Panorama penuh + zoom kamera ke **1. Layar Rancangan Infrastruktur**, **2. Deretan 4 Komputer Workstation (`PC-01`..`PC-04`)**, **3. Rak Server `U01`–`U04`** (`Uji Ping Server`), dan **4. Switch VLAN 24-Port** (`← Sebelumnya` / `Berikutnya →`, dwibahasa ID/EN, pintasan `ESC`).
+- [x] Klik titik #4 (`infra-lp3i`) men-zoom kamera ke `75% 66%` masuk ke ilustrasi ruangan server `server_room_bg.jpg` dengan gambar artwork fisik SVG untuk **Rak Server `U01`–`U04`**, **Layar Rancangan Infrastruktur NOC**, **Switch 24-Port**, dan **4 Gambar Monitor Komputer (`PC-01`..`PC-04`)** plus panel close-up besar & **`Uji Ping Server`**.
 
 ### Interaksi Zoom-In Lorong Penghargaan & Gambar Plakat/Piagam Hotspot #5 (Selesai)
 - [x] Klik titik #5 (`shelf-awards`) men-zoom kamera ke `89% 35%` (`data-zoom-mode="awards"`) masuk ke lorong galeri `hallway_awards_bg.jpg` dengan **6 gambar visual piagam & plakat medali** yang menempel pada perspektif dinding kiri-kanan, fokus dinding kiri/kanan, close-up artwork besar, & dwibahasa ID/EN.

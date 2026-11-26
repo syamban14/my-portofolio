@@ -79,12 +79,8 @@ Melalui sesi tanya-jawab dengan pengguna, disepakati:
 - Pengunjung dapat mengganti kelima aplikasi di dock laptop (`Presensi Online`, `Kesehatan doklinc`, `Ujian Online`, `Test Online Masuk`, `Aplikasi Surat`), berpindah antara `Layar Utama` dan `Data & Log`, lompat ke simulasi penuh (`#projects`), atau keluar kembali ke ruangan lewat tombol `Keluar dari Laptop` maupun tombol keyboard `ESC`.
 
 ## 14. Zoom-In Kamera ke Ruangan Server & Rancangan Infrastruktur pada Hotspot #4 (2026-11-26)
-- Mengubah interaksi titik Hotspot #4 (`infra-lp3i` / Server & Infrastruktur LP3I pada `75% 66%`) menjadi **Tur Visual 2.5D Ruangan Server & Layar Infrastruktur** (`Tur Ruangan Server & Layar Infrastruktur`).
-- Di dalam ruangan server ditampilkan 4 zona bernomor interaktif dengan animasi kamera *pan & zoom* mulus (`scale(1)` Ruangan Penuh $\leftrightarrow$ `scale(1.26)`–`1.36` per stasiun) serta kontrol `← Sebelumnya` / `Berikutnya →`:
-  1. **Layar Rancangan Infrastruktur (NOC Wall)**: Diagram arsitektur 3-tier beranimasi aliran paket data dengan filter skenario (*Semua Alur*, *Presensi & Klinik*, *Lab Ujian LP3I*).
-  2. **Deretan 4 Komputer Workstation (`PC-01` s/d `PC-04`)**: Monitor `Lab LP3I`, `Presensi BCS`, `Klinik doklinc`, dan `Terminal AI Docker` yang dapat diklik langsung.
-  3. **Kabinet Rak Server (`U01`–`U04`)**: Blade server dengan LED aktif dan tombol **`Uji Ping Server`** langsung.
-  4. **Kabinet Core Switch 24-Port & Segmentasi VLAN**: Matriks LED port RJ45 dan pembagian `VLAN 10`, `VLAN 20`, `VLAN 30`, serta `WAN Fiber`.
+- Memutakhirkan **Titik #4 (`infra-lp3i` / Server & Infrastruktur LP3I)** setara dengan kualitas visual **Titik #5**: menghadirkan ilustrasi latar interior ruangan server bergaya anime modern (`public/assets/server_room_bg.jpg`) berpadu dengan gambar artwork fisik SVG (`buildServerArtworkSvg`) untuk **Rak Server 4U** (miring perspektif dinding kiri `rotateY(18deg)`), **Layar Widescreen Rancangan Infrastruktur NOC** di dinding tengah dengan ikon perangkat & sirkuit paket, **Hardware Switch 24-Port & Patch Panel** di dinding kanan (`rotateY(-18deg)`), serta **Deretan 4 Gambar Monitor Komputer** (`PC-01`–`PC-04`) pada meja depan.
+- Menambahkan **Panel Close-Up Artwork Ukuran Besar** (`.server-closeup-panel`) di bawah ruangan server berdampingan dengan filter interaktif, 3 metrik KPI, dan tombol **`Uji Ping Server`** langsung.
 
 ## 15. Lorong Penghargaan 3D Perspektif dengan Gambar Piagam & Plakat pada Hotspot #5 (2026-11-26)
 - Mengubah interaksi titik Hotspot #5 (`shelf-awards` / Rak Sertifikasi & Trofi pada `89% 35%`) agar melakukan zoom-in kamera (`data-zoom-mode="awards"`, `transform-origin: 89% 35%`, `scale(2.85)`) menuju galeri lorong penghargaan **`Lorong Penghargaan & Piagam Sertifikasi`**.

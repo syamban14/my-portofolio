@@ -353,6 +353,234 @@ const INFRA_ROOM_DATA = {
   },
 };
 
+function buildServerArtworkSvg(kind, { activeBladeId = 'bcs-docker', activePcId = 'pc-lab', flowLit = [], large = false } = {}) {
+  const uid = `${kind}-${large ? 'lg' : 'sm'}`;
+  const isLit = (key) => (flowLit.length === 0 || flowLit.includes(key) ? '#18d2b6' : '#3a5968');
+  const isGlowOpacity = (key) => (flowLit.length === 0 || flowLit.includes(key) ? '1' : '0.42');
+
+  if (kind === 'rack') {
+    const blades = [
+      { id: 'bcs-docker', label: 'U01 · DOCKER', y: 48 },
+      { id: 'db-cluster', label: 'U02 · POSTGRES', y: 84 },
+      { id: 'lp3i-campus', label: 'U03 · LP3I SRV', y: 120 },
+      { id: 'net-switch', label: 'U04 · CORE NET', y: 156 },
+    ];
+    return `
+      <svg viewBox="0 0 200 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Server Rack Hardware U01-U04">
+        <defs>
+          <linearGradient id="rack-${uid}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#193346"/>
+            <stop offset="100%" stop-color="#09151e"/>
+          </linearGradient>
+        </defs>
+        <rect x="6" y="4" width="188" height="197" rx="10" fill="url(#rack-${uid})" stroke="#2a556a" stroke-width="2"/>
+        <rect x="14" y="12" width="172" height="24" rx="5" fill="#08131b" stroke="#18d2b6" stroke-opacity="0.45"/>
+        <circle cx="28" cy="24" r="4" fill="#18d2b6"/>
+        <text x="40" y="28" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" fill="#dff3f8">RACK-A · 21.4°C</text>
+        <text x="174" y="28" text-anchor="end" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" fill="#18d2b6">4U</text>
+        ${blades
+          .map((b) => {
+            const on = b.id === activeBladeId;
+            return `
+            <rect x="14" y="${b.y}" width="172" height="28" rx="5" fill="${on ? '#113847' : '#0b1b26'}" stroke="${on ? '#18d2b6' : '#2a4857'}" stroke-width="${on ? '1.8' : '1.1'}"/>
+            <circle cx="26" cy="${b.y + 14}" r="3.5" fill="${on ? '#18d2b6' : '#329688'}"/>
+            <text x="36" y="${b.y + 18}" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="${on ? '#ffffff' : '#b7d4e0'}">${b.label}</text>
+            <rect x="130" y="${b.y + 9}" width="32" height="10" rx="2" fill="#07131c" stroke="#2d4c5c" stroke-width="0.8"/>
+            <line x1="135" y1="${b.y + 14}" x2="157" y2="${b.y + 14}" stroke="${on ? '#f6ce72' : '#18d2b6'}" stroke-width="2" stroke-dasharray="3 2"/>
+            <circle cx="174" cy="${b.y + 14}" r="3" fill="${on ? '#f6ce72' : '#3a5968'}"/>
+          `;
+          })
+          .join('')}
+        <line x1="20" y1="192" x2="180" y2="192" stroke="#18d2b6" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="6 4"/>
+      </svg>
+    `;
+  }
+
+  if (kind === 'network') {
+    const portsTop = Array.from({ length: 12 }, (_, i) => {
+      const lit = i % 4 !== 3;
+      return `<rect x="${20 + i * 13.5}" y="54" width="10" height="9" rx="1.5" fill="${lit ? '#18d2b6' : '#172c38'}" stroke="#2a4857" stroke-width="0.8"/>`;
+    }).join('');
+    const portsBot = Array.from({ length: 12 }, (_, i) => {
+      const lit = i % 3 !== 2;
+      return `<rect x="${20 + i * 13.5}" y="68" width="10" height="9" rx="1.5" fill="${lit ? '#f6ce72' : '#172c38'}" stroke="#2a4857" stroke-width="0.8"/>`;
+    }).join('');
+    return `
+      <svg viewBox="0 0 200 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Core Managed Switch 24-Port VLAN">
+        <defs>
+          <linearGradient id="sw-${uid}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#173042"/>
+            <stop offset="100%" stop-color="#08131c"/>
+          </linearGradient>
+        </defs>
+        <rect x="6" y="4" width="188" height="197" rx="10" fill="url(#sw-${uid})" stroke="#2a556a" stroke-width="2"/>
+        <rect x="14" y="12" width="172" height="24" rx="5" fill="#08131b" stroke="#18d2b6" stroke-opacity="0.45"/>
+        <text x="24" y="28" font-family="Space Grotesk, sans-serif" font-size="10" font-weight="700" fill="#dff3f8">SWITCH · 24-PORT</text>
+        <circle cx="174" cy="24" r="4" fill="#18d2b6"/>
+        <rect x="14" y="44" width="172" height="42" rx="6" fill="#08151f" stroke="#2d4c5c"/>
+        ${portsTop}
+        ${portsBot}
+        <path d="M36 86 C36 106 54 106 54 120" stroke="#18d2b6" stroke-width="2.2" fill="none"/>
+        <path d="M98 86 C98 106 100 106 100 120" stroke="#f6ce72" stroke-width="2.2" fill="none"/>
+        <path d="M162 86 C162 106 146 106 146 120" stroke="#5bb8ff" stroke-width="2.2" fill="none"/>
+        <rect x="14" y="116" width="172" height="22" rx="4" fill="#0e2534" stroke="#18d2b6" stroke-opacity="0.5"/>
+        <text x="100" y="131" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="#18d2b6">VLAN 10 · 30+ LAB PCs</text>
+        <rect x="14" y="144" width="172" height="22" rx="4" fill="#0e2534" stroke="#f6ce72" stroke-opacity="0.45"/>
+        <text x="100" y="159" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="#f6ce72">VLAN 20 · DB &amp; DOCKER</text>
+        <rect x="14" y="172" width="172" height="22" rx="4" fill="#0e2534" stroke="#5bb8ff" stroke-opacity="0.45"/>
+        <text x="100" y="187" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="#9fd6ff">VLAN 30 · CLINIC &amp; WAN</text>
+      </svg>
+    `;
+  }
+
+  if (kind === 'pc') {
+    const visuals = {
+      'pc-lab': {
+        accent: '#18d2b6',
+        title: 'PC-01 · LAB LP3I',
+        graphic: `
+          <rect x="26" y="34" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <rect x="56" y="34" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <rect x="86" y="34" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <rect x="26" y="58" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <rect x="56" y="58" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <rect x="86" y="58" width="24" height="18" rx="3" fill="#103647" stroke="#18d2b6"/>
+          <circle cx="142" cy="56" r="18" fill="#0c2633" stroke="#f6ce72" stroke-width="2"/>
+          <path d="M142 46 V56 L150 60" stroke="#f6ce72" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        `,
+      },
+      'pc-bcs': {
+        accent: '#f6ce72',
+        title: 'PC-02 · PRESENSI GPS',
+        graphic: `
+          <circle cx="62" cy="56" r="24" fill="none" stroke="#18d2b6" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+          <circle cx="62" cy="56" r="14" fill="none" stroke="#18d2b6" stroke-width="1.5"/>
+          <circle cx="62" cy="56" r="5" fill="#f6ce72"/>
+          <rect x="108" y="32" width="44" height="50" rx="6" fill="#0e2a39" stroke="#f6ce72" stroke-width="1.6"/>
+          <circle cx="130" cy="48" r="7" fill="#18d2b6"/>
+          <line x1="116" y1="64" x2="144" y2="64" stroke="#9ec4d6" stroke-width="2"/>
+          <line x1="116" y1="72" x2="138" y2="72" stroke="#9ec4d6" stroke-width="2"/>
+        `,
+      },
+      'pc-doklinc': {
+        accent: '#5be4d1',
+        title: 'PC-03 · DOKLINC CLINIC',
+        graphic: `
+          <rect x="26" y="34" width="38" height="44" rx="6" fill="#0f323d" stroke="#18d2b6" stroke-width="1.6"/>
+          <path d="M45 45 V67 M34 56 H56" stroke="#18d2b6" stroke-width="4" stroke-linecap="round"/>
+          <polyline points="74,62 90,62 98,42 108,74 118,52 126,62 154,62" fill="none" stroke="#f6ce72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        `,
+      },
+      'pc-ai': {
+        accent: '#a29bfe',
+        title: 'PC-04 · DOCKER & AI',
+        graphic: `
+          <polygon points="56,34 80,46 80,70 56,82 32,70 32,46" fill="#102c40" stroke="#18d2b6" stroke-width="1.8"/>
+          <line x1="32" y1="46" x2="56" y2="58" stroke="#18d2b6" stroke-width="1.2"/>
+          <line x1="80" y1="46" x2="56" y2="58" stroke="#18d2b6" stroke-width="1.2"/>
+          <line x1="56" y1="58" x2="56" y2="82" stroke="#18d2b6" stroke-width="1.2"/>
+          <line x1="102" y1="42" x2="146" y2="56" stroke="#f6ce72" stroke-width="1.8"/>
+          <line x1="102" y1="70" x2="146" y2="56" stroke="#f6ce72" stroke-width="1.8"/>
+          <circle cx="102" cy="42" r="7" fill="#18d2b6"/>
+          <circle cx="102" cy="70" r="7" fill="#18d2b6"/>
+          <circle cx="146" cy="56" r="9" fill="#f6ce72"/>
+        `,
+      },
+    };
+    const v = visuals[activePcId] || visuals['pc-lab'];
+    return `
+      <svg viewBox="0 0 180 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${v.title}">
+        <rect x="8" y="6" width="164" height="92" rx="8" fill="#07131c" stroke="${v.accent}" stroke-width="2"/>
+        <rect x="14" y="12" width="152" height="16" rx="3" fill="#0d2332"/>
+        <text x="20" y="23" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" fill="${v.accent}">${v.title}</text>
+        <circle cx="156" cy="20" r="3" fill="#18d2b6"/>
+        ${v.graphic}
+        <rect x="78" y="98" width="24" height="14" fill="#2c4959"/>
+        <rect x="56" y="112" width="68" height="6" rx="3" fill="#416478"/>
+      </svg>
+    `;
+  }
+
+  // Default: Wide NOC Infrastructure Architecture Blueprint Wall Screen
+  return `
+    <svg viewBox="0 0 320 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NOC Infrastructure Architecture Blueprint">
+      <defs>
+        <linearGradient id="scr-${uid}" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#0b2434"/>
+          <stop offset="100%" stop-color="#06131d"/>
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="312" height="167" rx="10" fill="url(#scr-${uid})" stroke="#2a5a6e" stroke-width="2"/>
+      <rect x="14" y="13" width="292" height="18" rx="4" fill="#0f2f40"/>
+      <circle cx="26" cy="22" r="3.5" fill="#18d2b6"/>
+      <text x="36" y="25" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="700" fill="#e2f3f8">SYAMSUL NOC · INFRASTRUCTURE TOPOLOGY</text>
+      <text x="298" y="25" text-anchor="end" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#18d2b6">LIVE</text>
+
+      <!-- Animated Conduit Connectors -->
+      <line x1="94" y1="56" x2="124" y2="56" stroke="#18d2b6" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="94" y1="92" x2="124" y2="92" stroke="#f6ce72" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="94" y1="128" x2="124" y2="128" stroke="#18d2b6" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="196" y1="56" x2="226" y2="56" stroke="#18d2b6" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="196" y1="92" x2="226" y2="92" stroke="#f6ce72" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="196" y1="128" x2="226" y2="128" stroke="#18d2b6" stroke-width="2" stroke-dasharray="4 3"/>
+
+      <!-- Column 1: Edge Devices -->
+      <g opacity="${isGlowOpacity('edge-0')}">
+        <rect x="16" y="42" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('edge-0')}" stroke-width="1.4"/>
+        <rect x="23" y="48" width="9" height="15" rx="2" fill="none" stroke="${isLit('edge-0')}" stroke-width="1.4"/>
+        <text x="38" y="59" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">Mobile GPS</text>
+      </g>
+      <g opacity="${isGlowOpacity('edge-1')}">
+        <rect x="16" y="78" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('edge-1')}" stroke-width="1.4"/>
+        <rect x="22" y="85" width="12" height="9" rx="1.5" fill="none" stroke="${isLit('edge-1')}" stroke-width="1.4"/>
+        <text x="39" y="95" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">30+ Lab PC</text>
+      </g>
+      <g opacity="${isGlowOpacity('edge-2')}">
+        <rect x="16" y="114" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('edge-2')}" stroke-width="1.4"/>
+        <circle cx="28" cy="128" r="5" fill="none" stroke="${isLit('edge-2')}" stroke-width="1.4"/>
+        <text x="38" y="131" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">Klinik Web</text>
+      </g>
+
+      <!-- Column 2: Docker & API Gateway -->
+      <g opacity="${isGlowOpacity('gw-0')}">
+        <rect x="124" y="42" width="72" height="28" rx="5" fill="#0f3242" stroke="${isLit('gw-0')}" stroke-width="1.6"/>
+        <polygon points="135,48 142,52 142,59 135,63 128,59 128,52" fill="${isLit('gw-0')}" fill-opacity="0.3" stroke="${isLit('gw-0')}" stroke-width="1.2"/>
+        <text x="148" y="59" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#ffffff">Docker</text>
+      </g>
+      <g opacity="${isGlowOpacity('gw-1')}">
+        <rect x="124" y="78" width="72" height="28" rx="5" fill="#0f3242" stroke="${isLit('gw-1')}" stroke-width="1.6"/>
+        <text x="160" y="95" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#f6ce72">REST Go/PHP</text>
+      </g>
+      <g opacity="${isGlowOpacity('gw-2')}">
+        <rect x="124" y="114" width="72" height="28" rx="5" fill="#0f3242" stroke="${isLit('gw-2')}" stroke-width="1.6"/>
+        <text x="160" y="131" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#ffffff">Python AI</text>
+      </g>
+
+      <!-- Column 3: Databases -->
+      <g opacity="${isGlowOpacity('db-0')}">
+        <rect x="226" y="42" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('db-0')}" stroke-width="1.4"/>
+        <ellipse cx="238" cy="52" rx="6" ry="3" fill="${isLit('db-0')}" fill-opacity="0.4" stroke="${isLit('db-0')}" stroke-width="1.2"/>
+        <path d="M232 52 V61 C232 63 244 63 244 61 V52" fill="none" stroke="${isLit('db-0')}" stroke-width="1.2"/>
+        <text x="250" y="59" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">Postgres</text>
+      </g>
+      <g opacity="${isGlowOpacity('db-1')}">
+        <rect x="226" y="78" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('db-1')}" stroke-width="1.4"/>
+        <ellipse cx="238" cy="88" rx="6" ry="3" fill="${isLit('db-1')}" fill-opacity="0.4" stroke="${isLit('db-1')}" stroke-width="1.2"/>
+        <path d="M232 88 V97 C232 99 244 99 244 97 V88" fill="none" stroke="${isLit('db-1')}" stroke-width="1.2"/>
+        <text x="250" y="95" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">MySQL</text>
+      </g>
+      <g opacity="${isGlowOpacity('db-2')}">
+        <rect x="226" y="114" width="78" height="28" rx="5" fill="#0d2938" stroke="${isLit('db-2')}" stroke-width="1.4"/>
+        <ellipse cx="238" cy="124" rx="6" ry="3" fill="${isLit('db-2')}" fill-opacity="0.4" stroke="${isLit('db-2')}" stroke-width="1.2"/>
+        <path d="M232 124 V133 C232 135 244 135 244 133 V124" fill="none" stroke="${isLit('db-2')}" stroke-width="1.2"/>
+        <text x="250" y="131" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700" fill="#e6f5fa">SQLite</text>
+      </g>
+
+      <text x="160" y="160" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="8" font-weight="600" fill="#8fb4c4">EDGE CLIENTS → DOCKER &amp; REST API → POSTGRESQL / MYSQL / SQLITE</text>
+    </svg>
+  `;
+}
+
 const AWARDS_HALL_ITEMS = {
   id: [
     {
@@ -831,15 +1059,13 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
         el.classList.toggle('is-focus', el.dataset.tourGoto === infraStationId);
       }
     });
-    stageEl.querySelectorAll('.server-rack-u').forEach((el) => {
-      el.classList.toggle('is-active', el.dataset.bladeId === activeBlade.id);
-    });
     stageEl.querySelectorAll('[data-infra-pc]').forEach((el) => {
       el.classList.toggle('is-selected', el.dataset.infraPc === activePc.id);
     });
-    stageEl.querySelectorAll('.noc-node-pill').forEach((el) => {
-      el.classList.toggle('is-lit', activeFlow.litNodes.includes(el.dataset.nodeKey));
-    });
+    const rackArt = stageEl.querySelector('#infraRackSvgWrap');
+    if (rackArt) rackArt.innerHTML = buildServerArtworkSvg('rack', { activeBladeId: activeBlade.id });
+    const screenArt = stageEl.querySelector('#infraScreenSvgWrap');
+    if (screenArt) screenArt.innerHTML = buildServerArtworkSvg('screen', { flowLit: activeFlow.litNodes });
     const flowLabel = stageEl.querySelector('#infraScreenFlowTag');
     if (flowLabel) flowLabel.textContent = activeFlow.label;
     const pcTag = stageEl.querySelector('#infraDeskPcTag');
@@ -882,7 +1108,6 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       </div>
     `;
 
-    const switchPorts = Array.from({ length: 12 }, (_, idx) => `<span class="switch-port-led${idx % 5 !== 4 ? ' is-live' : ''}"></span>`).join('');
     const labels =
       lang === 'en'
         ? {
@@ -922,11 +1147,14 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
     let stationSub = stationMeta.sub;
     let inspectorControls = '';
     let inspectorMetrics = activeBlade.metrics;
+    let closeupSvgKind = 'screen';
 
     if (infraStationId === 'overview') {
       inspectorControls = '';
       inspectorMetrics = labels.overviewMetrics;
+      closeupSvgKind = 'screen';
     } else if (infraStationId === 'screen') {
+      closeupSvgKind = 'screen';
       inspectorControls = `
         <div class="server-tour-chips">
           ${langData.flows
@@ -939,6 +1167,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       `;
       inspectorMetrics = labels.screenMetrics;
     } else if (infraStationId === 'computers') {
+      closeupSvgKind = 'pc';
       stationHeadline = activePc.title;
       stationSub = activePc.sub;
       inspectorControls = `
@@ -953,6 +1182,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       `;
       inspectorMetrics = activePc.metrics;
     } else if (infraStationId === 'rack') {
+      closeupSvgKind = 'rack';
       stationHeadline = `${activeBlade.unit} · ${activeBlade.host}`;
       stationSub = activeBlade.sub;
       inspectorControls = `
@@ -967,6 +1197,7 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       `;
       inspectorMetrics = activeBlade.metrics;
     } else if (infraStationId === 'network') {
+      closeupSvgKind = 'network';
       inspectorControls = `
         <div class="server-tour-chips">
           ${langData.vlans.map((v) => `<span class="laptop-impact-chip">${v}</span>`).join('')}
@@ -975,25 +1206,37 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
       inspectorMetrics = langData.networkMetrics;
     }
 
+    const closeupArtworkHtml = buildServerArtworkSvg(closeupSvgKind, {
+      activeBladeId: activeBlade.id,
+      activePcId: activePc.id,
+      flowLit: activeFlow.litNodes,
+      large: true,
+    });
+
     const inspectorHtml = `
-      <div class="server-tour-subbar">
-        <div>
-          <p class="laptop-screen-title">${stationHeadline}</p>
-          <p class="laptop-screen-sub">${stationSub}</p>
-        </div>
-        ${inspectorControls}
-      </div>
-      <div class="laptop-kpi-grid">
-        ${inspectorMetrics
-          .map(
-            (m) => `
-          <div class="laptop-kpi-card">
-            <span class="laptop-kpi-label">${m.k}</span>
-            <span class="laptop-kpi-val tabular-nums">${m.v}</span>
+      <div class="server-closeup-panel">
+        <div class="server-closeup-art">${closeupArtworkHtml}</div>
+        <div class="server-closeup-meta">
+          <div class="server-tour-subbar">
+            <div>
+              <p class="laptop-screen-title">${stationHeadline}</p>
+              <p class="laptop-screen-sub">${stationSub}</p>
+            </div>
+            ${inspectorControls}
           </div>
-        `
-          )
-          .join('')}
+          <div class="laptop-kpi-grid">
+            ${inspectorMetrics
+              .map(
+                (m) => `
+              <div class="laptop-kpi-card">
+                <span class="laptop-kpi-label">${m.k}</span>
+                <span class="laptop-kpi-val tabular-nums">${m.v}</span>
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
       </div>
     `;
 
@@ -1027,73 +1270,30 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
 
     laptopBody.innerHTML = `
       <div class="server-tour-stage" data-tour-station="${infraStationId}">
+        <img class="server-room-bg" src="assets/server_room_bg.jpg" alt="" aria-hidden="true" />
+        <div class="server-room-vignette" aria-hidden="true"></div>
         <div class="server-room-canvas">
-          <div class="server-room-ceiling">
-            <span class="server-ceiling-light" aria-hidden="true"></span>
-            <span class="server-room-ambient-tag">${langData.ambientTag}</span>
-            <span class="server-ceiling-light" aria-hidden="true"></span>
-          </div>
-
           <div class="server-room-backwall">
-            <button type="button" class="server-zone-box${infraStationId === 'rack' ? ' is-focus' : ''}" data-tour-goto="rack">
+            <button type="button" class="server-zone-box server-zone-rack${infraStationId === 'rack' ? ' is-focus' : ''}" data-tour-goto="rack">
               <div class="server-zone-head">
                 <span class="server-zone-pin"><span class="server-pin-num">3</span> ${labels.rack}</span>
-                <span class="server-zone-temp">U01–U04</span>
               </div>
-              <div class="server-rack-slots">
-                ${langData.blades
-                  .map(
-                    (b) => `
-                  <div class="server-rack-u${b.id === activeBlade.id ? ' is-active' : ''}" data-blade-id="${b.id}">
-                    <span class="server-rack-u-left"><span class="infra-led-dot" aria-hidden="true"></span><span>${b.unit} · ${b.badge}</span></span>
-                    <span>99.9%</span>
-                  </div>
-                `
-                  )
-                  .join('')}
-              </div>
+              <div class="server-zone-svg-wrap" id="infraRackSvgWrap">${buildServerArtworkSvg('rack', { activeBladeId: activeBlade.id })}</div>
             </button>
 
-            <button type="button" class="server-zone-box${infraStationId === 'screen' ? ' is-focus' : ''}" data-tour-goto="screen">
+            <button type="button" class="server-zone-box server-zone-screen${infraStationId === 'screen' ? ' is-focus' : ''}" data-tour-goto="screen">
               <div class="server-zone-head">
                 <span class="server-zone-pin"><span class="server-pin-num">1</span> ${labels.screen}</span>
                 <span class="server-zone-temp" id="infraScreenFlowTag">${activeFlow.label}</span>
               </div>
-              <div class="server-noc-screen">
-                <div class="noc-diagram-row">
-                  ${langData.topology
-                    .map(
-                      (tier, tierIdx) => `
-                    ${tierIdx > 0 ? '<div class="noc-pipe" aria-hidden="true"><span class="noc-packet-dot"></span></div>' : ''}
-                    <div class="noc-tier-box">
-                      <span class="noc-tier-label">${tier.title}</span>
-                      ${tier.nodes
-                        .map((nodeLabel, nIdx) => {
-                          const nodeKey = `${tier.key}-${nIdx}`;
-                          const isLit = activeFlow.litNodes.includes(nodeKey);
-                          return `<span class="noc-node-pill${isLit ? ' is-lit' : ''}" data-node-key="${nodeKey}">${nodeLabel}</span>`;
-                        })
-                        .join('')}
-                    </div>
-                  `
-                    )
-                    .join('')}
-                </div>
-              </div>
+              <div class="server-zone-svg-wrap" id="infraScreenSvgWrap">${buildServerArtworkSvg('screen', { flowLit: activeFlow.litNodes })}</div>
             </button>
 
-            <button type="button" class="server-zone-box${infraStationId === 'network' ? ' is-focus' : ''}" data-tour-goto="network">
+            <button type="button" class="server-zone-box server-zone-switch${infraStationId === 'network' ? ' is-focus' : ''}" data-tour-goto="network">
               <div class="server-zone-head">
                 <span class="server-zone-pin"><span class="server-pin-num">4</span> ${labels.network}</span>
-                <span class="server-zone-temp">24-Port</span>
               </div>
-              <div class="switch-port-matrix" aria-hidden="true">${switchPorts}</div>
-              <div class="switch-vlan-list">
-                ${langData.vlans
-                  .slice(0, 3)
-                  .map((v) => `<div class="switch-vlan-row">${v}</div>`)
-                  .join('')}
-              </div>
+              <div class="server-zone-svg-wrap">${buildServerArtworkSvg('network')}</div>
             </button>
           </div>
 
@@ -1106,12 +1306,8 @@ export function initLivingWorkspace({ getTimeMode, onRequestSection, onActionToa
               ${langData.computers
                 .map(
                   (pc) => `
-                <button type="button" class="server-pc-unit${pc.id === activePc.id ? ' is-selected' : ''}" data-infra-pc="${pc.id}">
-                  <span class="server-pc-monitor">
-                    <span class="server-pc-title">${pc.label}</span>
-                    <span class="server-pc-screen-line">${pc.screenLine}</span>
-                  </span>
-                  <span class="server-pc-stand" aria-hidden="true"></span>
+                <button type="button" class="server-pc-unit${pc.id === activePc.id ? ' is-selected' : ''}" data-infra-pc="${pc.id}" aria-label="${pc.label}">
+                  <span class="server-pc-svg-wrap">${buildServerArtworkSvg('pc', { activePcId: pc.id })}</span>
                 </button>
               `
                 )
